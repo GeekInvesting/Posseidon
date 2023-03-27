@@ -8,6 +8,7 @@ module.exports = {
     "./nuxt.config.{js,ts}",
     "./node_modules/flowbite.{js,ts}",
   ],
+  darkMode: 'media',
   theme: {
     extend: {},
   },
