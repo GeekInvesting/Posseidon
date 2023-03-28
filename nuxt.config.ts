@@ -3,10 +3,8 @@ export default defineNuxtConfig({
     modules: [
         "@nuxtjs/tailwindcss",
         "nuxt-icon",
-        'nuxt-quasar-ui'
+        'nuxt-quasar-ui',
     ],
 
     quasar: { /* */ },
-
-    
-});
+})
