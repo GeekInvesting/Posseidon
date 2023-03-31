@@ -4,7 +4,7 @@ export default defineNuxtConfig({
         "@nuxtjs/tailwindcss",
         "nuxt-icon",
         'nuxt-quasar-ui',
+        '@element-plus/nuxt',
     ],
 
-    quasar: { /* */ },
 })
