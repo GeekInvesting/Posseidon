@@ -42,6 +42,9 @@ watch(props.initialData, newVal => {
 const submitForm = () => {
   // Lógica de submissão do formulário
   console.log(country.value);
+
+  
+  location.reload();
 };
 </script>
 

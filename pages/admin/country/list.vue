@@ -7,6 +7,9 @@
     Novo
     </Button>
   </div>
+  <AdminCountryForm 
+  :class="{'hidden max-w-max': !hiddenCreate}" />
+  <br>
   <div class="space-y-5">
     <AdminCountryCard
       v-for="country in countries"
@@ -35,6 +38,7 @@ export default defineComponent({
   },
   methods: {
     createCountry() {
+      this.hiddenCreate = !this.hiddenCreate;
       // implementar a lógica para editar o país
     },
   }
