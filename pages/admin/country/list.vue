@@ -1,7 +1,11 @@
 <template>
   <div class="p-3 rounded-lg flex justify-between w-auto">
     <NuxtLink to="/admin"> <Icon name="ic:outline-arrow-back"/> Admin</NuxtLink>
-    <AdminButton button-text="Criar" route="/admin/country"></AdminButton>
+    <Button 
+    class="px-4 py-2 text-white bg-green-500 rounded-md mx-5"
+    @click="createCountry" > 
+    Novo
+    </Button>
   </div>
   <div class="space-y-5">
     <AdminCountryCard
@@ -19,12 +23,20 @@ import { Country } from "~~/model/Country";
 export default defineComponent({
   data() {
     return {
+      hiddenCreate: false,
+
       countries: [
         { id: 1, name: "Brasil", sigla: "BRA", enabled: true, deleted: false },
         { id: 2, name: "Estados Unidos", sigla: "USA", enabled: false, deleted: false },
         { id: 3, name: "Argentina", sigla: "ARG", enabled: false, deleted: true },
       ] as Country[],
+
     };
   },
+  methods: {
+    createCountry() {
+      // implementar a lógica para editar o país
+    },
+  }
 });
 </script>

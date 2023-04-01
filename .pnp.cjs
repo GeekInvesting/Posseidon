@@ -35,7 +35,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["nuxt", "npm:3.3.2"],\
             ["nuxt-icon", "npm:0.3.3"],\
             ["nuxt-quasar-ui", "virtual:1f0463a623b59e602c5e351b7ca9c50da07537ccc4c6ad36d3c8636d9d44ca44b72bf55fcaa3f8c38fc73c8a7b109fab1db6936b38d1efcb5ddf6eb81d977f69#npm:1.3.1"],\
-            ["quasar", "npm:2.11.9"],\
             ["ts-loader", "virtual:1f0463a623b59e602c5e351b7ca9c50da07537ccc4c6ad36d3c8636d9d44ca44b72bf55fcaa3f8c38fc73c8a7b109fab1db6936b38d1efcb5ddf6eb81d977f69#npm:9.4.2"],\
             ["typescript", "patch:typescript@npm%3A5.0.3#~builtin<compat/typescript>::version=5.0.3&hash=85af82"]\
           ],\
@@ -5996,7 +5995,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["nuxt", "npm:3.3.2"],\
             ["nuxt-icon", "npm:0.3.3"],\
             ["nuxt-quasar-ui", "virtual:1f0463a623b59e602c5e351b7ca9c50da07537ccc4c6ad36d3c8636d9d44ca44b72bf55fcaa3f8c38fc73c8a7b109fab1db6936b38d1efcb5ddf6eb81d977f69#npm:1.3.1"],\
-            ["quasar", "npm:2.11.9"],\
             ["ts-loader", "virtual:1f0463a623b59e602c5e351b7ca9c50da07537ccc4c6ad36d3c8636d9d44ca44b72bf55fcaa3f8c38fc73c8a7b109fab1db6936b38d1efcb5ddf6eb81d977f69#npm:9.4.2"],\
             ["typescript", "patch:typescript@npm%3A5.0.3#~builtin<compat/typescript>::version=5.0.3&hash=85af82"]\
           ],\
@@ -6047,7 +6045,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/quasar", null],\
             ["magic-string", "npm:0.30.0"],\
             ["p-memoize", "npm:7.1.1"],\
-            ["quasar", "npm:2.11.9"],\
+            ["quasar", null],\
             ["unplugin", "npm:1.3.1"]\
           ],\
           "packagePeers": [\
@@ -7508,15 +7506,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/punycode-npm-2.3.0-df4bdce06b-39f760e09a.zip/node_modules/punycode/",\
           "packageDependencies": [\
             ["punycode", "npm:2.3.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["quasar", [\
-        ["npm:2.11.9", {\
-          "packageLocation": "./.yarn/cache/quasar-npm-2.11.9-1a07eb427e-d23c0f5ae0.zip/node_modules/quasar/",\
-          "packageDependencies": [\
-            ["quasar", "npm:2.11.9"]\
           ],\
           "linkType": "HARD"\
         }]\

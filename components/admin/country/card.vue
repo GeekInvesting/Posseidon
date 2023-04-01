@@ -12,14 +12,15 @@
       <span
         class="text-lg font-semibold"
         :class="{ 'line-through': country.deleted }"
-        >{{ country.name }}</span>
+        >{{ country.name }}</span
+      >
 
       <span class="text-gray-500">
-        {{ country.enabled ? "Ativo" : "Inativo" }}</span>
+        {{ country.enabled ? "Ativo" : "Inativo" }}</span
+      >
 
-      <div class="mt-4 space-x-2"></div>
-    
     </div>
+    <br>
     <button
       class="px-4 py-2 text-white bg-blue-500 rounded-md mx-5"
       @click="editCountry"
@@ -27,12 +28,30 @@
       Editar
     </button>
     <button
-      :class="{ hidden: country.deleted }"
+      :class="{ 'hidden': !country.enabled }"
+      class="px-4 py-2 text-white bg-blue-500 rounded-md mx-5"
+      @click="enabledCountry"
+    >
+      Ativar
+    </button>
+    <button
+      :class="{ 'hidden': country.enabled }"
+      class="px-4 py-2 text-white bg-blue-500 rounded-md mx-5"
+      @click="disabledCountry"
+    >
+      Desativar
+    </button>
+    <button
+      :class="{ 'hidden': country.deleted }"
       class="px-4 py-2 text-white bg-red-500 rounded-md mx-5"
       @click="deleteCountry"
     >
       Excluir
     </button>
+    <br />
+    <div :class="{ 'hidden': !hiddenUpdate }">
+      <AdminCountryForm :initial-data="country" />
+    </div>
   </div>
 </template>
 
@@ -46,13 +65,21 @@ export default defineComponent({
       required: true,
     },
   },
+  data() {
+    return {
+      hiddenUpdate: false,
+    };
+  },
   methods: {
     editCountry() {
+      this.hiddenUpdate = !this.hiddenUpdate;
       // implementar a lógica para editar o país
     },
     deleteCountry() {
       // implementar a lógica para excluir o país
     },
+    enabledCountry() {},
+    disabledCountry() {},
   },
 });
 </script>

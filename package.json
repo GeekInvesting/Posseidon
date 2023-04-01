@@ -19,7 +19,7 @@
   "dependencies": {
     "@quasar/extras": "^1.16.0",
     "flowbite": "^1.6.4",
-    "nuxt-icon": "^0.3.3",
-    "quasar": "^2.11.9"
+    "lru-cache": "^8.0.4",
+    "nuxt-icon": "^0.3.3"
   }
 }
