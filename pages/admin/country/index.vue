@@ -39,7 +39,7 @@ export default defineComponent({
   },
   async fetch() {
     try {
-      const response = await $fetch("http://localhost:8101/hera/country");
+      const response = await fetch("http://localhost:8101/hera/country");
       if (!response.ok) {
         throw new Error("Erro ao carregar os países");
       }

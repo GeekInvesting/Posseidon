@@ -7,9 +7,9 @@
       <el-menu mode="horizontal" class=" md:flex-row md:items-center hover:transition-all">
         <el-menu-item index="1"><NuxtLink to="/">Home</NuxtLink></el-menu-item>
         <el-sub-menu index="2">
-          <template #title><NuxtLink to="admin">Admin</NuxtLink></template>
-          <el-menu-item index="2-1"><NuxtLink to="admin/country">Country</NuxtLink></el-menu-item>
-          <el-menu-item index="2-2"><NuxtLink to="admin/state">State</NuxtLink></el-menu-item>
+          <template #title><NuxtLink to="/admin">Admin</NuxtLink></template>
+          <el-menu-item index="2-1"><NuxtLink to="/admin/country">Country</NuxtLink></el-menu-item>
+          <el-menu-item index="2-2"><NuxtLink to="/admin/state">State</NuxtLink></el-menu-item>
         </el-sub-menu>
         <el-menu-item index="3"><NuxtLink to="about">About</NuxtLink></el-menu-item>
       </el-menu>
