@@ -3,11 +3,11 @@
     <form @submit.prevent="submitForm">
       <br>
       <el-form-item label="Nome">
-        <el-input v-model="country.name" />
+        <el-input v-model="country.countryName" />
       </el-form-item>
       <br>
-      <el-form-item label="Sigla">
-        <el-input v-model="country.sigla" />
+      <el-form-item label="countryCode">
+        <el-input v-model="country.countryCode" />
       </el-form-item>
       <br>
       <el-button type="primary" native-type="submit">Enviar</el-button>
@@ -17,6 +17,7 @@
 
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
+import { Country } from '~~/model/Country';
 
 const props = defineProps({
   initialData: {
@@ -26,16 +27,16 @@ const props = defineProps({
 })
 
 const country = ref({
-  name: props.initialData.name || '',
-  sigla: props.initialData.sigla || '',
-  enabled: props.initialData.enabled || false
+  countryName: props.initialData.countryName || '',
+  countryCode: props.initialData.countryCode || '',
+  countryEnabled: props.initialData.countryEnabled || false
 })
 
 watch(props.initialData, newVal => {
   country.value = {
-    name: newVal.name || '',
-    sigla: newVal.sigla || '',
-    enabled: newVal.enabled || false
+    countryName: newVal.countryName || '',
+    countryCode: newVal.countryCode || '',
+    countryEnabled: newVal.countryEnabled || false
   }
 })
 

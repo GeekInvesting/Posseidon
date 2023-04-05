@@ -2,21 +2,21 @@
   <div
     class="p-3 rounded-lg shadow-md mx-5"
     :class="{
-      ' bg-green-50': country.enabled,
-      ' bg-red-50': !country.enabled,
+      ' bg-green-50': country.countryEnabled,
+      ' bg-red-50': !country.countryEnabled,
     }"
   >
     <div class="flex justify-between mx-5 w-auto">
-      <span class="text-gray-500">{{ country.sigla }}</span>
+      <span class="text-gray-500">{{ country.countryCode }}</span>
 
       <span
         class="text-lg font-semibold"
-        :class="{ 'line-through': country.deleted }"
-        >{{ country.name }}</span
+        :class="{ 'line-through': country.countryDeleted }"
+        >{{ country.countryName }}</span
       >
 
       <span class="text-gray-500">
-        {{ country.enabled ? "Ativo" : "Inativo" }}</span
+        {{ country.countryEnabled ? "Ativo" : "Inativo" }}</span
       >
 
     </div>
@@ -28,21 +28,21 @@
       Editar
     </button>
     <button
-      :class="{ 'hidden': !country.enabled }"
+      :class="{ 'hidden': !country.countryEnabled }"
       class="px-4 py-2 text-white bg-blue-500 rounded-md mx-5"
       @click="enabledCountry"
     >
       Ativar
     </button>
     <button
-      :class="{ 'hidden': country.enabled }"
+      :class="{ 'hidden': country.countryDeleted }"
       class="px-4 py-2 text-white bg-blue-500 rounded-md mx-5"
       @click="disabledCountry"
     >
       Desativar
     </button>
     <button
-      :class="{ 'hidden': country.deleted }"
+      :class="{ 'hidden': country.countryDeleted }"
       class="px-4 py-2 text-white bg-red-500 rounded-md mx-5"
       @click="deleteCountry"
     >

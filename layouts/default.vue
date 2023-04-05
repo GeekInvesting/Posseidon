@@ -1,6 +1,6 @@
 <template>
   <div class="w-full flex-auto justify-between">
-    <HomeNavbar />
+    <NavBar />
     <span>
       <NuxtPage />
     </span>
