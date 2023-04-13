@@ -7,7 +7,7 @@
       :description="alertDescription"
       show-icon
     />
-    <br/>
+    <br />
   </div>
   <div v-if="showUpdate">
     <AdminCountryForm :initial-data="country" type-save="update" />
@@ -16,29 +16,34 @@
   <el-table
     :data="countries"
     class="custom-loading-svg w-full"
+    stripe
+    height="90%"
     v-loading="loading"
     :element-loading-svg="svg"
     element-loading-svg-view-box="-10, -10, 50, 50"
   >
     <el-table-column prop="countryName" label="Name" sortable></el-table-column>
-    <el-table-column
-      prop="countryCode"
-      label="Code"
-      sortable
-    ></el-table-column>
+    <el-table-column prop="countryCode" label="Code" sortable></el-table-column>
     <el-table-column prop="countryEnable" label="Enable">
       <template #default="{ row }">
         <span>{{ row.countryEnabled ? "True" : "False" }}</span>
       </template>
     </el-table-column>
-    <el-table-column label="Ações">
+    <el-table-column label="Actions">
       <template #default="{ row }" class="grid grid-cols-1 gap-3">
-        <el-button @click="edit(row)" ><Icon name="ic:twotone-mode-edit"/></el-button>
+        <el-button @click="edit(row)"
+          ><Icon name="ic:twotone-mode-edit"
+        /></el-button>
         <el-button @click="toggle(row)">
-          <Icon v-if="row.countryEnabled" name="ic:twotone-person-add-disabled"/>
-          <Icon v-else name="ic:twotone-person-add"/>
+          <Icon
+            v-if="row.countryEnabled"
+            name="ic:twotone-person-add-disabled"
+          />
+          <Icon v-else name="ic:twotone-person-add" />
         </el-button>
-        <el-button @click="remove(row)"><Icon name="ic:outline-delete-forever"/></el-button>
+        <el-button @click="remove(row)"
+          ><Icon name="ic:outline-delete-forever"
+        /></el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -46,7 +51,7 @@
 
 <script lang="ts" setup>
 import { Country } from "~~/model/Country";
-import { useEventBus } from '~~/events/eventBus';
+import { useEventBus } from "~~/events/eventBus";
 
 const eventBus = useEventBus();
 
@@ -64,7 +69,7 @@ const fetchCountries = async () => {
   try {
     loading.value = true;
     //const response = await fetch(`${urlApi}/country`);
-    const response = await fetch("http://localhost:8101/hera/country");
+    const response = await fetch("http://localhost:8101/hera/country/all");
     const data = await response.json();
 
     //console.log("Dados recebidos:", data);
@@ -85,16 +90,16 @@ onMounted(() => {
   fetchCountries();
 });
 
-const refreshTable = () => {
+const refreshCountries = () => {
   fetchCountries();
-}
+};
 
 watch(
-  () => eventBus.value.refreshTable,
+  () => eventBus.value.refreshCountries,
   (newValue) => {
     if (newValue) {
-      refreshTable();
-      eventBus.value.refreshTable = false;
+      refreshCountries();
+      eventBus.value.refreshCountries = false;
     }
   }
 );
@@ -108,7 +113,6 @@ const edit = (row: Country) => {
 };
 
 const toggle = (row: Country) => {
-
   if (row.countryEnabled) {
     postRequest("disable", "PUT", row);
   } else {
@@ -120,10 +124,8 @@ const remove = (row: Country) => {
   postRequest("delete", "DELETE", row);
 };
 
-const postRequest = async (data: any, method:any, country:Country) => {
-  const url = `http://localhost:8101/hera/country/${data}/${
-    country.id
-  }`;
+const postRequest = async (data: any, method: any, country: Country) => {
+  const url = `http://localhost:8101/hera/country/${data}/${country.id}`;
   try {
     const response = await fetch(url, {
       method: method,
@@ -131,7 +133,7 @@ const postRequest = async (data: any, method:any, country:Country) => {
         "Content-Type": "application/json",
       },
     });
-    
+
     if (response.ok) {
       const data = await response.json();
       //console.log(`Success ${data} Country: ${country.countryName}`);
@@ -139,17 +141,16 @@ const postRequest = async (data: any, method:any, country:Country) => {
       alertTitle.value = "Success";
       alertDescription.value = `Success ${data} Country: ${country.countryName}`;
       alertType.value = "success";
-      refreshTable();
+      refreshCountries();
     } else {
       throw new Error(`Error ${data} Country: ${country.countryName}`);
     }
-    
   } catch (error) {
-    console.error( error);    
+    console.error(error);
     alertCountry.value = true;
-      alertTitle.value = "Error";
-      alertDescription.value = `Error ${data} Country: ${country.countryName}`;
-      alertType.value = "error";
+    alertTitle.value = "Error";
+    alertDescription.value = `Error ${data} Country: ${country.countryName}`;
+    alertType.value = "error";
   }
 
   setTimeout(() => {

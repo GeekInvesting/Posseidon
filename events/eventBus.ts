@@ -2,11 +2,13 @@
 import { ref, watch } from 'vue';
 
 interface EventBusType {
-  refreshTable: boolean;
+  refreshCountries: boolean;
+  refreshStates: boolean;
 }
 
 const eventBusState: EventBusType = {
-  refreshTable: false,
+  refreshCountries: false,
+  refreshStates: false,
 };
 
 const eventBus = ref(eventBusState);

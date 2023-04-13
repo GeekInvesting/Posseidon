@@ -1,24 +1,25 @@
-<template>
+<template lang="">
   <div class="p-3 rounded-lg flex justify-between w-auto">
     <NuxtLink to="/admin">
       <Icon name="ic:outline-arrow-back" /> Admin</NuxtLink
     >
     <Button
       class="px-4 py-2 text-white bg-green-500 rounded-md mx-5"
-      @click="createCountry"
+      @click="create"
     >
-      New Country
+      New State
     </Button>
   </div>
-  <AdminCountryForm v-if="hiddenCreate" class="max-w-max" />
-  <br />
-  <AdminCountryTable />
+  <AdminStateForm v-if="hiddenCreate" class="max-w-max" />
+  <br/>
+  <AdminStateTable />
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 let hiddenCreate: Ref<boolean> = ref(false);
 
-const createCountry = () => {
+const create = () => {
   hiddenCreate.value = !hiddenCreate.value;
 };
+
 </script>

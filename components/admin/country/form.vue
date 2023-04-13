@@ -35,6 +35,9 @@ import { Country } from "~~/model/Country";
 import { defineEmits } from 'vue';
 import { emitEventBus } from '~~/events/eventBus';
 
+const runtimeConfig = useRuntimeConfig();
+const urlHera = runtimeConfig.apiHera 
+
 let urlApi:String = "";
 let urlType:String = "";
 let alertCountry: Ref<boolean> = ref(false);
@@ -75,10 +78,10 @@ const submitForm = async () => {
 
   try {
     if (props.typeSave == "create") {
-      urlApi = "http://127.0.0.1:8100/hera/country";
+      urlApi = `${urlHera}/country`;
       urlType = "POST";
     } else if (props.typeSave == "update") {
-      urlApi = `http://127.0.0.1:8100/hera/country/${country.value.id}`;
+      urlApi = `${urlHera}/country/${country.value.id}`;
       urlType = "PUT";
     }
     const response = await fetch(`${urlApi}`, {
@@ -116,7 +119,7 @@ const submitForm = async () => {
   alertCountry.value = true;
   loading.value = false;
 
-  emitEventBus("refreshTable", true)
+  emitEventBus("refreshCountries", true)
   
   setTimeout(() => {
     alertCountry.value = false;
