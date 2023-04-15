@@ -1,4 +1,4 @@
-export interface State {
+export interface StateDto {
   id: string;
   stateName: string;
   stateCode: string;

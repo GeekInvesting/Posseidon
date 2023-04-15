@@ -1,8 +1,5 @@
-import vuetify from 'vite-plugin-vuetify'
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  
   modules: [
     "@nuxtjs/tailwindcss",
     "nuxt-icon",
@@ -10,15 +7,14 @@ export default defineNuxtConfig({
     "@element-plus/nuxt",
   ],
 
-  plugins: [
-    { src: "~/plugins/element-plus", mode: "client" },
-    { src: "~/plugins/vuetify", mode: "client" },
+  build: {
+    transpile: ["primevue"],
+  },
+  css: [
+    "primevue/resources/themes/lara-light-blue/theme.css",
+    "primevue/resources/primevue.css",
+    "primeicons/primeicons.css",
   ],
 
-  vite:{
-    ssr: {
-      noExternal: ['vuetify'],
-    }
-  }
-
+  plugins: [{ src: "~/plugins/element-plus", mode: "client" }],
 });

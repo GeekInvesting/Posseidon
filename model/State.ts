@@ -4,7 +4,7 @@ export interface State {
   id: string;
   stateName: string;
   stateCode: string;
-  stateCountry: string;
+  stateCountry: Country;
   stateEnabled: boolean;
   stateDeleted: boolean;
 }

@@ -1,58 +1,61 @@
 <template>
-  <div>
-    <el-alert
-      v-if="alertState"
-      :title="alertTitle"
-      :description="alertDescription"
-      :type="alertType"
-      :closable="false"
-    />
-    <br />
-  </div>
-  <div class="p-8 rounded-lg shadow-md mx-5">
-    <el-form :model="state" ref="stateForm" label-width="120px">
-      <el-form-item label="State Name" prop="stateName">
-        <el-input v-model="state.stateName" />
+  <div
+    class="p-8 bg-white rounded-lg shadow-md mx-5 md:mx-10 lg:mx-20 xl:mx-40"
+  >
+    <el-form
+      class="mb-4"
+      v-loading="loading"
+      :element-loading-svg="svg"
+      element-loading-svg-view-box="-10, -10, 50, 50"
+    >
+      <el-form-item label="State Name" prop="stateName" class="mb-4">
+        <el-input v-model="state.stateName" class="shadow-sm" placeholder="New York"/>
       </el-form-item>
-      <el-form-item label="State Code" prop="stateCode">
-        <el-input v-model="state.stateCode" />
+      <el-form-item label="State Code" prop="stateCode" class="mb-4">
+        <el-input v-model="state.stateCode" class="shadow-sm" placeholder="NY"/>
       </el-form-item>
-      <el-form-item label="Country">
+      <el-form-item label="Country" class="mb-4">
         <!--- //TODO:Substituir o select por um componente de autocoplete -->
-        <el-select v-model="selectValue" placeholder="Selecione um país">
+        <el-select
+          v-model="selectValue"
+          placeholder="Selecione um país"
+          @change="onSelectChange"
+          class="shadow-sm"
+        >
           <el-option
             v-for="country in countries"
-            :key="country.id"
-            :label="country.countryName"
-            :value="country.id"
+            :key="country"
+            :label="country"
+            :value="country"
           ></el-option>
         </el-select>
-        
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm">Submit</el-button>
+        <el-button
+          type="primary"
+          @click="submitForm"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Submit
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { State } from "~/model/State";
-import { Country } from "~/model/Country";
+import { StateDto } from "~/model/StateDto";
 import { emitEventBus } from "~~/events/eventBus";
+import { Notification } from "~~/utils/Notification";
 
-const runtimeConfig = useRuntimeConfig();
-const urlHera = runtimeConfig.apiHera;
+import { ApiHera } from "~~/utils/api/hera";
+
+const apiHera = ApiHera();
+
+const svg = Loading().svg;
+let loading = ref(false);
 
 let selectValue = ref("");
-
-let urlApi: String = "";
-let urlType: String = "";
-
-let alertState: Ref<boolean> = ref(false);
-let alertDescription: Ref<string> = ref("");
-let alertTitle: Ref<string> = ref("");
-let alertType: Ref<any> = ref("success");
 
 const props = defineProps({
   initialData: {
@@ -65,53 +68,78 @@ const props = defineProps({
   },
 });
 
-const countries: Country[] = [
-  // Insira os dados dos países aqui, exemplo:
-  {
-    id: "1",
-    countryName: "Brasil",
-    countryCode: "BR",
-    countryEnabled: true,
-    countryDeleted: false,
-  },
-  {
-    id: "2",
-    countryName: "Estados Unidos",
-    countryCode: "US",
-    countryEnabled: true,
-    countryDeleted: false,
-  },
-];
+let countries: Ref<string[]> = ref([]);
 
-let state: State = {
+let state: Ref<StateDto> = ref({
   id: props.initialData.id || "",
   stateName: props.initialData.stateName || "",
   stateCode: props.initialData.stateCode || "",
-  stateCountry: props.initialData.stateCountry || countries,
+  countryName: props.initialData.countryName || "",
   stateEnabled: props.initialData.stateEnabled || false,
   stateDeleted: props.initialData.stateDeleted || false,
-};
+});
 
 watch(props.initialData, (newVal) => {
-  state = {
+  state.value = {
     id: newVal.id || "",
     stateName: newVal.stateName || "",
     stateCode: newVal.stateCode || "",
-    stateCountry: newVal.stateCountry || countries,
+    countryName: newVal.countryName || "",
     stateEnabled: newVal.stateEnabled || false,
     stateDeleted: newVal.stateDeleted || false,
   };
 });
 
+onMounted(() => {
+  getCountries();
+});
+
+const getCountries = async () => {
+  const response = await apiHera.getAllCountryName();
+  const data = await response.json();
+  //console.log("data: ", data);
+  countries.value = data;
+};
+
 let stateForm = ref(null);
 
-const submitForm = async () => {
-  // Implemente a lógica de envio do formulário aqui
-  console.log("Formulário enviado:", state);
+const onSelectChange = () => {
+  //console.log('Select perdeu foco');
+  state.value.countryName = selectValue.value;
 };
-/*
-    function resetForm() {
-      stateForm.value.resetFields()
+
+const submitForm = async () => {
+  console.log("Formulário enviado:", state.value);
+
+  loading.value = true;
+  try {
+    const response = await ApiHera().postState(state.value, props.typeSave);
+
+    if (!response.ok) {
+      const responseBody = await response.text();
+      throw new Error(`${response.status} - ${responseBody}`);
     }
-    */
+    const data = await response.json();
+
+    Notification().notfSuccess(
+      "Success",
+      `Success Save State: ${data.stateName}`
+    );
+
+    state.value = {
+      id: "",
+      stateName: "",
+      stateCode: "",
+      countryName: "",
+      stateEnabled: false,
+      stateDeleted: false,
+    };
+    selectValue.value = "";
+  } catch (error) {
+    Notification().notfError("Error", `Error Save State: ${error}`);
+  }
+
+  emitEventBus("refreshStates", true);
+  loading.value = false;
+};
 </script>

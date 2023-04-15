@@ -1,20 +1,26 @@
 <template lang="">
-  <div>
-    <el-alert
-      v-if="alertCountry"
-      :title="alertTitle"
-      :type="alertType"
-      :description="alertDescription"
-      show-icon
-    />
-    <br />
-  </div>
-  <div v-if="showUpdate">
-    <AdminStateForm :initial-data="state" type-save="update" />
-  </div>
+  <v-dialog v-model="showDialog">
+    <v-card>
+      <v-card-title class="bg-primary text-white"> Update State </v-card-title>
+
+      <v-card-text>
+        <AdminStateForm :initial-data="stateDto" type-save="update" />
+      </v-card-text>
+
+      <v-card-actions>
+        <v-btn
+          text
+          class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+          @click="showDialog = false"
+        >
+          Cancel
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
   <el-table
     :data="states"
-    class="custom-loading-svg w-full"
+    class="custom-loading-svg w-full md:w-3/4 lg:w-1/2 xl:w-1/3 grid grid-flow-row auto-rows-max"
     v-loading="loading"
     :element-loading-svg="svg"
     element-loading-svg-view-box="-10, -10, 50, 50"
@@ -35,9 +41,9 @@
       <template #default="{ row }">
         <span>{{ row.stateDeleted ? "Deleted" : "" }}</span>
       </template>
-      </el-table-column>
+    </el-table-column>
     <el-table-column label="Actions">
-      <template #default="{ row }" class="grid grid-cols-1 gap-3">
+      <template #default="{ row }" class="grid grid-rown-1 flex justify-end">
         <el-button @click="edit(row)"
           ><Icon name="ic:twotone-mode-edit"
         /></el-button>
@@ -46,8 +52,8 @@
           <Icon v-else name="ic:twotone-person-add" />
         </el-button>
         <el-button @click="remove(row)"
-          ><Icon name="ic:outline-delete-forever" />
-        </el-button>
+          ><Icon name="ic:outline-delete-forever"
+        /></el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -57,19 +63,19 @@
 import { List } from "lodash";
 import { useEventBus } from "~~/events/eventBus";
 import { State } from "~~/model/State";
+import { StateDto } from "~~/model/StateDto";
+import { Notification } from "~~/utils/Notification";
+import { ApiHera } from "~~/utils/api/hera";
+import { StateUtils } from "~~/utils/models/StateUtils";
+
+const svg = Loading().svg;
+let loading = ref(false);
 
 const eventBus = useEventBus();
-const runtimeConfig = useRuntimeConfig();
-
-const urlHera = "http://localhost:8101/hera";
-
-let alertCountry: Ref<boolean> = ref(false);
-let alertDescription: Ref<string> = ref("");
-let alertTitle: Ref<string> = ref("");
-let alertType: Ref<any> = ref("success");
 
 let showUpdate: Ref<boolean> = ref(false);
 let state: Ref<State> = ref({} as State);
+let stateDto: Ref<StateDto> = ref({} as StateDto);
 
 const states = ref([] as List<State>);
 
@@ -79,24 +85,14 @@ onMounted(() => {
 
 const fetchStates = async () => {
   loading.value = true;
-  console.log(`${urlHera}/state/all`)
   try {
-    const response = await fetch(`${urlHera}/state/all`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    
-    console.log(response);
+    const response = await ApiHera().getAllState();
 
     const data = await response.json();
+    console.log(data);
     states.value = data;
   } catch (error) {
-    alertCountry.value = true;
-    alertTitle.value = "Error";
-    alertDescription.value = "Error to fetch states" + error;
-    alertType.value = "error";
+    Notification().notfError("Error", `Error to fetch states ${error}`);
   }
   loading.value = false;
 };
@@ -115,8 +111,9 @@ watch(
 );
 
 const edit = (row: State) => {
-  state.value = row;
-
+  const data: StateDto = StateUtils().stateToDto(row);
+  console.log(data);
+  stateDto.value = data;
   showUpdate.value = !showUpdate.value;
 };
 
@@ -132,50 +129,27 @@ const remove = (row: State) => {
   request("delete", "DELETE", row);
 };
 
-const request =async (data:any, method: any, state:State) => {
-  const url = `${urlHera}/state/${data}/${state.id}`;
-  try { 
-    const response = await fetch(url, {
-      method: method,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+const request = async (type: any, method: any, state: State) => {
+  try {
+    const response = await ApiHera().requestState(type, method, state);
 
-    if(response.ok){
-      alertCountry.value = true;
-      alertTitle.value = "Success";
-      alertDescription.value = `State ${state.stateName} ${data} with success`;
-      alertType.value = "success";
+    if (response.ok) {
+      Notification().notfSuccess(
+        "Success",
+        `State ${state.stateName} ${type} with success`
+      );
       refreshStates();
-  } else { 
-    throw new Error(`Error to ${data} state ${state.stateName}`)
-  }
+    } else {
+      const data = await response.text();
+      throw new Error(`Error to ${type} state ${state.stateName} - ${data}`);
+    }
   } catch (error) {
-    alertCountry.value = true;
-    alertTitle.value = "Error";
-    alertDescription.value = `${error}`;
-    alertType.value = "error";
+    Notification().notfError("Error", `${error}`);
   }
-
-  setTimeout(() => {
-    alertCountry.value = false;
-  }, 5000);
-}
+};
 
 const filters = [
   { text: "Ativo", value: "Ativo" },
   { text: "Inativo", value: "Inativo" },
 ];
-let loading = ref(true);
-const svg = `
-        <path class="path" d="
-          M 30 15
-          L 28 17
-          M 25.61 25.61
-          A 15 15, 0, 0, 1, 15 30
-          A 15 15, 0, 1, 1, 27.99 7.5
-          L 15 15
-        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
-      `;
 </script>
