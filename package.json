@@ -21,6 +21,10 @@
     "flowbite": "^1.6.4",
     "lru-cache": "^8.0.4",
     "nuxt-icon": "^0.3.3",
-    "nuxt-jsonapi": "^2.0.1"
+    "nuxt-jsonapi": "^2.0.1",
+    "primeicons": "^6.0.1",
+    "primevue": "^3.26.1",
+    "vee-validate": "^4.5.8",
+    "vuetify": "^3.1.4"
   }
 }

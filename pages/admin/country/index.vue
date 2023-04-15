@@ -16,15 +16,9 @@
 </template>
 
 <script lang="ts" setup>
-import { defineExpose } from 'vue';
-
 let hiddenCreate: Ref<boolean> = ref(false);
 
 const createCountry = () => {
   hiddenCreate.value = !hiddenCreate.value;
 };
-
-defineExpose({
-  createCountry
-});
 </script>

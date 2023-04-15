@@ -1,46 +1,44 @@
 <template>
-  <div>
-    <el-alert
-      v-if="alertCountry"
-      :title="alertTitle"
-      :type="alertType"
-      :description="alertDescription"
-      show-icon
-    />
-    <br/>
-  </div>
-  <div class="p-4 rounded-lg shadow-md mx-5">
+  <div
+    class="p-8 bg-white rounded-lg shadow-md mx-5 md:mx-10 lg:mx-20 xl:mx-40"
+  >
     <form
       @submit.prevent="submitForm"
       v-loading="loading"
       :element-loading-svg="svg"
       element-loading-svg-view-box="-10, -10, 50, 50"
+      class="mb-4"
     >
-      <br />
-      <el-form-item label="Nome">
-        <el-input v-model="country.countryName" />
+      <el-form-item label="Country Name" class="mb-4">
+        <el-input v-model="country.countryName" class="shadow-sm" />
       </el-form-item>
-      <br />
-      <el-form-item label="Code">
-        <el-input v-model="country.countryCode" />
+      <el-form-item label="Country Code" class="mb-4">
+        <el-input v-model="country.countryCode" class="shadow-sm" />
       </el-form-item>
-      <br />
-      <el-button type="primary" native-type="submit">Submit</el-button>
+      <el-button
+        type="primary"
+        @click="submitForm"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Submit
+      </el-button>
     </form>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { emitEventBus } from "~~/events/eventBus";
 import { Country } from "~~/model/Country";
-import { defineEmits } from 'vue';
-import { emitEventBus } from '~~/events/eventBus';
 
-let urlApi:String = "";
-let urlType:String = "";
-let alertCountry: Ref<boolean> = ref(false);
-let alertDescription: Ref<string> = ref("");
-let alertTitle: Ref<string> = ref("");
-let alertType: Ref<any> = ref("success");
+import { Loading } from "~~/utils/Loading";
+import { Notification } from "~~/utils/Notification";
+import { ApiHera } from "~~/utils/api/hera";
+
+const apiHera = ApiHera();
+
+const svg = Loading().svg;
+let loading = ref(false);
+
 
 const props = defineProps({
   initialData: {
@@ -53,11 +51,12 @@ const props = defineProps({
   },
 });
 
-const country = ref({
+const country: Ref<Country> = ref({
   id: props.initialData.id || "",
   countryName: props.initialData.countryName || "",
   countryCode: props.initialData.countryCode || "",
   countryEnabled: props.initialData.countryEnabled || false,
+  countryDeleted: props.initialData.countryDeleted || false,
 });
 
 watch(props.initialData, (newVal) => {
@@ -66,6 +65,7 @@ watch(props.initialData, (newVal) => {
     countryName: newVal.countryName || "",
     countryCode: newVal.countryCode || "",
     countryEnabled: newVal.countryEnabled || true,
+    countryDeleted: newVal.countryDeleted || false,
   };
 });
 
@@ -74,20 +74,7 @@ const submitForm = async () => {
   loading.value = true;
 
   try {
-    if (props.typeSave == "create") {
-      urlApi = "http://127.0.0.1:8100/hera/country";
-      urlType = "POST";
-    } else if (props.typeSave == "update") {
-      urlApi = `http://127.0.0.1:8100/hera/country/${country.value.id}`;
-      urlType = "PUT";
-    }
-    const response = await fetch(`${urlApi}`, {
-      method: `${urlType}`,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(country.value),
-    });
+    const response = await apiHera.postCountry(country.value, props.typeSave);
 
     if (!response.ok) {
       const responseBody = await response.text();
@@ -96,45 +83,23 @@ const submitForm = async () => {
 
     const responseBody = await response.json();
 
-    alertType.value = "success";
-    alertTitle.value = "Success Save Country";
-    alertDescription.value = `Country saved successfully: ${responseBody.countryName}`;
+    Notification().notfSuccess("Success", `Country saved successfully: ${responseBody.countryName}`);
 
     country.value = {
       id: "",
       countryName: "",
       countryCode: "",
       countryEnabled: true,
+      countryDeleted: false,
     };
   } catch (error: any) {
-    alertType.value = "error";
-    alertTitle.value = "Error Save Country";
-    alertDescription.value = ref(error);
-    console.error(error);
+    Notification().notfError("Error", `Error saving country: ${error}`);
+    //console.error(error);
   }
 
-  alertCountry.value = true;
   loading.value = false;
 
-  emitEventBus("refreshTable", true)
-  
-  setTimeout(() => {
-    alertCountry.value = false;
-  }, 5000);
+  emitEventBus("refreshCountries", true);
 };
 
-
-let loading = ref(false);
-const svg = `
-        <path class="path" d="
-          M 30 15
-          L 28 17
-          M 25.61 25.61
-          A 15 15, 0, 0, 1, 15 30
-          A 15 15, 0, 1, 1, 27.99 7.5
-          L 15 15
-        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
-      `;
 </script>
-
-<style></style>
