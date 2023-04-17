@@ -1,29 +1,29 @@
 export function Notification() {
-  const duration = 5000;
-  const position = "bottom-right"
 
   const notfSuccess = (title: string, msg: string) => {
-    ElNotification({
-      title: title,
-      message: msg,
-      type: "success",
-      duration: duration,
-      position: position,
-    });
+    ElMessage({
+      message: `${title} - ${msg}`,
+      type: 'success',
+    })
   };
 
   const notfError = (title: string, msg: string) => {
-    ElNotification({
-      title: title,
-      message: msg,
-      type: "error",
-      duration: duration,
-      position: position,
-    });
+    ElMessage({
+      message: `${title} - ${msg}`,
+      type: 'error',
+    })
   };
+
+  const notfWarn = (title: string, msg: string) => {
+    ElMessage({
+      message: `${title} - ${msg}`,
+      type: 'warning',
+    })
+  }
 
   return {
     notfSuccess,
     notfError,
+    notfWarn,
   };
 }

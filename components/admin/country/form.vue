@@ -10,10 +10,10 @@
       class="mb-4"
     >
       <el-form-item label="Country Name" class="mb-4">
-        <el-input v-model="country.countryName" class="shadow-sm" />
+        <el-input v-model="country.countryName" class="shadow-sm" placeholder="Brazil"/>
       </el-form-item>
       <el-form-item label="Country Code" class="mb-4">
-        <el-input v-model="country.countryCode" class="shadow-sm" />
+        <el-input v-model="country.countryCode" class="shadow-sm" placeholder="BRA"/>
       </el-form-item>
       <el-button
         type="primary"
@@ -83,12 +83,12 @@ const submitForm = async () => {
 
     const responseBody = await response.json();
 
-    Notification().notfSuccess("Success", `Country saved successfully: ${responseBody.countryName}`);
+    Notification().notfSuccess("Success", `Saved successfully: ${responseBody.countryName}`);
 
     emptyCountry();
 
   } catch (error: any) {
-    Notification().notfError("Error", `Error saving country: ${error}`);
+    Notification().notfError("Error", `Saving country: ${error}`);
     //console.error(error);
   }
 
@@ -106,9 +106,5 @@ const emptyCountry = () => {
       countryDeleted: false,
     };
 }
-
-onUnmounted(() => {
-  emptyCountry()
-})
 
 </script>

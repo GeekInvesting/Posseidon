@@ -6,7 +6,7 @@
     :before-close="handleClose"
   >
     <span>
-      <AdminCountryForm :initial-data="country" type-save="update" />
+      <AdminCountryForm :key="componentKey" :initial-data="country" type-save="update" />
     </span>
   </el-dialog>
   <el-table
@@ -31,19 +31,54 @@
     </el-table-column>
     <el-table-column label="Actions">
       <template #default="{ row }" class="grid grid-cols-1 gap-3">
-        <el-button @click="edit(row)"
-          ><Icon name="ic:twotone-mode-edit"
-        /></el-button>
-        <el-button @click="toggle(row)">
-          <Icon
-            v-if="row.countryEnabled"
-            name="ic:twotone-person-add-disabled"
-          />
-          <Icon v-else name="ic:twotone-person-add" />
-        </el-button>
-        <el-button @click="remove(row)"
-          ><Icon name="ic:outline-delete-forever"
-        /></el-button>
+        <el-dropdown size="large" placement="top">
+          <el-button circle>
+            <Icon name="ic:baseline-format-list-bulleted" />
+          </el-button>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item
+                ><el-tooltip
+                  class="box-item"
+                  effect="dark"
+                  content="Edit Country"
+                  placement="right"
+                >
+                  <el-button @click="edit(row)">
+                    <Icon name="ic:twotone-mode-edit" />
+                  </el-button>
+                </el-tooltip>
+              </el-dropdown-item>
+              <el-dropdown-item
+                ><el-tooltip
+                  class="box-item"
+                  effect="dark"
+                  :content="
+                    row.countryEnabled ? 'Disable Country' : 'Enable Country'
+                  "
+                  placement="right"
+                >
+                  <el-button @click="toggle(row)"
+                    ><Icon
+                      v-if="row.countryEnabled"
+                      name="ic:twotone-person-add-disabled" />
+                    <Icon v-else name="ic:twotone-person-add" /></el-button
+                ></el-tooltip>
+              </el-dropdown-item>
+              <el-dropdown-item
+                ><el-tooltip
+                  class="box-item"
+                  effect="dark"
+                  content="Edit Country"
+                  placement="right"
+                >
+                  <el-button @click="remove(row)"
+                    ><Icon name="ic:outline-delete-forever" /></el-button
+                ></el-tooltip>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </template>
     </el-table-column>
   </el-table>
@@ -63,22 +98,17 @@ let loading = ref(false);
 const eventBus = useEventBus();
 let country: Ref<Country> = ref({} as Country);
 const countries = ref([]);
+const componentKey = ref(0);
 const dialogVisible = ref(false);
 
 const handleClose = (done: () => void) => {
   ElMessageBox.confirm(`Are you sure to close this Country?`)
     .then(() => {
-      country.value = {
-        id: "",
-        countryName: "",
-        countryCode: "",
-        countryEnabled: true,
-        countryDeleted: false,
-      };
       done();
     })
     .catch((error) => {
-      console.log(error);
+      //console.log(error);
+      Notification().notfWarn("Warn", `${error} this operation.`);
     });
 };
 
@@ -93,7 +123,7 @@ const fetchCountries = async () => {
     countries.value = data;
   } catch (error) {
     //console.error("Erro ao buscar os dados:", error);
-    Notification().notfError("Error", "Erro ao buscar os dados." + error);
+    Notification().notfError("Error", "Get data: " + error);
   }
 
   loading.value = false;
@@ -118,11 +148,10 @@ watch(
 );
 
 const edit = (row: Country) => {
-  //console.log("Editando o país:", country);
-
   country.value = row;
-
+  //console.log("Editando o país:", country);
   dialogVisible.value = true;
+  componentKey.value ++;
 };
 
 const toggle = (row: Country) => {
@@ -134,7 +163,13 @@ const toggle = (row: Country) => {
 };
 
 const remove = (row: Country) => {
+  ElMessageBox.confirm(`Are you sure to delete this Country?`)
+  .then(() => {
   postRequest("delete", "DELETE", row);
+}).catch((error) => {
+  //console.log(error);
+  Notification().notfWarn("Warn Delete", `${error} this operation.`);
+})
 };
 
 const postRequest = async (type: any, method: any, country: Country) => {
@@ -146,7 +181,7 @@ const postRequest = async (type: any, method: any, country: Country) => {
       //console.log(`Success ${data} Country: ${country.countryName}`);
       Notification().notfSuccess(
         "Success",
-        `Success ${type} Country: ${country.countryName}`
+        `${type} Country: ${country.countryName}`
       );
       refreshCountries();
     } else {
@@ -157,7 +192,7 @@ const postRequest = async (type: any, method: any, country: Country) => {
     //console.error(error);
     Notification().notfError(
       "Error",
-      `Error ${type} Country: ${country.countryName} - ${error}`
+      `${type} Country: ${country.countryName} - ${error}`
     );
   }
 };
