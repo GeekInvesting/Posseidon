@@ -1,8 +1,14 @@
 <template>
-  <div v-if="showUpdate">
-    <AdminCountryForm :initial-data="country" type-save="update" />
-    <br />
-  </div>
+  <el-dialog
+    v-model="dialogVisible"
+    title="Country"
+    width="85%"
+    :before-close="handleClose"
+  >
+    <span>
+      <AdminCountryForm :initial-data="country" type-save="update" />
+    </span>
+  </el-dialog>
   <el-table
     :data="countries"
     class="custom-loading-svg w-full"
@@ -51,16 +57,30 @@ import { Notification } from "~~/utils/Notification";
 import { ApiHera } from "~~/utils/api/hera";
 
 const apiHera = ApiHera();
-
 const svg = Loading().svg;
+
 let loading = ref(false);
-
 const eventBus = useEventBus();
-
-let showUpdate: Ref<boolean> = ref(false);
 let country: Ref<Country> = ref({} as Country);
-
 const countries = ref([]);
+const dialogVisible = ref(false);
+
+const handleClose = (done: () => void) => {
+  ElMessageBox.confirm(`Are you sure to close this Country?`)
+    .then(() => {
+      country.value = {
+        id: "",
+        countryName: "",
+        countryCode: "",
+        countryEnabled: true,
+        countryDeleted: false,
+      };
+      done();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 const fetchCountries = async () => {
   try {
@@ -102,7 +122,7 @@ const edit = (row: Country) => {
 
   country.value = row;
 
-  showUpdate.value = !showUpdate.value;
+  dialogVisible.value = true;
 };
 
 const toggle = (row: Country) => {
@@ -124,7 +144,10 @@ const postRequest = async (type: any, method: any, country: Country) => {
     if (response.ok) {
       const data = await response.json();
       //console.log(`Success ${data} Country: ${country.countryName}`);
-      Notification().notfSuccess("Success", `Success ${type} Country: ${country.countryName}`);
+      Notification().notfSuccess(
+        "Success",
+        `Success ${type} Country: ${country.countryName}`
+      );
       refreshCountries();
     } else {
       const data = await response.text();
@@ -132,7 +155,10 @@ const postRequest = async (type: any, method: any, country: Country) => {
     }
   } catch (error) {
     //console.error(error);
-    Notification().notfError("Error", `Error ${type} Country: ${country.countryName} - ${error}`);
+    Notification().notfError(
+      "Error",
+      `Error ${type} Country: ${country.countryName} - ${error}`
+    );
   }
 };
 
@@ -140,6 +166,4 @@ const filters = [
   { text: "Ativo", value: "Ativo" },
   { text: "Inativo", value: "Inativo" },
 ];
-
 </script>
-

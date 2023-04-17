@@ -1,14 +1,6 @@
 <template>
-  <div class="p-3 rounded-lg flex justify-between w-auto">
-    <NuxtLink to="/admin">
-      <Icon name="ic:outline-arrow-back" /> Admin</NuxtLink
-    >
-    <Button
-      class="px-4 py-2 text-white bg-green-500 rounded-md mx-5"
-      @click="createCountry"
-    >
-      New Country
-    </Button>
+  <div class="p-3 rounded-lg">
+    <AdminHeader title="Country" />
   </div>
   <AdminCountryForm v-if="hiddenCreate" class="max-w-max" />
   <br />

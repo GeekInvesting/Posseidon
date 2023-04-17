@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-8 bg-white rounded-lg shadow-md mx-5 md:mx-10 lg:mx-20 xl:mx-40"
+    class="p-1 rounded-lg shadow-md mx-5 md:mx-10 lg:mx-20 xl:mx-40"
   >
     <form
       @submit.prevent="submitForm"
@@ -85,13 +85,8 @@ const submitForm = async () => {
 
     Notification().notfSuccess("Success", `Country saved successfully: ${responseBody.countryName}`);
 
-    country.value = {
-      id: "",
-      countryName: "",
-      countryCode: "",
-      countryEnabled: true,
-      countryDeleted: false,
-    };
+    emptyCountry();
+
   } catch (error: any) {
     Notification().notfError("Error", `Error saving country: ${error}`);
     //console.error(error);
@@ -101,5 +96,19 @@ const submitForm = async () => {
 
   emitEventBus("refreshCountries", true);
 };
+
+const emptyCountry = () => {
+  country.value = {
+      id: "",
+      countryName: "",
+      countryCode: "",
+      countryEnabled: true,
+      countryDeleted: false,
+    };
+}
+
+onUnmounted(() => {
+  emptyCountry()
+})
 
 </script>

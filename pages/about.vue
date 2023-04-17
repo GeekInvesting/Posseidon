@@ -1,6 +1,4 @@
 
 <template>
-  <div class="card flex justify-content-center">
-      <Button label="Check" icon="pi pi-check" />
-  </div>
+  <AdminHeader title="Country" />
 </template>
