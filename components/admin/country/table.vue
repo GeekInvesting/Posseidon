@@ -19,7 +19,7 @@
   >
     <el-table-column prop="countryName" label="Name" sortable></el-table-column>
     <el-table-column prop="countryCode" label="Code" sortable></el-table-column>
-    <el-table-column prop="countryEnable" label="Enable">
+    <el-table-column prop="countryEnable" label="Enable" sortable>
       <template #default="{ row }">
         <span>{{ row.countryEnabled ? "True" : "False" }}</span>
       </template>
@@ -98,7 +98,7 @@ let loading = ref(false);
 const eventBus = useEventBus();
 let country: Ref<Country> = ref({} as Country);
 const countries = ref([]);
-const componentKey = ref(0);
+const componentKey: Ref<string> = ref('');
 const dialogVisible = ref(false);
 
 const handleClose = (done: () => void) => {
@@ -111,6 +111,10 @@ const handleClose = (done: () => void) => {
       Notification().notfWarn("Warn", `${error} this operation.`);
     });
 };
+
+const hideDialog = () => {
+  dialogVisible.value = false;
+}
 
 const fetchCountries = async () => {
   try {
@@ -142,6 +146,7 @@ watch(
   (newValue) => {
     if (newValue) {
       refreshCountries();
+      hideDialog();
       eventBus.value.refreshCountries = false;
     }
   }
@@ -151,7 +156,7 @@ const edit = (row: Country) => {
   country.value = row;
   //console.log("Editando o país:", country);
   dialogVisible.value = true;
-  componentKey.value ++;
+  componentKey.value = row.id;
 };
 
 const toggle = (row: Country) => {

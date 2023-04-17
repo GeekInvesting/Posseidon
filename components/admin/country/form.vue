@@ -70,7 +70,7 @@ watch(props.initialData, (newVal) => {
 });
 
 const submitForm = async () => {
-  console.log(JSON.stringify(country.value));
+  //console.log(JSON.stringify(country.value));
   loading.value = true;
 
   try {
@@ -91,10 +91,10 @@ const submitForm = async () => {
     Notification().notfError("Error", `Saving country: ${error}`);
     //console.error(error);
   }
-
-  loading.value = false;
-
+  
   emitEventBus("refreshCountries", true);
+  
+    loading.value = false;
 };
 
 const emptyCountry = () => {
