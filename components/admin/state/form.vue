@@ -92,6 +92,7 @@ watch(props.initialData, (newVal) => {
 
 onMounted(() => {
   getCountries();
+  selectValue.value = state.value.countryName;
 });
 
 const getCountries = async () => {
@@ -123,7 +124,7 @@ const submitForm = async () => {
 
     Notification().notfSuccess(
       "Success",
-      `Success Save State: ${data.stateName}`
+      `Save State: ${data.stateName}`
     );
 
     state.value = {
@@ -136,7 +137,7 @@ const submitForm = async () => {
     };
     selectValue.value = "";
   } catch (error) {
-    Notification().notfError("Error", `Error Save State: ${error}`);
+    Notification().notfError("Error", `Save State: ${error}`);
   }
 
   emitEventBus("refreshStates", true);

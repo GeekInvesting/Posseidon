@@ -38,6 +38,8 @@
 </template>
 
 <script setup lang="ts">
+import { emitEventBus } from "~~/events/eventBus";
+
 const router = useRouter();
 
 const props = defineProps({
@@ -53,6 +55,11 @@ const handleClose = (done: () => void) => {
   ElMessageBox.confirm(`Are you sure to close this ${ props.title }?`)
     .then(() => {
       done();
+      if(props.title == 'State') {
+        emitEventBus("refreshStates", true);
+      } else if (props.title == 'Country') {
+        emitEventBus("refreshCountries", true);
+      } 
     })
     .catch((error) => {
       console.log(error)

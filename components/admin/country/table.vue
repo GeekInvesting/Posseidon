@@ -69,7 +69,7 @@
                 ><el-tooltip
                   class="box-item"
                   effect="dark"
-                  content="Edit Country"
+                  content="Delete Country"
                   placement="right"
                 >
                   <el-button @click="remove(row)"
