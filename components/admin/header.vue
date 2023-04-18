@@ -33,6 +33,10 @@
         v-else-if="props.title == 'Country'"
         class="max-w-screen-md mx-auto"
       />
+      <AdminCityForm
+        v-else-if="props.title == 'City'"
+        class="max-w-screen-md mx-auto"
+        />
     </span>
   </el-dialog>
 </template>

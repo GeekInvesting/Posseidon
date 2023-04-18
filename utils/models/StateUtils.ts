@@ -1,4 +1,4 @@
-import { Country } from "~~/model/Country";
+import { Country } from "~/model/hera/Country";
 import { State } from "~~/model/State";
 import { StateDto } from "~~/model/StateDto";
 
