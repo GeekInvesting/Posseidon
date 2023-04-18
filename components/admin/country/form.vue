@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-8 bg-white rounded-lg shadow-md mx-5 md:mx-10 lg:mx-20 xl:mx-40"
+    class="p-1 rounded-lg shadow-md mx-5 md:mx-10 lg:mx-20 xl:mx-40"
   >
     <form
       @submit.prevent="submitForm"
@@ -10,10 +10,10 @@
       class="mb-4"
     >
       <el-form-item label="Country Name" class="mb-4">
-        <el-input v-model="country.countryName" class="shadow-sm" />
+        <el-input v-model="country.countryName" class="shadow-sm" placeholder="Brazil"/>
       </el-form-item>
       <el-form-item label="Country Code" class="mb-4">
-        <el-input v-model="country.countryCode" class="shadow-sm" />
+        <el-input v-model="country.countryCode" class="shadow-sm" placeholder="BRA"/>
       </el-form-item>
       <el-button
         type="primary"
@@ -70,7 +70,7 @@ watch(props.initialData, (newVal) => {
 });
 
 const submitForm = async () => {
-  console.log(JSON.stringify(country.value));
+  //console.log(JSON.stringify(country.value));
   loading.value = true;
 
   try {
@@ -83,23 +83,28 @@ const submitForm = async () => {
 
     const responseBody = await response.json();
 
-    Notification().notfSuccess("Success", `Country saved successfully: ${responseBody.countryName}`);
+    Notification().notfSuccess("Success", `Saved successfully: ${responseBody.countryName}`);
 
-    country.value = {
+    emptyCountry();
+
+  } catch (error: any) {
+    Notification().notfError("Error", `Saving country: ${error}`);
+    //console.error(error);
+  }
+  
+  emitEventBus("refreshCountries", true);
+  
+    loading.value = false;
+};
+
+const emptyCountry = () => {
+  country.value = {
       id: "",
       countryName: "",
       countryCode: "",
       countryEnabled: true,
       countryDeleted: false,
     };
-  } catch (error: any) {
-    Notification().notfError("Error", `Error saving country: ${error}`);
-    //console.error(error);
-  }
-
-  loading.value = false;
-
-  emitEventBus("refreshCountries", true);
-};
+}
 
 </script>
