@@ -2,11 +2,13 @@ import { Country } from "~~/model/Country";
 import { State } from "~~/model/State";
 import { StateDto } from "~~/model/StateDto";
 
-let heraUrl = 'http://localhost:8100/hera'
+const heraUrl = 'http://localhost:8101/hera'
+//const heraUrl = 'http://hera:8100/hera'
 
 export function ApiHera() {
     const getAllCountry = async () => {
         const response = await fetch(`${heraUrl}/country/all`);
+        console.log(heraUrl, response);
         return response;
   }
 

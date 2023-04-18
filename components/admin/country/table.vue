@@ -122,11 +122,11 @@ const fetchCountries = async () => {
     const response = await apiHera.getAllCountry();
     const data = await response.json();
 
-    //console.log("Dados recebidos:", data);
+    console.log("Dados recebidos:", data);
 
     countries.value = data;
   } catch (error) {
-    //console.error("Erro ao buscar os dados:", error);
+    console.error("Erro ao buscar os dados:", error);
     Notification().notfError("Error", "Get data: " + error);
   }
 
