@@ -120,6 +120,25 @@ export function ApiHera() {
     return response;
   };
 
+  const getAllCity = async () => {
+    const response = await fetch(`${heraUrl}/city/all`);
+    //console.log(heraUrl, response);
+    return response;
+  }
+
+  const requestCity = async (data: any, method: any, city: CityDto) => {
+    const url = `${heraUrl}/city/${data}/${city.id}`;
+    console.log(url);
+      const response = await fetch(url, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      return response;
+  }
+
   return {
     getAllCountry,
     requestCountry,
@@ -131,5 +150,7 @@ export function ApiHera() {
     getAllStateName,
     createCity,
     updateCity,
+    getAllCity,
+    requestCity,
   }
 }

@@ -86,10 +86,6 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
-  countryValue: {
-    type: String,
-    default: "",
-  },
   typeSave: {
     type: String,
     default: "create",
@@ -100,7 +96,8 @@ let city = ref<CityDto>({
   id: props.initialData.id || "",
   cityName: props.initialData.cityName || "",
   cityCode: props.initialData.cityCode || null,
-  cityState: props.initialData.cityState || "",
+  cityState: props.initialData.cityState || null,
+  cityCountry: props.initialData.cityCountry || "",
   cityEnabled: props.initialData.cityEnabled || false,
   cityDeleted: props.initialData.cityDeleted || false,
 });
@@ -109,15 +106,29 @@ watch(props.initialData, (newVal) => {
   city.value = {
     id: newVal.id || "",
     cityName: newVal.cityName || "",
-    cityCode: newVal.cityCode || 0,
-    cityState: newVal.cityState || "",
+    cityCode: newVal.cityCode || null,
+    cityState: newVal.cityState || null,
+    cityCountry: newVal.cityCountry || "",
     cityEnabled: newVal.cityEnabled || false,
     cityDeleted: newVal.cityDeleted || false,
   };
 });
 
-onMounted(async () => {
+onMounted( () => {
   loading.value = true;
+  
+  getCountryName();
+
+  if (props.typeSave == "update") {
+    countryValue.value = props.initialData.cityCountry;
+    stateValue.value = props.initialData.cityState;
+    console.log(stateValue.value, countryValue.value);
+  }
+
+  loading.value = false;
+});
+
+const getCountryName = async () => {
   try {
     const response = await apiHera.getAllCountryName();
     const data = await response.json();
@@ -125,13 +136,7 @@ onMounted(async () => {
   } catch (error) {
     Notification().notfError("Error", `${error}`);
   }
-
-  if (props.typeSave == "update") {
-    countryValue.value = props.initialData.cityCountry;
-  }
-
-  loading.value = false;
-});
+};
 
 const onSelectCountry = async () => {
   loading.value = true;
@@ -184,6 +189,7 @@ const emptyForm = () => {
     cityName: "",
     cityCode: null,
     cityState: "",
+    cityCountry: "",
     cityEnabled: false,
     cityDeleted: false,
   };

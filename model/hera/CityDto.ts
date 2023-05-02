@@ -3,6 +3,7 @@ export interface CityDto {
     cityName: string;
     cityCode: number | null;
     cityState: string;
+    cityCountry: string;
     cityEnabled: boolean;
     cityDeleted: boolean;
 }
