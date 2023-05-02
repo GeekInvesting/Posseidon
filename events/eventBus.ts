@@ -4,11 +4,13 @@ import { ref, watch } from 'vue';
 interface EventBusType {
   refreshCountries: boolean;
   refreshStates: boolean;
+  refreshCities: boolean;
 }
 
 const eventBusState: EventBusType = {
   refreshCountries: false,
   refreshStates: false,
+  refreshCities: false,
 };
 
 

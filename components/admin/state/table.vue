@@ -25,7 +25,7 @@
     ></el-table-column>
     <el-table-column prop="stateEnabled" label="Enable">
       <template #default="{ row }">
-        <span>{{ row.stateEnabled ? "True" : "False" }}</span>
+        <span>{{ row.stateEnabled ? "Enable" : "Disable" }}</span>
       </template>
     </el-table-column>
     <el-table-column prop="stateDeleted" label="Deleted">
@@ -91,8 +91,8 @@
 <script setup lang="ts">
 import { List } from "lodash";
 import { useEventBus } from "~~/events/eventBus";
-import { State } from "~~/model/State";
-import { StateDto } from "~~/model/StateDto";
+import { State } from "~~/model/hera/State";
+import { StateDto } from "~~/model/hera/StateDto";
 import { Notification } from "~~/utils/Notification";
 import { ApiHera } from "~~/utils/api/hera";
 import { StateUtils } from "~~/utils/models/StateUtils";
@@ -154,6 +154,7 @@ watch(
   (newValue) => {
     if (newValue) {
       refreshStates();
+      eventBus.value.refreshStates = false;
     }
   }
 );

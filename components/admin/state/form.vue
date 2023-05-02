@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-8 bg-white rounded-lg shadow-md mx-5 md:mx-10 lg:mx-20 xl:mx-40"
+    class="p-4 bg-white rounded-lg shadow-md mx-5 md:mx-10 lg:mx-20 xl:mx-40"
   >
     <el-form
       class="mb-4"
@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { StateDto } from "~/model/StateDto";
+import { StateDto } from "~/model/hera/StateDto.js";
 import { emitEventBus } from "~~/events/eventBus";
 import { Notification } from "~~/utils/Notification";
 
