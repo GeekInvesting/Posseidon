@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-4 bg-white rounded-lg shadow-md mx-5 md:mx-10 lg:mx-20 xl:mx-40"
+    class="p-4 bg-white rounded-lg shadow-md mx-5 md:mx-5 lg:mx-10 xl:mx-20"
   >
     <el-form
       class="mb-4"
