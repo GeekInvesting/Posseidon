@@ -7,7 +7,16 @@
       <div
         class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md"
       >
-        <p class="text-2xl font-bold mb-4">Bem-vindo, {{ userName }}!</p>
+        <p class="text-2xl font-bold mb-4">Welcome, {{ userName }}!</p>
+        <div v-if="existInvestor" class="flex justify-space-between mb-4 flex-wrap gap-4">
+          <div>
+            <p>Select the investor profile: </p>
+          </div>
+          <br>
+          <div v-for="investor in investors">
+            <UserInvestorButton :investor="investor" origin="signin"/>
+          </div>
+        </div>
       </div>
     </div>
   </transition>
@@ -62,11 +71,15 @@
 
 <script setup lang="ts">
 import { emitEventBus } from "~/events/eventBus";
-import { User } from "~/model/atena/User";
+import { Investor } from "~/model/atena/Investor";
 import { authSignIn } from "~/utils/service/atena/AuthService";
+import { getbyUser } from "~/utils/service/atena/InvestorService";
 import { Notification } from "~~/utils/Notification";
 
 const router = useRouter();
+
+const investors: Ref<Array<Partial<Investor>>> = ref([]);
+const existInvestor: Ref<boolean> = ref(false);
 
 const svg = Loading().svg;
 let loading = ref(false);
@@ -82,7 +95,8 @@ const handleSubmit = async () => {
     const response = await authSignIn(email.value, password.value);
 
     if (!response.ok) {
-      throw new Error(await response.text());
+      const msg = await response.json();
+      throw new Error(msg.message);
     }
     const responseBody = await response.json();
     const { token, user } = responseBody;
@@ -94,12 +108,25 @@ const handleSubmit = async () => {
 
     emitEventBus("refreshLogin", true);
 
+    const responseInvestor = await getbyUser();
+    if (!responseInvestor.ok) {
+      const msg = await responseInvestor.json();
+      throw new Error(msg.message);
+    }
+
+    const listInvestor = await responseInvestor.json();
+
+    investors.value = JSON.parse(JSON.stringify(listInvestor));
+
     showWelcome.value = true;
     userName.value = user.userName;
 
-    setTimeout(() => {
-      router.push("/");
-    }, 2000);
+    existInvestor.value = investors.value.length > 0;
+    if (!existInvestor) {
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
+    }
 
   } catch (error) {
     Notification().notfError(`Error`, `${error}`);
