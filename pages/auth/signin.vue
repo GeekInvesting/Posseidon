@@ -74,7 +74,6 @@ import { emitEventBus } from "~/events/eventBus";
 import { Investor } from "~/model/atena/Investor";
 import { authSignIn } from "~/utils/service/atena/AuthService";
 import { getbyUser } from "~/utils/service/atena/InvestorService";
-import { Notification } from "~~/utils/Notification";
 
 const router = useRouter();
 
@@ -129,7 +128,7 @@ const handleSubmit = async () => {
     }
 
   } catch (error) {
-    Notification().notfError(`Error`, `${error}`);
+    Notif().notfError(`Error`, `${error}`);
   }
   loading.value = false;
 };

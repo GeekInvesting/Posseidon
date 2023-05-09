@@ -1,3 +1,4 @@
+//UserInvestorButton
 <template>
   <el-button
     plain
@@ -9,6 +10,7 @@
 </template>
 
 <script lang="ts" setup>
+import { emitEventBus } from '~/events/eventBus';
 import { Investor } from '~/model/atena/Investor';
 
 const router = useRouter();
@@ -44,11 +46,16 @@ watch(props.investor, (newVal) => {
 
 const selectInvestor = () => {
   localStorage.setItem("investor", JSON.stringify(investor.value));
-
-  if (origin.value != "nav") {
+  
+  if (origin.value == "signin") {
     setTimeout(() => {
         router.push("/");
       }, 500);
   }
+
+  if (origin.value == "navUser") {
+    emitEventBus("dialogInvestor", true);
+  }
 };
+
 </script>

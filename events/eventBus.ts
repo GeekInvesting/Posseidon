@@ -6,6 +6,7 @@ interface EventBusType {
   refreshStates: boolean;
   refreshCities: boolean;
   refreshLogin: boolean;
+  dialogInvestor: boolean;
 }
 
 const eventBusState: EventBusType = {
@@ -13,6 +14,7 @@ const eventBusState: EventBusType = {
   refreshStates: false,
   refreshCities: false,
   refreshLogin: false,
+  dialogInvestor: false,
 };
 
 

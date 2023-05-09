@@ -83,7 +83,7 @@
 
 <script lang="ts" setup>
 import { User } from "~/model/atena/User";
-import { Notification } from "~/utils/Notification";
+import { Notification } from "~/utils/Notif";
 import { createUser } from "~/utils/service/atena/UserService";
 
 const svg = Loading().svg;

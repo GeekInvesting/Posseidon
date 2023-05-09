@@ -93,7 +93,7 @@
 
 <script lang="ts" setup>
 import { CityDto } from '~/model/hera/CityDto';
-import { Notification } from '~/utils/Notification';
+import { Notification } from '~/utils/Notif';
 import { ApiHera } from '~/utils/api/hera';
 import { useEventBus } from '~/events/eventBus';
 import { City } from '~/model/hera/City';

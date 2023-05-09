@@ -46,7 +46,7 @@
 <script setup lang="ts">
 import { StateDto } from "~/model/hera/StateDto.js";
 import { emitEventBus } from "~~/events/eventBus";
-import { Notification } from "~~/utils/Notification";
+import { Notification } from "~/utils/Notif";
 
 import { ApiHera } from "~~/utils/api/hera";
 

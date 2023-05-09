@@ -28,52 +28,8 @@
         >
       </el-menu>
     </div>
-    <div class="md:flex items-center">
-      <el-dropdown size="large">
-        <el-button circle>
-          <el-avatar
-            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-          />
-        </el-button>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <template #default v-if="isLoged">
-              <el-dropdown-item>
-                <button>
-                  <NuxtLink to="/auth/signin">
-                    <Icon name="ic:round-assignment-ind" />
-                    User
-                  </NuxtLink>
-                </button>
-              </el-dropdown-item>
-              <el-dropdown-item>
-                <button @click="logout">
-                  <Icon name="memory:logout" />
-                  Logout
-                </button>
-              </el-dropdown-item>
-            </template>
-            <template #default v-else>
-              <el-dropdown-item>
-                <button>
-                  <NuxtLink to="/auth/signin">
-                    <Icon name="memory:login" />
-                    Sing In
-                  </NuxtLink>
-                </button>
-              </el-dropdown-item>
-              <el-dropdown-item>
-                <button>
-                  <NuxtLink to="/user">
-                    <Icon name="ic:round-assignment-ind" />
-                    Sing Up
-                  </NuxtLink>
-                </button>
-              </el-dropdown-item>
-            </template>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
+    <div>
+      <UserNavUser />
     </div>
   </nav>
 </template>
@@ -103,15 +59,8 @@ watch(
   (newValue) => {
     if (newValue) {
       setLogin();
-      eventBus.value.refreshLogin = false;
     }
   }
 );
 
-
-const logout = () => {
-  localStorage.removeItem("user");
-  localStorage.removeItem("token");
-  window.location.reload();
-};
 </script>

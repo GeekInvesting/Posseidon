@@ -88,7 +88,7 @@
 import { useEventBus } from "~~/events/eventBus";
 import { Country } from "~/model/hera/Country";
 
-import { Notification } from "~~/utils/Notification";
+import { Notification } from "~/utils/Notif";
 import { ApiHera } from "~~/utils/api/hera";
 
 const apiHera = ApiHera();

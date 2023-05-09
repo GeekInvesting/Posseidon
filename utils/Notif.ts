@@ -1,4 +1,4 @@
-export function Notification() {
+export function Notif() {
 
   const notfSuccess = (title: string, msg: string) => {
     ElMessage({
