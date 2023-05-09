@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-1 rounded-lg shadow-md mx-5 md:mx-10 lg:mx-20 xl:mx-40"
+    class="p-1 rounded-lg shadow-md mx-5 md:mx-5 lg:mx-10 xl:mx-20"
   >
     <form
       @submit.prevent="submitForm"
@@ -31,7 +31,7 @@ import { emitEventBus } from "~~/events/eventBus";
 import { Country } from "~/model/hera/Country";
 
 import { Loading } from "~~/utils/Loading";
-import { Notification } from "~~/utils/Notification";
+import { Notification } from "~/utils/Notif";
 import { ApiHera } from "~~/utils/api/hera";
 
 const apiHera = ApiHera();

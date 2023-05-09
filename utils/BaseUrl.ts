@@ -1,0 +1,1 @@
+export const urlAtena = 'http://localhost:8000/atena'
