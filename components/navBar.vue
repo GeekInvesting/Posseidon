@@ -24,7 +24,7 @@
           >
         </el-sub-menu>
         <el-menu-item index="3"
-          ><NuxtLink to="about">About</NuxtLink></el-menu-item
+          ><NuxtLink to="/about">About</NuxtLink></el-menu-item
         >
       </el-menu>
     </div>

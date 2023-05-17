@@ -68,7 +68,6 @@
 <script setup lang="ts">
 import { CityDto } from "~/model/hera/CityDto.js";
 import { emitEventBus } from "~~/events/eventBus";
-import { Notification } from "~/utils/Notif";
 
 import { ApiHera } from "~~/utils/api/hera";
 
@@ -134,7 +133,7 @@ const getCountryName = async () => {
     const data = await response.json();
     countries.value = data;
   } catch (error) {
-    Notification().notfError("Error", `${error}`);
+    Notif().notfError("Error", `${error}`);
   }
 };
 
@@ -147,7 +146,7 @@ const onSelectCountry = async () => {
     const data = await response.json();
     states.value = data;
   } catch (error) {
-    Notification().notfError("Error", `${error}`);
+    Notif().notfError("Error", `${error}`);
   }
   loading.value = false;
 };
@@ -162,14 +161,14 @@ const submitForm = async () => {
     if (props.typeSave == "create") {
       const response = await apiHera.createCity(city.value);
       if (!response.ok) throw new Error(await response.text());
-      Notification().notfSuccess(
+      Notif().notfSuccess(
         "Success",
         `City created ${city.value.cityName.toUpperCase()}`
       );
     } else {
       const response = await apiHera.updateCity(city.value);
       if (!response.ok) throw new Error(await response.text());
-      Notification().notfSuccess(
+      Notif().notfSuccess(
         "Success",
         `City updated ${city.value.cityName.toUpperCase()}`
       );
@@ -178,7 +177,7 @@ const submitForm = async () => {
     emptyForm();
     emitEventBus("refreshCities", true);
   } catch (error) {
-    Notification().notfError("Error", `${error}`);
+    Notif().notfError("Error", `${error}`);
   }
   loading.value = false;
 };

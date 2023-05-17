@@ -19,7 +19,7 @@
             <el-divider />
             <el-dropdown-item>
               <button>
-                <NuxtLink to="/auth/signin">
+                <NuxtLink to="/user">
                   <Icon name="ic:round-assignment-ind" />
                   User
                 </NuxtLink>

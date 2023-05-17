@@ -46,7 +46,7 @@
 <script setup lang="ts">
 import { StateDto } from "~/model/hera/StateDto.js";
 import { emitEventBus } from "~~/events/eventBus";
-import { Notification } from "~/utils/Notif";
+import { Notif } from "~/utils/Notif";
 
 import { ApiHera } from "~~/utils/api/hera";
 
@@ -122,7 +122,7 @@ const submitForm = async () => {
     }
     const data = await response.json();
 
-    Notification().notfSuccess(
+    Notif().notfSuccess(
       "Success",
       `Save State: ${data.stateName}`
     );
@@ -137,7 +137,7 @@ const submitForm = async () => {
     };
     selectValue.value = "";
   } catch (error) {
-    Notification().notfError("Error", `Save State: ${error}`);
+    Notif().notfError("Error", `Save State: ${error}`);
   }
 
   emitEventBus("refreshStates", true);

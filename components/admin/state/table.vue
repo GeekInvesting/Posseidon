@@ -93,7 +93,7 @@ import { List } from "lodash";
 import { useEventBus } from "~~/events/eventBus";
 import { State } from "~~/model/hera/State";
 import { StateDto } from "~~/model/hera/StateDto";
-import { Notification } from "~/utils/Notif";
+import { Notif } from "~/utils/Notif";
 import { ApiHera } from "~~/utils/api/hera";
 import { StateUtils } from "~~/utils/models/StateUtils";
 
@@ -107,7 +107,7 @@ const handleClose = (done: () => void) => {
     })
     .catch((error) => {
       //console.log(error);
-      Notification().notfWarn("Warn", `${error} this operation.`);
+      Notif().notfWarn("Warn", `${error} this operation.`);
     });
 };
 
@@ -139,7 +139,7 @@ const fetchStates = async () => {
     console.log(data);
     states.value = data;
   } catch (error) {
-    Notification().notfError("Error", `To fetch states ${error}`);
+    Notif().notfError("Error", `To fetch states ${error}`);
   }
   loading.value = false;
 };
@@ -181,7 +181,7 @@ const remove = (row: State) => {
     request("delete", "DELETE", row);
 }).catch((error) => {
   //console.log(error);
-  Notification().notfWarn("Warn Delete", `${error} this operation.`);
+  Notif().notfWarn("Warn Delete", `${error} this operation.`);
 })
 };
 
@@ -190,7 +190,7 @@ const request = async (type: any, method: any, state: State) => {
     const response = await ApiHera().requestState(type, method, state);
 
     if (response.ok) {
-      Notification().notfSuccess(
+      Notif().notfSuccess(
         "Success",
         `State ${state.stateName} ${type} with success`
       );
@@ -200,7 +200,7 @@ const request = async (type: any, method: any, state: State) => {
       throw new Error(`Error to ${type} state ${state.stateName} - ${data}`);
     }
   } catch (error) {
-    Notification().notfError("Error", `${error}`);
+    Notif().notfError("Error", `${error}`);
   }
 };
 

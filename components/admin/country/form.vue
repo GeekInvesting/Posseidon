@@ -31,7 +31,7 @@ import { emitEventBus } from "~~/events/eventBus";
 import { Country } from "~/model/hera/Country";
 
 import { Loading } from "~~/utils/Loading";
-import { Notification } from "~/utils/Notif";
+import { Notif } from "~/utils/Notif";
 import { ApiHera } from "~~/utils/api/hera";
 
 const apiHera = ApiHera();
@@ -83,12 +83,12 @@ const submitForm = async () => {
 
     const responseBody = await response.json();
 
-    Notification().notfSuccess("Success", `Saved successfully: ${responseBody.countryName}`);
+    Notif().notfSuccess("Success", `Saved successfully: ${responseBody.countryName}`);
 
     emptyCountry();
 
   } catch (error: any) {
-    Notification().notfError("Error", `Saving country: ${error}`);
+    Notif().notfError("Error", `Saving country: ${error}`);
     //console.error(error);
   }
   

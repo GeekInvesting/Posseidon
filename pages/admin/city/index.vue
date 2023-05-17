@@ -1,3 +1,4 @@
+//city.vue
 <template>
     <div class="p-3 rounded-lg">
       <AdminHeader title="City" />
@@ -9,5 +10,9 @@
   
   <script lang="ts" setup>
   
+  definePageMeta({
+    middleware: 'auth',
+    name: 'City'
+  })
   </script>
   
