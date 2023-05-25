@@ -40,10 +40,23 @@
         >
           Exchange
         </NuxtLink>
+        <NuxtLink
+          to="/admin/sector"
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Sector
+        </NuxtLink>
       </div>
     </el-card>
   </div>
 </template>
+
+<script lang="ts" setup>
+
+definePageMeta({
+  middleware: 'auth',
+})
+</script>
 
 <style>
 </style>

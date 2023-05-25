@@ -93,7 +93,6 @@
 
 <script lang="ts" setup>
 import { CityDto } from '~/model/hera/CityDto';
-import { Notification } from '~/utils/Notif';
 import { ApiHera } from '~/utils/api/hera';
 import { useEventBus } from '~/events/eventBus';
 import { City } from '~/model/hera/City';
@@ -133,7 +132,7 @@ const handleClose = (done: () => void) => {
     })
     .catch((error) => {
       //console.log(error);
-      Notification().notfWarn("Warn", `${error} this operation.`);
+      Notif().notfWarn("Warn", `${error} this operation.`);
     });
 };
 
@@ -146,7 +145,7 @@ const fetchCities = async () => {
 
     cities = await response.json();
   } catch (error) {
-    Notification().notfError("Error", `${error}`);
+    Notif().notfError("Error", `${error}`);
   }
 
   loading.value = false;
@@ -178,10 +177,10 @@ const request = async (type:any, method:any, city: City) => {
 
     if (!response.ok) throw new Error(await response.text());
 
-    Notification().notfSuccess("Success", `${type} City.`);
+    Notif().notfSuccess("Success", `${type} City.`);
     fetchCities();
   } catch (error) {
-    Notification().notfError("Error", `${error}`);
+    Notif().notfError("Error", `${error}`);
   }
 
   fetchCities();

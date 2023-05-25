@@ -3,7 +3,7 @@ import { Country } from "~/model/hera/Country";
 import { State } from "~~/model/hera/State";
 import { StateDto } from "~~/model/hera/StateDto";
 
-const heraUrl = 'http://localhost:8100/hera'
+const heraUrl = 'http://localhost:80/hera'
 //const heraUrl = 'http://hera:8100/hera'
 
 export function ApiHera() {

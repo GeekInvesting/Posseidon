@@ -101,9 +101,9 @@ const handleSubmit = async () => {
     const { token, user } = responseBody;
 
     const userStorage = JSON.stringify(user);
-
-    localStorage.setItem("user", userStorage);
-    localStorage.setItem("token", token);
+    //console.log(userStorage, token);
+    await localStorage.setItem("user", userStorage);
+    await localStorage.setItem("token", token);
 
     emitEventBus("refreshLogin", true);
 

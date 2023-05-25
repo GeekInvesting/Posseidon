@@ -31,7 +31,7 @@
           show-password
         />
       </el-form-item>
-      <template v-if="userAuth.userRole == 'admin'">
+      <template v-if="isAdmin">
         <el-form-item label="Role">
           <el-select v-model="user.userRole" placeholder="Select Role">
             <el-option label="Admin" value="admin" />
@@ -83,11 +83,13 @@
 
 <script lang="ts" setup>
 import { User } from "~/model/atena/User";
-import { Notification } from "~/utils/Notif";
+import { Notif } from "~/utils/Notif";
+import { validToken } from "~/utils/service/atena/AuthService";
 import { createUser } from "~/utils/service/atena/UserService";
 
 const svg = Loading().svg;
 let loading = ref(false);
+const isAdmin = ref(false);
 const userAuth: Ref<Partial<User>> = ref({});
 
 const props = defineProps({
@@ -131,7 +133,8 @@ onMounted(() => {
   const userStorage = localStorage.getItem("user");
   if (userStorage) {
     userAuth.value = JSON.parse(userStorage);
-    console.log(userStorage);
+    validUser();
+    //console.log(userStorage);
   }
 });
 
@@ -140,7 +143,7 @@ const submit = async () => {
   loading.value = true;
   try {
     if (user.value.userPassword != user.value.userConfirmPassword) {
-      Notification().notfError(
+      Notif().notfError(
         "Error",
         "Password and Confirm Password must be the same"
       );
@@ -156,13 +159,24 @@ const submit = async () => {
       throw new Error(responseBody.message);
     }
 
-    Notification().notfSuccess(
+    Notif().notfSuccess(
       "Success",
       `Saved User: ${responseBody.userName}`
     );
   } catch (error) {
-    Notification().notfError("Error", `${error}`);
+    Notif().notfError("Error", `${error}`);
   }
   loading.value = false;
 };
+
+const validUser = async () => {
+  const response = await validToken();
+
+  if (response.ok) {
+    const responseBody = await response.json();
+    if (responseBody.userRole == "admin") {
+      isAdmin.value = true;
+    }
+  }
+}
 </script>
