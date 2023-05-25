@@ -4,15 +4,15 @@
     <AdminHeader title="Exchange" />
   </div>
   <div class="p-3 rounded-lg">
-    <AdminExchangeTable />
+    <AdminHefestoExchangeTable />
   </div>
 </template>
 
 <script lang="ts" setup>
-/*
+
 definePageMeta({
   middleware: "auth",
   name: "Exchange",
 });
-*/
+
 </script>

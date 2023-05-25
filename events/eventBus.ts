@@ -8,7 +8,6 @@ interface EventBusType {
   refreshLogin: boolean;
   dialogInvestor: boolean;
   refreshExchange: boolean;
-  dialogExchange: boolean;
 }
 
 const eventBusState: EventBusType = {
@@ -18,7 +17,6 @@ const eventBusState: EventBusType = {
   refreshLogin: false,
   dialogInvestor: false,
   refreshExchange: false,
-  dialogExchange: false,
 };
 
 

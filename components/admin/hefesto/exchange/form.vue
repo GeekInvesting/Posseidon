@@ -58,7 +58,7 @@
 
 <script lang="ts" setup>
 import { emitEventBus } from "~~/events/eventBus";
-import { Exchange } from "~/model/hefesto/Exchange";
+import { ExchangeDto } from "~/model/hefesto/Exchange";
 import { ApiHera } from "~/utils/api/hera";
 import {
   createExchange,
@@ -73,34 +73,34 @@ let countries: Ref<string[]> = ref([]);
 
 const props = defineProps({
   initialData: {
-    type: Object as PropType<Exchange>,
-    required: true,
-  },
+    type: Object as PropType<ExchangeDto>,
+    default: () => ({}),
+    },
   typeSave: {
     type: String as PropType<"create" | "update">,
     default: "create",
   },
 });
 
-const exchange: Ref<Exchange> = ref({
-  exchangeId: props.initialData.exchangeId,
-  exchangeName: props.initialData.exchangeName,
-  exchangeCode: props.initialData.exchangeCode,
-  exchangeCurrency: props.initialData.exchangeCurrency,
-  exchangeCountry: props.initialData.exchangeCountry,
-  exchangeEnabled: props.initialData.exchangeEnabled,
-  exchangeDeleted: props.initialData.exchangeDeleted,
+const exchange: Ref<ExchangeDto> = ref({
+  exchangeId: props.initialData.exchangeId || '',
+  exchangeName: props.initialData.exchangeName || '',
+  exchangeCode: props.initialData.exchangeCode || '',
+  exchangeCurrency: props.initialData.exchangeCurrency || '',
+  exchangeCountry: props.initialData.exchangeCountry || '',
+  exchangeEnabled: props.initialData.exchangeEnabled || false,
+  exchangeDeleted: props.initialData.exchangeDeleted || false,
 });
 
 watch(props.initialData, (value) => {
   exchange.value = {
-    exchangeId: value.exchangeId,
-    exchangeName: value.exchangeName,
-    exchangeCode: value.exchangeCode,
-    exchangeCurrency: value.exchangeCurrency,
-    exchangeCountry: value.exchangeCountry,
-    exchangeEnabled: value.exchangeEnabled,
-    exchangeDeleted: value.exchangeDeleted,
+    exchangeId: value.exchangeId || '',
+    exchangeName: value.exchangeName || '',
+    exchangeCode: value.exchangeCode || '',
+    exchangeCurrency: value.exchangeCurrency || '',
+    exchangeCountry: value.exchangeCountry || '',
+    exchangeEnabled: value.exchangeEnabled || false,
+    exchangeDeleted: value.exchangeDeleted || false,
   };
 });
 
@@ -149,7 +149,6 @@ const submitForm = async () => {
   }
 
   emitEventBus("refreshExchange", true);
-  emitEventBus("dialogExchange", true);
 
   emptyForm();
 
