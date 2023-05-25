@@ -13,15 +13,27 @@
         <el-menu-item index="1"><NuxtLink to="/">Home</NuxtLink></el-menu-item>
         <el-sub-menu v-if="isAdmin" index="2">
           <template #title><NuxtLink to="/admin">Admin</NuxtLink></template>
-          <el-menu-item index="2-1"
-            ><NuxtLink to="/admin/country">Country</NuxtLink></el-menu-item
-          >
-          <el-menu-item index="2-2"
-            ><NuxtLink to="/admin/state">State</NuxtLink></el-menu-item
-          >
-          <el-menu-item index="2-3"
-            ><NuxtLink to="/admin/city">City</NuxtLink></el-menu-item
-          >
+          <el-sub-menu index="2-1">
+            <template #title>Hera</template>
+            <el-menu-item index="2-1-1"
+              ><NuxtLink to="/admin/country">Country</NuxtLink></el-menu-item
+            >
+            <el-menu-item index="2-1-2"
+              ><NuxtLink to="/admin/state">State</NuxtLink></el-menu-item
+            >
+            <el-menu-item index="2-1-3"
+              ><NuxtLink to="/admin/city">City</NuxtLink></el-menu-item
+            >
+          </el-sub-menu>
+          <el-sub-menu index="2-2">
+            <template #title>Hefesto</template>
+            <el-menu-item index="2-2-1"
+              ><NuxtLink to="/admin/exchange">Exchange</NuxtLink></el-menu-item
+            >
+            <el-menu-item index="2-2-2"
+              ><NuxtLink to="/admin/sector">Sector</NuxtLink></el-menu-item
+            >
+          </el-sub-menu>
         </el-sub-menu>
         <el-menu-item index="3"
           ><NuxtLink to="/about">About</NuxtLink></el-menu-item
@@ -35,7 +47,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useEventBus } from '~/events/eventBus';
+import { useEventBus } from "~/events/eventBus";
 
 const eventBus = useEventBus();
 
@@ -50,9 +62,10 @@ const setLogin = () => {
   if (process.client) {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     isAdmin.value = user && user.userRole === "admin";
-    isLoged.value = user && user.userRole === "admin" || user.userRole === "user";
+    isLoged.value =
+      (user && user.userRole === "admin") || user.userRole === "user";
   }
-}
+};
 
 watch(
   () => eventBus.value.refreshLogin,
@@ -62,5 +75,4 @@ watch(
     }
   }
 );
-
 </script>

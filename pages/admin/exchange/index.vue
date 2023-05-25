@@ -1,16 +1,18 @@
-//city.vue
+//pages/admin/exchange/index.vue
 <template>
   <div class="p-3 rounded-lg">
-    <AdminHeader title="City" />
+    <AdminHeader title="Exchange" />
   </div>
   <div class="p-3 rounded-lg">
-    <AdminCityTable />
+    <AdminExchangeTable />
   </div>
 </template>
 
 <script lang="ts" setup>
+/*
 definePageMeta({
   middleware: "auth",
-  name: "City",
+  name: "Exchange",
 });
+*/
 </script>

@@ -1,3 +1,5 @@
+import { notifTitle } from "~/@types/PosseidonTipes";
+
 export function Notif() {
 
   const notfSuccess = (title: string, msg: string) => {
@@ -26,4 +28,12 @@ export function Notif() {
     notfError,
     notfWarn,
   };
+}
+
+
+export const PosseidonNotif = (title: notifTitle, msg: string) => {
+  ElMessage({
+    message: `${msg}`,
+    type: `${title}`,
+  })
 }

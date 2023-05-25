@@ -101,7 +101,7 @@ const handleSubmit = async () => {
     const { token, user } = responseBody;
 
     const userStorage = JSON.stringify(user);
-    console.log(userStorage);
+    //console.log(userStorage, token);
     await localStorage.setItem("user", userStorage);
     await localStorage.setItem("token", token);
 
