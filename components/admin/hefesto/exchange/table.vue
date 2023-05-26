@@ -100,7 +100,7 @@
 <script lang="ts" setup>
 import { useEventBus } from "~/events/eventBus";
 import { Exchange, ExchangeDto } from "~/model/hefesto/Exchange";
-import { exchangeToDto } from "~/utils/models/ExchangeUtils";
+import { exchangeToDto } from "~/utils/modelUtils/ExchangeUtils";
 import {
   disableExchange,
   enableExchange,

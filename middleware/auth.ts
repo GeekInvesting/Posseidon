@@ -23,9 +23,10 @@ const directHome = (msg: string) => {
 export default defineNuxtRouteMiddleware((to, from) => {
   return new Promise(async (resolve, reject) => {
     try {
+      //console.log(to);
       if (process.client) {
         const token = localStorage.getItem('token');
-        console.log(token);
+        //console.log(token);
         if (!token) {
           directSignin('Restricted area, please login');
           resolve();

@@ -11,7 +11,7 @@
 
 <script lang="ts" setup>
 import { emitEventBus } from '~/events/eventBus';
-import { Investor } from '~/model/atena/Investor';
+import { Investor } from '~/modelService/atena/Investor';
 
 const router = useRouter();
 

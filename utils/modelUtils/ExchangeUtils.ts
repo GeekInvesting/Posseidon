@@ -1,4 +1,4 @@
-import { Exchange } from "~/model/hefesto/Exchange";
+import { Exchange } from "~/modelService/hefesto/Exchange";
 
 export const exchangeToDto = (exchange: Exchange) => {
   return {

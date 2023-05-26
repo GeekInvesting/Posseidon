@@ -1,4 +1,4 @@
-import { User } from "~/model/atena/User";
+import { User } from "~/modelService/atena/User";
 import { urlAtena } from "~/utils/BaseUrl";
 
 export const createUser = async (data: Partial<User>) => {

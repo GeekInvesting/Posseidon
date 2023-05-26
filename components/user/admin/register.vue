@@ -82,7 +82,7 @@
 </template>
 
 <script lang="ts" setup>
-import { User } from "~/model/atena/User";
+import { User } from "~/modelService/atena/User";
 import { Notif } from "~/utils/Notif";
 import { validToken } from "~/utils/service/atena/AuthService";
 import { createUser } from "~/utils/service/atena/UserService";

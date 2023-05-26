@@ -28,7 +28,7 @@
 
 <script lang="ts" setup>
 import { emitEventBus } from "~~/events/eventBus";
-import { Country } from "~/model/hera/Country";
+import { Country } from "~/modelService/hera/Country";
 
 import { Loading } from "~~/utils/Loading";
 import { Notif } from "~/utils/Notif";

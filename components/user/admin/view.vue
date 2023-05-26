@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import { User } from "~/model/atena/User";
+import { User } from "~/modelService/atena/User";
 
 const userView = ref({})
 

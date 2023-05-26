@@ -41,6 +41,10 @@
         v-else-if="props.title == 'Exchange'"
         class="max-w-screen-md mx-auto"
       />
+      <AdminHefestoSectorForm
+        v-else-if="props.title == 'Sector'"
+        class="max-w-screen-md mx-auto"
+      />
     </span>
   </el-dialog>
 </template>
@@ -71,6 +75,8 @@ const handleClose = (done: () => void) => {
         emitEventBus("refreshCities", true);
       } else if (props.title == "Exchange") {
         emitEventBus("refreshExchange", true);
+      } else if (props.title == "Sector") {
+        emitEventBus("refreshSectors", true);
       }
 
       dialogVisible.value = false;
