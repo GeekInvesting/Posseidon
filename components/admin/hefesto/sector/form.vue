@@ -47,8 +47,8 @@ const props = defineProps({
   },
 });
 
-const sector = ref<Sector>({
-  sectorId: props.initialData.sectorId || '' ,
+const sector = ref<Partial<Sector>>({
+  sectorId: props.initialData.id || '' ,
   sectorName: props.initialData.sectorName || "",
   sectorEnabled: props.initialData.sectorEnabled || true,
   sectorDeleted: props.initialData.sectorDeleted || false,
@@ -58,7 +58,7 @@ watch(
   () => props.initialData,
   (value) => {
     sector.value = {
-      sectorId: value.sectorId || "",
+      sectorId: value.id || "",
       sectorName: value.sectorName || "",
       sectorEnabled: value.sectorEnabled || true,
       sectorDeleted: value.sectorDeleted || false,

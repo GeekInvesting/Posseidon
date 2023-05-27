@@ -221,7 +221,6 @@ const remove = (exchange: Exchange) => {
   } finally {
     fetchExchanges();
   }
-  //TODO: Implementar Remover exchange
 };
 
 watch(
