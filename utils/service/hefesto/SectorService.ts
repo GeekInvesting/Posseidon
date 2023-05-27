@@ -53,4 +53,11 @@ export class SectorService extends ApiService {
       method: "PUT",
     });
   }
+
+  async getAllSectorsName(): Promise<Response> {
+    const url = `${this.urlBase}/sector/all/name`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "GET",
+    });
+  };
 }

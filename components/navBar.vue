@@ -31,8 +31,9 @@
               ><NuxtLink to="/admin/exchange">Exchange</NuxtLink></el-menu-item
             >
             <el-menu-item index="2-2-2"
-              ><NuxtLink to="/admin/sector">Sector</NuxtLink></el-menu-item
-            >
+              ><NuxtLink to="/admin/sector">Sector</NuxtLink></el-menu-item>
+            <el-menu-item index="2-2-3"
+              ><NuxtLink to="/admin/subsector">Subsector</NuxtLink></el-menu-item>
           </el-sub-menu>
         </el-sub-menu>
         <el-menu-item index="3"
