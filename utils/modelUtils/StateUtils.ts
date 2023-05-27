@@ -1,6 +1,6 @@
-import { Country } from "~/model/hera/Country";
-import { State } from "~~/model/hera/State";
-import { StateDto } from "~~/model/hera/StateDto";
+import { Country } from "~/modelService/hera/Country";
+import { State } from "~/modelService/hera/State";
+import { StateDto } from "~/modelService/hera/StateDto";
 
 export function StateUtils() {
   const stateToDto = (state: State): StateDto => {

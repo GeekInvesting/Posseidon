@@ -35,5 +35,6 @@ export const PosseidonNotif = (title: notifTitle, msg: string) => {
   ElMessage({
     message: `${msg}`,
     type: `${title}`,
+    duration: 5000,
   })
 }

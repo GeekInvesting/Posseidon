@@ -36,7 +36,15 @@
       <AdminCityForm
         v-else-if="props.title == 'City'"
         class="max-w-screen-md mx-auto"
-        />
+      />
+      <AdminHefestoExchangeForm
+        v-else-if="props.title == 'Exchange'"
+        class="max-w-screen-md mx-auto"
+      />
+      <AdminHefestoSectorForm
+        v-else-if="props.title == 'Sector'"
+        class="max-w-screen-md mx-auto"
+      />
     </span>
   </el-dialog>
 </template>
@@ -50,23 +58,31 @@ const props = defineProps({
   title: {
     type: String,
     required: true,
-  }
+  },
 });
 
 const dialogVisible = ref(false);
 
 const handleClose = (done: () => void) => {
-  ElMessageBox.confirm(`Are you sure to close this ${ props.title }?`)
+  ElMessageBox.confirm(`Are you sure to close this ${props.title}?`)
     .then(() => {
       done();
-      if(props.title == 'State') {
+      if (props.title == "State") {
         emitEventBus("refreshStates", true);
-      } else if (props.title == 'Country') {
+      } else if (props.title == "Country") {
         emitEventBus("refreshCountries", true);
-      } 
+      } else if (props.title == "City") {
+        emitEventBus("refreshCities", true);
+      } else if (props.title == "Exchange") {
+        emitEventBus("refreshExchange", true);
+      } else if (props.title == "Sector") {
+        emitEventBus("refreshSectors", true);
+      }
+
+      dialogVisible.value = false;
     })
     .catch((error) => {
-      console.log(error)
+      console.log(error);
     });
 };
 

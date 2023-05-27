@@ -35,7 +35,7 @@
       </template>
       <div class="card-content text-center grid grid-cols-3 justify-items-stretch gap-3">
         <NuxtLink
-          to="/admin/country"
+          to="/admin/exchange"
           class="bg-blue-500 text-white px-4 py-2 rounded"
         >
           Exchange
