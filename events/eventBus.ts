@@ -10,6 +10,7 @@ interface EventBusType {
   refreshExchange: boolean;
   refreshSectors: boolean;
   refreshSubsectors: boolean;
+  refreshTypes: boolean;
 }
 
 const eventBusState: EventBusType = {
@@ -21,6 +22,7 @@ const eventBusState: EventBusType = {
   refreshExchange: false,
   refreshSectors: false,
   refreshSubsectors: false,
+  refreshTypes: false,
 };
 
 

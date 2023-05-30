@@ -92,7 +92,7 @@
 <script lang="ts" setup>
 import { useEventBus } from "~/events/eventBus";
 import { Sector } from "~/model/hefesto/Sector";
-import { SectorService } from "~/utils/service/hefesto/SectorService";
+import { SectorService } from "~/service/hefesto/SectorService";
 
 const dialogVisible: Ref<boolean> = ref(false);
 const componentKey: Ref<string> = ref("");

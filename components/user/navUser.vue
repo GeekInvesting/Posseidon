@@ -72,7 +72,7 @@
 
 <script lang="ts" setup>
 import { useEventBus } from "~/events/eventBus";
-import { getbyUser } from "~/utils/service/atena/InvestorService";
+import { getbyUser } from "~/service/atena/InvestorService";
 
 const eventBus = useEventBus();
 

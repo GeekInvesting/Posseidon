@@ -44,8 +44,8 @@
 <script lang="ts" setup>
 import { emitEventBus } from "~/events/eventBus";
 import { Subsector, SubsectorDto } from "~/model/hefesto/Subsector";
-import { SectorService } from "~/utils/service/hefesto/SectorService";
-import { SubsectorService } from "~/utils/service/hefesto/SubsectorService";
+import { SectorService } from "~/service/hefesto/SectorService";
+import { SubsectorService } from "~/service/hefesto/SubsectorService";
 
 const loading = ref(false);
 const svg = Loading().svg;

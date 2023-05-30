@@ -98,7 +98,7 @@
 <script lang="ts" setup>
 import { useEventBus } from "~/events/eventBus";
 import { Subsector } from "~/model/hefesto/Subsector";
-import { SubsectorService } from "~/utils/service/hefesto/SubsectorService";
+import { SubsectorService } from "~/service/hefesto/SubsectorService";
 
 const dialogVisible = ref(false);
 const componentKey = ref("");

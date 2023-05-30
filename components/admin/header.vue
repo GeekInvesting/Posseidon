@@ -49,6 +49,10 @@
         v-else-if="props.title == 'Subsector'"
         class="max-w-screen-md mx-auto"
       />
+      <AdminHefestoTypeForm
+        v-else-if="props.title == 'Type'"
+        class="max-w-screen-md mx-auto"
+      />
     </span>
   </el-dialog>
 </template>
@@ -83,6 +87,8 @@ const handleClose = (done: () => void) => {
         emitEventBus("refreshSectors", true);
       } else if (props.title == "Subsector") {
         emitEventBus("refreshSubsectors", true);
+      } else if (props.title == "Type") {
+        emitEventBus("refreshTypes", true);
       }
 
       dialogVisible.value = false;

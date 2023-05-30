@@ -71,9 +71,9 @@
 
 <script setup lang="ts">
 import { emitEventBus } from "~/events/eventBus";
-import { Investor } from "~/modelService/atena/Investor";
-import { authSignIn } from "~/utils/service/atena/AuthService";
-import { getbyUser } from "~/utils/service/atena/InvestorService";
+import { Investor } from "~/model/atena/Investor";
+import { authSignIn } from "~/service/atena/AuthService";
+import { getbyUser } from "~/service/atena/InvestorService";
 
 const router = useRouter();
 
