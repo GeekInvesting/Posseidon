@@ -8,12 +8,12 @@
     >
       <el-form-item label="Subsector Name" prop="subsectorName" class="mb-4">
         <el-input
-          v-model="subsector.subsectorName"
+          v-model="subsectorDto.subsectorName"
           class="shadow-sm"
           placeholder="Transmition"
         />
       </el-form-item>
-      <el-form-item label="Sector" class="shadow-sm">
+      <el-form-item label="Sector" class="mb-4">
         <el-select
           v-model="sectorValue"
           placeholder="Select a sector"
@@ -61,7 +61,7 @@ onMounted(() => {
 
 const props = defineProps({
   initialData: {
-    type: Object as PropType<SubsectorDto>,
+    type: Object as PropType<Subsector>,
     default: () => ({}),
   },
   typeSave: {
@@ -70,10 +70,10 @@ const props = defineProps({
   },
 });
 
-const subsector = ref<Partial<SubsectorDto>>({
+const subsectorDto = ref<Partial<SubsectorDto>>({
   id: props.initialData.id || "",
   subsectorName: props.initialData.subsectorName || "",
-  sectorName: props.initialData.sectorName || "",
+  sectorName: props.initialData.sectorModel.sectorName || "",
   subsectorEnabled: props.initialData.subsectorEnabled || true,
   subsectorDeleted: props.initialData.subsectorDeleted || false,
 });
@@ -81,10 +81,10 @@ const subsector = ref<Partial<SubsectorDto>>({
 watch(
   () => props.initialData,
   (value) => {
-    subsector.value = {
+    subsectorDto.value = {
       id: value.id || "",
       subsectorName: value.subsectorName || "",
-      sectorName: value.sectorName || "",
+      sectorName: value.sectorModel.sectorName || "",
       subsectorEnabled: value.subsectorEnabled || true,
       subsectorDeleted: value.subsectorDeleted || false,
     };
@@ -95,9 +95,8 @@ watch(
 const submitForm = async () => {
   loading.value = true;
   let response;
-  if (props.typeSave === "create")
-    response = await subsectorService.createSubsector(subsector.value);
-  //else response = await subsectorService.updateSubsector(subsector.value);
+  if (props.typeSave === "create") response = await subsectorService.createSubsector(subsectorDto.value);
+  else response = await subsectorService.updateSubsector(subsectorDto.value);
 
   if (response) {
     const data = await response.json();
@@ -109,7 +108,7 @@ const submitForm = async () => {
 };
 
 const onSelectSector = () => {
-  subsector.value.sectorName = sectorValue.value;
+  subsectorDto.value.sectorName = sectorValue.value;
 };
 
 const fetchSectorsNames = async () => {
@@ -119,12 +118,12 @@ const fetchSectorsNames = async () => {
   sectors.value = data;
 
   if (props.typeSave === "update")
-    sectorValue.value = subsector.value.sectorName as string;
+    sectorValue.value = subsectorDto.value.sectorName as string;
   else sectorValue.value = "";
 };
 
 const emptyForm = () => {
-  subsector.value = {
+  subsectorDto.value = {
     id: "",
     subsectorName: "",
     sectorName: "",

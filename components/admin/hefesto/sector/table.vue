@@ -18,7 +18,8 @@
     class="custom-loading-svg w-full md:w-3/4 lg:w-1/2 xl:w-1/3 grid grid-flow-row auto-rows-max"
     v-loading="loading"
     :element-loading-svg="svg"
-    element-loading-svg-view-box="-10, -10, 50, 50">
+    element-loading-svg-view-box="-10, -10, 50, 50"
+  >
     <el-table-column prop="sectorName" label="Name" sortable />
     <el-table-column prop="sectorEnabled" label="Enable">
       <template #default="{ row }">
@@ -45,9 +46,9 @@
                   content="Edit Sector"
                   placement="right"
                 >
-                <el-button @click="edit(row)">
-                  <Icon name="ic:twotone-mode-edit" />
-                </el-button>
+                  <el-button @click="edit(row)">
+                    <Icon name="ic:twotone-mode-edit" />
+                  </el-button>
                 </el-tooltip>
               </el-dropdown-item>
               <el-dropdown-item>
@@ -85,13 +86,13 @@
         </el-dropdown>
       </template>
     </el-table-column>
-    </el-table>
+  </el-table>
 </template>
 
 <script lang="ts" setup>
-import { useEventBus } from '~/events/eventBus';
-import { Sector } from '~/model/hefesto/Sector';
-import { SectorService } from '~/utils/service/hefesto/SectorService';
+import { useEventBus } from "~/events/eventBus";
+import { Sector } from "~/model/hefesto/Sector";
+import { SectorService } from "~/utils/service/hefesto/SectorService";
 
 const dialogVisible: Ref<boolean> = ref(false);
 const componentKey: Ref<string> = ref("");
@@ -130,12 +131,16 @@ const edit = (row: Sector) => {
   componentKey.value = row.id as string;
   sector.value = row;
   typeSave.value = "update";
-}
+};
 
 const toggle = (row: Sector) => {
   loading.value = true;
 
-  ElMessageBox.confirm(`Are you sure to ${row.sectorEnabled ? "disable" : "enable"} this Sector ${row.sectorName} ?`)
+  ElMessageBox.confirm(
+    `Are you sure to ${row.sectorEnabled ? "disable" : "enable"} this Sector ${
+      row.sectorName
+    } ?`
+  )
     .then(async () => {
       let response;
       if (row.sectorEnabled) {
@@ -147,10 +152,14 @@ const toggle = (row: Sector) => {
       if (response) {
         const data = await response.json();
         if (data) {
-          PosseidonNotif("success", `Sector ${row.sectorName} ${row.sectorEnabled ? "disabled" : "enabled"}.`);
+          PosseidonNotif(
+            "success",
+            `Sector ${row.sectorName} ${
+              row.sectorEnabled ? "disabled" : "enabled"
+            }.`
+          );
         }
       }
-      
     })
     .catch((error) => {
       //console.log(error);
@@ -160,7 +169,7 @@ const toggle = (row: Sector) => {
       fetchSectors();
       loading.value = false;
     });
-}
+};
 
 const remove = (row: Sector) => {
   loading.value = true;
@@ -183,7 +192,7 @@ const remove = (row: Sector) => {
     .finally(() => {
       loading.value = false;
     });
-}
+};
 
 const fetchSectors = async () => {
   loading.value = true;
@@ -194,7 +203,7 @@ const fetchSectors = async () => {
   }
 
   loading.value = false;
-}
+};
 
 watch(
   () => useEventBus().value.refreshSectors,
@@ -205,5 +214,5 @@ watch(
       useEventBus().value.refreshSectors = false;
     }
   }
-)
+);
 </script>
