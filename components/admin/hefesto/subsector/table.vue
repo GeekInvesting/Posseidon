@@ -152,13 +152,25 @@ const edit = (row: Subsector) => {
 const toggle = async (row: Subsector) => {
   loading.value = true;
 
-  let response;
+  ElMessageBox.confirm(
+    `Are you sure to ${row.subsectorEnabled ? "Disable" : "Enable"} this Subsector?`
+  )
+    .then(async () => {
+      let response;
+    
+      row.subsectorEnabled
+        ? (response = await subsectorService.disableSubsector(row))
+        : (response = await subsectorService.enableSubsector(row));
+    
+      response
+        ? PosseidonNotif("success", `Subsector ${row.subsectorName} ${row.subsectorEnabled ? "Disabled" : "Enabled"}!`) 
+        : null;
+    })
+    .catch((error) => {
+      //console.log(error);
+      PosseidonNotif("warning", `${error} this operation.`);
+    });
 
-  row.subsectorEnabled
-    ? (response = await subsectorService.disableSubsector(row))
-    : (response = await subsectorService.enableSubsector(row));
-
-  response ? PosseidonNotif("success", `Subsector ${row.subsectorName} ${row.subsectorEnabled ? "Disabled" : "Enabled"}!`) : null;
 
   fetchSubsectors();
   loading.value = false;
@@ -167,8 +179,15 @@ const toggle = async (row: Subsector) => {
 const remove = async (row: Subsector) => {
   loading.value = true;
 
-  const response = await subsectorService.deleteSubsector(row);
-  response ? PosseidonNotif("success", `Subsector ${row.subsectorName} Deleted!`) : null;
+  ElMessageBox.confirm(`Are you sure to delete this Subsector?`)
+    .then(async () => {
+      const response = await subsectorService.deleteSubsector(row);
+      response ? PosseidonNotif("success", `Subsector ${row.subsectorName} Deleted!`) : null;
+    })
+    .catch((error) => {
+      //console.log(error);
+      PosseidonNotif("warning", `${error} this operation.`);
+    });
 
   fetchSubsectors();
   loading.value = false;

@@ -4,4 +4,5 @@ export interface TypeModel {
     typeCode: string;
     typeEnabled: boolean;
     typeDeleted: boolean;
+    id: string;
 };

@@ -17,5 +17,39 @@ export class TypeService extends ApiService {
         });
     };
 
-    
+    async getAllTypes(): Promise<Response> {
+        const url = `${this.urlBase}/all`;
+        return await apiErrorHandler(this.fetch)(url, {
+            method: "GET",
+        });
+    };
+
+    async updateType(type: Partial<TypeModel>): Promise<Response> {
+        const url = `${this.urlBase}/${type.typeId}`;
+        return await apiErrorHandler(this.fetch)(url, {
+            method: "PUT",
+            body: JSON.stringify(type),
+        });
+    }
+
+    async enableType(type: Partial<TypeModel>): Promise<Response> {
+        const url = `${this.urlBase}/enable/${type.id}`;
+        return await apiErrorHandler(this.fetch)(url, {
+            method: "PUT",
+        });
+    }
+
+    async disableType(type: Partial<TypeModel>): Promise<Response> {
+        const url = `${this.urlBase}/disable/${type.id}`;
+        return await apiErrorHandler(this.fetch)(url, {
+            method: "PUT",
+        });
+    }
+
+    async deleteType(type: Partial<TypeModel>): Promise<Response> {
+        const url = `${this.urlBase}/delete/${type.id}`;
+        return await apiErrorHandler(this.fetch)(url, {
+            method: "DELETE",
+        });
+    };
 }

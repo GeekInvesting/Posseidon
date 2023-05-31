@@ -54,8 +54,8 @@ const props = defineProps({
     }
   });
 
-  const typeModel: Ref<TypeModel> = ref({
-    typeId: props.initialData.typeId || '',
+  const typeModel: Ref<Partial<TypeModel>> = ref({
+    typeId: props.initialData.typeId || props.initialData.id || '',
     typeName: props.initialData.typeName || '',
     typeCode: props.initialData.typeCode || '',
     typeEnabled: props.initialData.typeEnabled || true,
@@ -65,7 +65,7 @@ const props = defineProps({
 watch(() => props.initialData,
   (newValue) => {
     typeModel.value = {
-      typeId: newValue.typeId || '',
+      typeId: newValue.typeId || newValue.id || '',
       typeName: newValue.typeName || '',
       typeCode: newValue.typeCode || '',
       typeEnabled: newValue.typeEnabled || true,
@@ -77,10 +77,11 @@ watch(() => props.initialData,
 const submitForm = async () => {
   loading.value = true;
 
+  //console.log(typeModel.value);
   let response;
   props.typeSave === 'create'
     ? response = await typeService.createType(typeModel.value)
-    : null // response = await typeService.updateType(typeModel.value);
+    :  response = await typeService.updateType(typeModel.value);
 
   response
     ? PosseidonNotif(`success`, `Type ${typeModel.value.typeCode} ${props.typeSave === 'create' ? 'created' : 'updated'} successfully`)
