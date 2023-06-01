@@ -1,7 +1,7 @@
 // eventBus.ts
 import { ref, watch } from 'vue';
 
-interface EventBusType {
+export interface EventBusType {
   refreshCountries: boolean;
   refreshStates: boolean;
   refreshCities: boolean;
@@ -11,6 +11,7 @@ interface EventBusType {
   refreshSectors: boolean;
   refreshSubsectors: boolean;
   refreshTypes: boolean;
+  refreshCompanies: boolean;
 }
 
 const eventBusState: EventBusType = {
@@ -23,6 +24,7 @@ const eventBusState: EventBusType = {
   refreshSectors: false,
   refreshSubsectors: false,
   refreshTypes: false,
+  refreshCompanies: false,
 };
 
 

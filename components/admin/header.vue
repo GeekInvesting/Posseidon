@@ -53,12 +53,16 @@
         v-else-if="props.title == 'Type'"
         class="max-w-screen-md mx-auto"
       />
+      <AdminHefestoCompanyForm
+        v-else-if="props.title == 'Company'"
+        class="max-w-screen-md mx-auto"
+      />
     </span>
   </el-dialog>
 </template>
 
 <script setup lang="ts">
-import { emitEventBus } from "~~/events/eventBus";
+import { EventBusType, emitEventBus } from "~~/events/eventBus";
 
 const router = useRouter();
 
@@ -71,24 +75,29 @@ const props = defineProps({
 
 const dialogVisible = ref(false);
 
+function isValidEventName(eventName: string): eventName is keyof EventBusType {
+  return ["refreshCountries", "refreshStates", "refreshCities", "refreshLogin", "dialogInvestor", "refreshExchange", "refreshSectors", "refreshSubsectors", "refreshTypes", "refreshCompanies"].includes(eventName);
+}
+
 const handleClose = (done: () => void) => {
   ElMessageBox.confirm(`Are you sure to close this ${props.title}?`)
     .then(() => {
       done();
-      if (props.title == "State") {
-        emitEventBus("refreshStates", true);
-      } else if (props.title == "Country") {
-        emitEventBus("refreshCountries", true);
-      } else if (props.title == "City") {
-        emitEventBus("refreshCities", true);
-      } else if (props.title == "Exchange") {
-        emitEventBus("refreshExchange", true);
-      } else if (props.title == "Sector") {
-        emitEventBus("refreshSectors", true);
-      } else if (props.title == "Subsector") {
-        emitEventBus("refreshSubsectors", true);
-      } else if (props.title == "Type") {
-        emitEventBus("refreshTypes", true);
+
+      const eventMap: { [key: string]: string | undefined } = {
+        "State": "refreshStates",
+        "Country": "refreshCountries",
+        "City": "refreshCities",
+        "Exchange": "refreshExchange",
+        "Sector": "refreshSectors",
+        "Subsector": "refreshSubsectors",
+        "Type": "refreshTypes",
+        "Company": "refreshCompanies",
+      };
+
+      const eventName = eventMap[props.title];
+      if (eventName && isValidEventName(eventName)) {
+        emitEventBus(eventName, true);
       }
 
       dialogVisible.value = false;

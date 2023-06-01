@@ -5,7 +5,7 @@
     <div class="flex items-center md:w-auto">
       <NuxtLink to="/" class="text-xl font-bold text-indigo-500">Logo</NuxtLink>
     </div>
-    <div class="md:flex-wrap items-center justify-center md:w-auto">
+    <div class="md:flex md:flex-wrap items-center justify-center md:w-auto">
       <el-menu
         mode="horizontal"
         class="md:flex-row md:items-center hover:transition-all"
@@ -46,7 +46,7 @@
         </el-menu-item>
       </el-menu>
     </div>
-    <div>
+    <div class="flex-shrink-0">
       <UserNavUser />
     </div>
   </nav>
