@@ -7,6 +7,7 @@ export interface EventBusType {
   refreshCities: boolean;
   refreshLogin: boolean;
   dialogInvestor: boolean;
+  dialogCreate: boolean;
   refreshExchange: boolean;
   refreshSectors: boolean;
   refreshSubsectors: boolean;
@@ -20,6 +21,7 @@ const eventBusState: EventBusType = {
   refreshCities: false,
   refreshLogin: false,
   dialogInvestor: false,
+  dialogCreate: false,
   refreshExchange: false,
   refreshSectors: false,
   refreshSubsectors: false,

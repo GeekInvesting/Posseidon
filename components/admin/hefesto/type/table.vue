@@ -57,7 +57,7 @@
                   class="box-item"
                   effect="dark"
                   :content="
-                    row.typeEnabled ? 'Disable Subsector' : 'Enable Subsector'
+                    row.typeEnabled ? 'Disable Type' : 'Enable Type'
                   "
                   placement="right"
                 >

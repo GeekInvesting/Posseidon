@@ -21,7 +21,7 @@
   <el-dialog
     v-model="dialogVisible"
     :title="props.title"
-    width="85%"
+    width="90%"
     :before-close="handleClose"
   >
     <span>
@@ -62,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { EventBusType, emitEventBus } from "~~/events/eventBus";
+import { emitEventBus, useEventBus } from "~~/events/eventBus";
 
 const router = useRouter();
 
@@ -75,29 +75,26 @@ const props = defineProps({
 
 const dialogVisible = ref(false);
 
-function isValidEventName(eventName: string): eventName is keyof EventBusType {
-  return ["refreshCountries", "refreshStates", "refreshCities", "refreshLogin", "dialogInvestor", "refreshExchange", "refreshSectors", "refreshSubsectors", "refreshTypes", "refreshCompanies"].includes(eventName);
-}
-
 const handleClose = (done: () => void) => {
   ElMessageBox.confirm(`Are you sure to close this ${props.title}?`)
     .then(() => {
       done();
-
-      const eventMap: { [key: string]: string | undefined } = {
-        "State": "refreshStates",
-        "Country": "refreshCountries",
-        "City": "refreshCities",
-        "Exchange": "refreshExchange",
-        "Sector": "refreshSectors",
-        "Subsector": "refreshSubsectors",
-        "Type": "refreshTypes",
-        "Company": "refreshCompanies",
-      };
-
-      const eventName = eventMap[props.title];
-      if (eventName && isValidEventName(eventName)) {
-        emitEventBus(eventName, true);
+      if (props.title == "State") {
+        emitEventBus("refreshStates", true);
+      } else if (props.title == "Country") {
+        emitEventBus("refreshCountries", true);
+      } else if (props.title == "City") {
+        emitEventBus("refreshCities", true);
+      } else if (props.title == "Exchange") {
+        emitEventBus("refreshExchange", true);
+      } else if (props.title == "Sector") {
+        emitEventBus("refreshSectors", true);
+      } else if (props.title == "Subsector") {
+        emitEventBus("refreshSubsectors", true);
+      } else if (props.title == "Type") {
+        emitEventBus("refreshTypes", true);
+      } else if (props.title == "Company") {
+        emitEventBus("refreshCompanies", true);
       }
 
       dialogVisible.value = false;
@@ -115,4 +112,13 @@ const create = () => {
 const goToAdmin = () => {
   router.push("/admin");
 };
+
+watch(
+  () => useEventBus().value.dialogCreate,
+  (newValue) => {
+    if (newValue) {
+      dialogVisible.value = true;
+    }
+  }
+);
 </script>

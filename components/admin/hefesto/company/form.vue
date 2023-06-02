@@ -25,8 +25,9 @@
           v-model="company.companySiteRi"
           class="shadow-sm"
           placeholder="http://www.petrobras.com.br/ri"
-        /> </el-form-item
-      ><el-form-item label="Logo" prop="companyLogo" class="mb-4">
+        />
+      </el-form-item>
+      <el-form-item label="Logo" prop="companyLogo" class="mb-4">
         <div class="flex items-center flex-grow">
           <el-input
             v-model="company.companyLogo"
@@ -71,6 +72,9 @@
           Submit
         </el-button>
       </el-form-item>
+      <el-form-item v-if="props.companySave === 'create'" >
+        <el-checkbox v-model="anotherCompany" label="Create Another Company" />
+      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -83,6 +87,7 @@ import { CompanyService } from "~/service/hefesto/CompanyService";
 const loading = ref(false);
 const svg = Loading().svg;
 const logo = ref("");
+const anotherCompany = ref(false);
 
 const companyService = new CompanyService();
 
@@ -142,18 +147,19 @@ const submitForm = () => {
 
       props.companySave === "create"
         ? (response = await companyService.createCompany(company.value))
-        : null;
+        : (response = await companyService.updateCompany(company.value));
 
       response
         ? PosseidonNotif(`success`, `${props.companySave}d successfully!`)
         : null;
+
+        emitEventBus("refreshCompanies", true);
+        anotherCompany.value ? null : emitEventBus("dialogCreate", true);
+        loading.value = false;
+        emptyForm();
     })
     .catch((error) => {
       PosseidonNotif(`warning`, `${error} this operation!`);
-    })
-    .finally(() => {
-      loading.value = false;
-      emitEventBus("refreshCompanies", true);
     });
 };
 
