@@ -21,7 +21,7 @@
   <el-dialog
     v-model="dialogVisible"
     :title="props.title"
-    width="85%"
+    width="90%"
     :before-close="handleClose"
   >
     <span>
@@ -45,12 +45,24 @@
         v-else-if="props.title == 'Sector'"
         class="max-w-screen-md mx-auto"
       />
+      <AdminHefestoSubsectorForm
+        v-else-if="props.title == 'Subsector'"
+        class="max-w-screen-md mx-auto"
+      />
+      <AdminHefestoTypeForm
+        v-else-if="props.title == 'Type'"
+        class="max-w-screen-md mx-auto"
+      />
+      <AdminHefestoCompanyForm
+        v-else-if="props.title == 'Company'"
+        class="max-w-screen-md mx-auto"
+      />
     </span>
   </el-dialog>
 </template>
 
 <script setup lang="ts">
-import { emitEventBus } from "~~/events/eventBus";
+import { emitEventBus, useEventBus } from "~~/events/eventBus";
 
 const router = useRouter();
 
@@ -77,6 +89,12 @@ const handleClose = (done: () => void) => {
         emitEventBus("refreshExchange", true);
       } else if (props.title == "Sector") {
         emitEventBus("refreshSectors", true);
+      } else if (props.title == "Subsector") {
+        emitEventBus("refreshSubsectors", true);
+      } else if (props.title == "Type") {
+        emitEventBus("refreshTypes", true);
+      } else if (props.title == "Company") {
+        emitEventBus("refreshCompanies", true);
       }
 
       dialogVisible.value = false;
@@ -94,4 +112,13 @@ const create = () => {
 const goToAdmin = () => {
   router.push("/admin");
 };
+
+watch(
+  () => useEventBus().value.dialogCreate,
+  (newValue) => {
+    if (newValue) {
+      dialogVisible.value = true;
+    }
+  }
+);
 </script>

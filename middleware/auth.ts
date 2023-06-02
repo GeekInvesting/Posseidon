@@ -1,4 +1,4 @@
-import { validToken } from "~/utils/service/atena/AuthService";
+import { validToken } from "~/service/atena/AuthService";
 
 const directSignin = (msg: string) => {
   const router = useRouter();

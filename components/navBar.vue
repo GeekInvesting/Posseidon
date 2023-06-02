@@ -5,7 +5,7 @@
     <div class="flex items-center md:w-auto">
       <NuxtLink to="/" class="text-xl font-bold text-indigo-500">Logo</NuxtLink>
     </div>
-    <div class="md:flex-wrap items-center justify-center md:w-auto">
+    <div class="md:flex md:flex-wrap items-center justify-center md:w-auto">
       <el-menu
         mode="horizontal"
         class="md:flex-row md:items-center hover:transition-all"
@@ -16,31 +16,40 @@
           <el-sub-menu index="2-1">
             <template #title>Hera</template>
             <el-menu-item index="2-1-1"
-              ><NuxtLink to="/admin/country">Country</NuxtLink></el-menu-item
-            >
+              ><NuxtLink to="/admin/country">Country</NuxtLink>
+            </el-menu-item>
             <el-menu-item index="2-1-2"
-              ><NuxtLink to="/admin/state">State</NuxtLink></el-menu-item
-            >
+              ><NuxtLink to="/admin/state">State</NuxtLink>
+            </el-menu-item>
             <el-menu-item index="2-1-3"
-              ><NuxtLink to="/admin/city">City</NuxtLink></el-menu-item
-            >
+              ><NuxtLink to="/admin/city">City</NuxtLink>
+            </el-menu-item>
           </el-sub-menu>
           <el-sub-menu index="2-2">
             <template #title>Hefesto</template>
             <el-menu-item index="2-2-1"
-              ><NuxtLink to="/admin/exchange">Exchange</NuxtLink></el-menu-item
-            >
+              ><NuxtLink to="/admin/exchange">Exchange</NuxtLink>
+            </el-menu-item>
             <el-menu-item index="2-2-2"
-              ><NuxtLink to="/admin/sector">Sector</NuxtLink></el-menu-item
-            >
+              ><NuxtLink to="/admin/sector">Sector</NuxtLink>
+            </el-menu-item>
+            <el-menu-item index="2-2-3"
+              ><NuxtLink to="/admin/subsector">Subsector</NuxtLink>
+            </el-menu-item>
+            <el-menu-item index="2-2-4"
+              ><NuxtLink to="/admin/type">Type</NuxtLink>
+            </el-menu-item>
+            <el-menu-item index="2-2-5">
+              <NuxtLink to="/admin/company">Company</NuxtLink>
+            </el-menu-item>
           </el-sub-menu>
         </el-sub-menu>
         <el-menu-item index="3"
-          ><NuxtLink to="/about">About</NuxtLink></el-menu-item
-        >
+          ><NuxtLink to="/about">About</NuxtLink>
+        </el-menu-item>
       </el-menu>
     </div>
-    <div>
+    <div class="flex-shrink-0">
       <UserNavUser />
     </div>
   </nav>

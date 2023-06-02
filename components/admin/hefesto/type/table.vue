@@ -1,39 +1,40 @@
 <template>
   <el-dialog
-    title="Sector"
+    title="Type"
     v-model="dialogVisible"
     width="85%"
     :before-close="handleClose"
   >
     <span>
-      <AdminHefestoSectorForm
+      <AdminHefestoTypeForm
         :key="componentKey"
-        :initialData="sector"
+        :initialData="typeModel"
         :typeSave="typeSave"
       />
     </span>
   </el-dialog>
   <el-table
-    :data="sectors"
+    :data="types"
     class="custom-loading-svg w-full md:w-3/4 lg:w-1/2 xl:w-1/3 grid grid-flow-row auto-rows-max"
     v-loading="loading"
     :element-loading-svg="svg"
     element-loading-svg-view-box="-10, -10, 50, 50"
   >
-    <el-table-column prop="sectorName" label="Name" sortable />
-    <el-table-column prop="sectorEnabled" label="Enable">
+    <el-table-column prop="typeName" label="Name" sortable />
+    <el-table-column prop="typeCode" label="Code" sortable />
+    <el-table-column prop="typeEnabled" label="Enable">
       <template #default="{ row }">
-        <span>{{ row.sectorEnabled ? "Enable" : "Disable" }}</span>
+        <span>{{ row.typeEnabled ? "Enable" : "Disable" }}</span>
       </template>
     </el-table-column>
-    <el-table-column prop="sectorDeleted" label="Deleted">
+    <el-table-column prop="typeDeleted" label="Deleted">
       <template #default="{ row }">
-        <span>{{ row.sectorDeleted ? "Deleted" : "" }}</span>
+        <span>{{ row.typeDeleted ? "Deleted" : "" }}</span>
       </template>
     </el-table-column>
     <el-table-column label="Actions">
       <template #default="{ row }">
-        <el-dropdown size="large" placement="auto-end">
+        <el-dropdown size="lager" placement="auto-end">
           <el-button circle>
             <Icon name="ic:baseline-format-list-bulleted" />
           </el-button>
@@ -43,7 +44,7 @@
                 <el-tooltip
                   class="box-item"
                   effect="dark"
-                  content="Edit Sector"
+                  content="Edit Type"
                   placement="right"
                 >
                   <el-button @click="edit(row)">
@@ -56,28 +57,28 @@
                   class="box-item"
                   effect="dark"
                   :content="
-                    row.sectorEnabled ? 'Disable Sector' : 'Enable Sector'
+                    row.typeEnabled ? 'Disable Type' : 'Enable Type'
                   "
                   placement="right"
                 >
                   <el-button @click="toggle(row)">
                     <Icon
-                      v-if="row.sectorEnabled"
-                      name="ic:twotone-person-add-disabled"
+                      :name="
+                        row.typeEnabled ? 'ic:sharp-block' : 'ic:sharp-check'
+                      "
                     />
-                    <Icon v-else name="ic:twotone-person-add" />
                   </el-button>
                 </el-tooltip>
               </el-dropdown-item>
-              <el-dropdown-item v-if="!row.sectorDeleted">
+              <el-dropdown-item v-if="!row.typeDeleted">
                 <el-tooltip
                   class="box-item"
                   effect="dark"
-                  content="Delete Sector"
+                  content="Delete Type"
                   placement="right"
                 >
                   <el-button @click="remove(row)">
-                    <Icon name="ic:baseline-delete-forever" />
+                    <Icon name="ic:sharp-delete" />
                   </el-button>
                 </el-tooltip>
               </el-dropdown-item>
@@ -89,26 +90,27 @@
   </el-table>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { useEventBus } from "~/events/eventBus";
-import { Sector } from "~/model/hefesto/Sector";
-import { SectorService } from "~/service/hefesto/SectorService";
+import { TypeModel } from "~/model/hefesto/TypeModel";
+import { TypeService } from "~/service/hefesto/TypeService";
 
-const dialogVisible: Ref<boolean> = ref(false);
-const componentKey: Ref<string> = ref("");
-const sector: Ref<Sector> = ref({} as Sector);
-const typeSave: Ref<"create" | "update"> = ref("update");
+const dialogVisible = ref(false);
+const componentKey = ref("");
+const typeModel: Ref<TypeModel> = ref({} as TypeModel);
+const typeSave = ref("");
+const loading = ref(false);
 const svg = Loading().svg;
-const loading: Ref<boolean> = ref(false);
-const sectors: Ref<Sector[]> = ref([]);
-const sectorService = new SectorService();
+const types: Ref<TypeModel[]> = ref([]);
+
+const typeService = new TypeService();
 
 onMounted(() => {
-  fetchSectors();
+  fetchTypes();
 });
 
 const handleClose = (done: () => void) => {
-  ElMessageBox.confirm(`Are you sure to close this Sector?`)
+  ElMessageBox.confirm(`Are you sure to close this Type?`)
     .then(() => {
       hideDialog();
       done();
@@ -122,96 +124,84 @@ const handleClose = (done: () => void) => {
 const hideDialog = () => {
   dialogVisible.value = false;
   componentKey.value = "";
-  sector.value = {} as Sector;
   typeSave.value = "update";
+  loading.value = false;
 };
 
-const edit = (row: Sector) => {
+const edit = (row: TypeModel) => {
+  loading.value = true;
+  typeModel.value = row;
+  componentKey.value = row.typeId;
+  typeSave.value = "update";
   dialogVisible.value = true;
-  componentKey.value = row.id as string;
-  sector.value = row;
-  typeSave.value = "update";
+  //console.log(row);
 };
 
-const toggle = (row: Sector) => {
+const toggle = (row: TypeModel) => {
   loading.value = true;
 
+  let response;
   ElMessageBox.confirm(
-    `Are you sure to ${row.sectorEnabled ? "disable" : "enable"} this Sector ${
-      row.sectorName
-    } ?`
+    `Are you sure to ${row.typeEnabled ? "disable" : "enable"} this Type?`
   )
-    .then(async () => {
-      let response;
-      if (row.sectorEnabled) {
-        response = await sectorService.disableSector(row.id as string);
-      } else {
-        response = await sectorService.enableSector(row.id as string);
-      }
+    .then( async () => {
+      row.typeEnabled
+        ? (response = await typeService.disableType(row))
+        : (response = await typeService.enableType(row));
 
-      if (response) {
-        const data = await response.json();
-        if (data) {
-          PosseidonNotif(
+      response
+        ? PosseidonNotif(
             "success",
-            `Sector ${row.sectorName} ${
-              row.sectorEnabled ? "disabled" : "enabled"
-            }.`
-          );
-        }
-      }
+            `Type ${row.typeEnabled ? "disabled" : "enabled"} successfully.`
+          )
+        : null;
     })
     .catch((error) => {
       //console.log(error);
       PosseidonNotif("warning", `${error} this operation.`);
-    })
-    .finally(() => {
-      fetchSectors();
+    }).finally(() => {
+      fetchTypes();
       loading.value = false;
     });
 };
 
-const remove = (row: Sector) => {
+const remove = (row: TypeModel) => {
   loading.value = true;
-  console.log(row);
-  ElMessageBox.confirm(`Are you sure to delete this Sector ${row.sectorName} ?`)
+
+  ElMessageBox.confirm(`Are you sure to delete this Type?`)
     .then(async () => {
-      const response = await sectorService.deleteSector(row.id as string);
-      if (response) {
-        const data = await response.json();
-        if (data) {
-          PosseidonNotif("success", `Sector ${row.sectorName} deleted.`);
-          fetchSectors();
-        }
-      }
+      const response = await typeService.deleteType(row);
+
+      response
+        ? PosseidonNotif("success", `Type deleted successfully.`)
+        : null;
     })
     .catch((error) => {
       //console.log(error);
       PosseidonNotif("warning", `${error} this operation.`);
-    })
-    .finally(() => {
+    }).finally(() => {
+      fetchTypes();
       loading.value = false;
     });
 };
 
-const fetchSectors = async () => {
+const fetchTypes = async () => {
   loading.value = true;
 
-  const response = await sectorService.getAllSectors();
-  if (response) {
-    sectors.value = await response.json();
-  }
+  const response = await typeService.getAllTypes();
+
+  types.value = await response.json();
 
   loading.value = false;
 };
 
 watch(
-  () => useEventBus().value.refreshSectors,
+  () => useEventBus().value.refreshTypes,
   (newValue) => {
     if (newValue) {
-      fetchSectors();
+      fetchTypes();
       hideDialog();
-      useEventBus().value.refreshSectors = false;
+      useEventBus().value.refreshTypes = false;
     }
   }
 );

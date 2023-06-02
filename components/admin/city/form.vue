@@ -121,7 +121,7 @@ onMounted( () => {
   if (props.typeSave == "update") {
     countryValue.value = props.initialData.cityCountry;
     stateValue.value = props.initialData.cityState;
-    console.log(stateValue.value, countryValue.value);
+    //console.log(stateValue.value, countryValue.value);
   }
 
   loading.value = false;

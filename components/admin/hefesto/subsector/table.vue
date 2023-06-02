@@ -1,39 +1,40 @@
 <template>
   <el-dialog
-    title="Sector"
+    title="Subsectors"
     v-model="dialogVisible"
     width="85%"
     :before-close="handleClose"
   >
     <span>
-      <AdminHefestoSectorForm
+      <AdminHefestoSubsectorForm
         :key="componentKey"
-        :initialData="sector"
+        :initialData="subsector"
         :typeSave="typeSave"
       />
     </span>
   </el-dialog>
   <el-table
-    :data="sectors"
+    :data="subsectors"
     class="custom-loading-svg w-full md:w-3/4 lg:w-1/2 xl:w-1/3 grid grid-flow-row auto-rows-max"
     v-loading="loading"
     :element-loading-svg="svg"
     element-loading-svg-view-box="-10, -10, 50, 50"
   >
-    <el-table-column prop="sectorName" label="Name" sortable />
-    <el-table-column prop="sectorEnabled" label="Enable">
+    <el-table-column prop="subsectorName" label="Name" sortable />
+    <el-table-column prop="sectorModel.sectorName" label="Sector" sortable />
+    <el-table-column prop="subsectorEnabled" label="Enable">
       <template #default="{ row }">
-        <span>{{ row.sectorEnabled ? "Enable" : "Disable" }}</span>
+        <span>{{ row.subsectorEnabled ? "Enable" : "Disable" }}</span>
       </template>
     </el-table-column>
-    <el-table-column prop="sectorDeleted" label="Deleted">
+    <el-table-column prop="subsectorDeleted" label="Deleted">
       <template #default="{ row }">
-        <span>{{ row.sectorDeleted ? "Deleted" : "" }}</span>
+        <span>{{ row.subsectorDeleted ? "Deleted" : "" }}</span>
       </template>
     </el-table-column>
     <el-table-column label="Actions">
       <template #default="{ row }">
-        <el-dropdown size="large" placement="auto-end">
+        <el-dropdown size="lager" placement="auto-end">
           <el-button circle>
             <Icon name="ic:baseline-format-list-bulleted" />
           </el-button>
@@ -43,7 +44,7 @@
                 <el-tooltip
                   class="box-item"
                   effect="dark"
-                  content="Edit Sector"
+                  content="Edit Subsector"
                   placement="right"
                 >
                   <el-button @click="edit(row)">
@@ -56,28 +57,32 @@
                   class="box-item"
                   effect="dark"
                   :content="
-                    row.sectorEnabled ? 'Disable Sector' : 'Enable Sector'
+                    row.subsectorEnabled
+                      ? 'Disable Subsector'
+                      : 'Enable Subsector'
                   "
                   placement="right"
                 >
                   <el-button @click="toggle(row)">
                     <Icon
-                      v-if="row.sectorEnabled"
-                      name="ic:twotone-person-add-disabled"
+                      :name="
+                        row.subsectorEnabled
+                          ? 'ic:sharp-block'
+                          : 'ic:sharp-check'
+                      "
                     />
-                    <Icon v-else name="ic:twotone-person-add" />
                   </el-button>
                 </el-tooltip>
               </el-dropdown-item>
-              <el-dropdown-item v-if="!row.sectorDeleted">
+              <el-dropdown-item v-if="!row.subsectorDeleted">
                 <el-tooltip
                   class="box-item"
                   effect="dark"
-                  content="Delete Sector"
+                  content="Delete Subsector"
                   placement="right"
                 >
                   <el-button @click="remove(row)">
-                    <Icon name="ic:baseline-delete-forever" />
+                    <Icon name="ic:sharp-delete" />
                   </el-button>
                 </el-tooltip>
               </el-dropdown-item>
@@ -89,26 +94,28 @@
   </el-table>
 </template>
 
+//components/admin/hefesto/subsector/form.vue
 <script lang="ts" setup>
 import { useEventBus } from "~/events/eventBus";
-import { Sector } from "~/model/hefesto/Sector";
-import { SectorService } from "~/service/hefesto/SectorService";
+import { Subsector } from "~/model/hefesto/Subsector";
+import { SubsectorService } from "~/service/hefesto/SubsectorService";
 
-const dialogVisible: Ref<boolean> = ref(false);
-const componentKey: Ref<string> = ref("");
-const sector: Ref<Sector> = ref({} as Sector);
+const dialogVisible = ref(false);
+const componentKey = ref("");
+const subsector: Ref<Subsector> = ref({} as Subsector);
 const typeSave: Ref<"create" | "update"> = ref("update");
+const loading = ref(false);
 const svg = Loading().svg;
-const loading: Ref<boolean> = ref(false);
-const sectors: Ref<Sector[]> = ref([]);
-const sectorService = new SectorService();
+const subsectors = ref<Subsector[]>([]);
+
+const subsectorService = new SubsectorService();
 
 onMounted(() => {
-  fetchSectors();
+  fetchSubsectors();
 });
 
 const handleClose = (done: () => void) => {
-  ElMessageBox.confirm(`Are you sure to close this Sector?`)
+  ElMessageBox.confirm(`Are you sure to close this Subsector?`)
     .then(() => {
       hideDialog();
       done();
@@ -122,96 +129,77 @@ const handleClose = (done: () => void) => {
 const hideDialog = () => {
   dialogVisible.value = false;
   componentKey.value = "";
-  sector.value = {} as Sector;
   typeSave.value = "update";
 };
 
-const edit = (row: Sector) => {
-  dialogVisible.value = true;
-  componentKey.value = row.id as string;
-  sector.value = row;
-  typeSave.value = "update";
-};
-
-const toggle = (row: Sector) => {
+const fetchSubsectors = async () => {
   loading.value = true;
 
-  ElMessageBox.confirm(
-    `Are you sure to ${row.sectorEnabled ? "disable" : "enable"} this Sector ${
-      row.sectorName
-    } ?`
-  )
-    .then(async () => {
-      let response;
-      if (row.sectorEnabled) {
-        response = await sectorService.disableSector(row.id as string);
-      } else {
-        response = await sectorService.enableSector(row.id as string);
-      }
+  const response = await subsectorService.getSubsectors();
 
-      if (response) {
-        const data = await response.json();
-        if (data) {
-          PosseidonNotif(
-            "success",
-            `Sector ${row.sectorName} ${
-              row.sectorEnabled ? "disabled" : "enabled"
-            }.`
-          );
-        }
-      }
-    })
-    .catch((error) => {
-      //console.log(error);
-      PosseidonNotif("warning", `${error} this operation.`);
-    })
-    .finally(() => {
-      fetchSectors();
-      loading.value = false;
-    });
-};
-
-const remove = (row: Sector) => {
-  loading.value = true;
-  console.log(row);
-  ElMessageBox.confirm(`Are you sure to delete this Sector ${row.sectorName} ?`)
-    .then(async () => {
-      const response = await sectorService.deleteSector(row.id as string);
-      if (response) {
-        const data = await response.json();
-        if (data) {
-          PosseidonNotif("success", `Sector ${row.sectorName} deleted.`);
-          fetchSectors();
-        }
-      }
-    })
-    .catch((error) => {
-      //console.log(error);
-      PosseidonNotif("warning", `${error} this operation.`);
-    })
-    .finally(() => {
-      loading.value = false;
-    });
-};
-
-const fetchSectors = async () => {
-  loading.value = true;
-
-  const response = await sectorService.getAllSectors();
-  if (response) {
-    sectors.value = await response.json();
-  }
+  if (response) subsectors.value = await response.json();
 
   loading.value = false;
 };
 
+const edit = (row: Subsector) => {
+  dialogVisible.value = true;
+  componentKey.value = row.id;
+  typeSave.value = "update";
+  subsector.value = row;
+};
+
+const toggle = async (row: Subsector) => {
+  loading.value = true;
+
+  ElMessageBox.confirm(
+    `Are you sure to ${row.subsectorEnabled ? "Disable" : "Enable"} this Subsector?`
+  )
+    .then(async () => {
+      let response;
+    
+      row.subsectorEnabled
+        ? (response = await subsectorService.disableSubsector(row))
+        : (response = await subsectorService.enableSubsector(row));
+    
+      response
+        ? PosseidonNotif("success", `Subsector ${row.subsectorName} ${row.subsectorEnabled ? "Disabled" : "Enabled"}!`) 
+        : null;
+    })
+    .catch((error) => {
+      //console.log(error);
+      PosseidonNotif("warning", `${error} this operation.`);
+    });
+
+
+  fetchSubsectors();
+  loading.value = false;
+};
+
+const remove = async (row: Subsector) => {
+  loading.value = true;
+
+  ElMessageBox.confirm(`Are you sure to delete this Subsector?`)
+    .then(async () => {
+      const response = await subsectorService.deleteSubsector(row);
+      response ? PosseidonNotif("success", `Subsector ${row.subsectorName} Deleted!`) : null;
+    })
+    .catch((error) => {
+      //console.log(error);
+      PosseidonNotif("warning", `${error} this operation.`);
+    });
+
+  fetchSubsectors();
+  loading.value = false;
+};
+
 watch(
-  () => useEventBus().value.refreshSectors,
+  () => useEventBus().value.refreshSubsectors,
   (newValue) => {
     if (newValue) {
-      fetchSectors();
+      fetchSubsectors();
       hideDialog();
-      useEventBus().value.refreshSectors = false;
+      useEventBus().value.refreshSubsectors = false;
     }
   }
 );

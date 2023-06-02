@@ -92,10 +92,10 @@
 </template>
 
 <script lang="ts" setup>
-import { CityDto } from '~/modelService/hera/CityDto';
+import { CityDto } from '~/model/hera/CityDto';
 import { ApiHera } from '~/utils/api/hera';
 import { useEventBus } from '~/events/eventBus';
-import { City } from '~/modelService/hera/City';
+import { City } from '~/model/hera/City';
 import { CityUtils } from '~/utils/modelUtils/CityUtils';
 
 let cityDto: Ref<CityDto> = ref({} as CityDto);

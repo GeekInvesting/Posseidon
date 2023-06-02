@@ -6,7 +6,9 @@
           <span>Hera</span>
         </div>
       </template>
-      <div class="card-content text-center grid grid-cols-3 justify-items-stretch gap-3">
+      <div
+        class="card-content text-center grid grid-cols-3 justify-items-stretch gap-3"
+      >
         <NuxtLink
           to="/admin/country"
           class="bg-blue-500 text-white px-4 py-2 rounded"
@@ -33,7 +35,9 @@
           <span>Hefesto</span>
         </div>
       </template>
-      <div class="card-content text-center grid grid-cols-3 justify-items-stretch gap-3">
+      <div
+        class="card-content text-center grid grid-cols-3 justify-items-stretch gap-3"
+      >
         <NuxtLink
           to="/admin/exchange"
           class="bg-blue-500 text-white px-4 py-2 rounded"
@@ -46,17 +50,33 @@
         >
           Sector
         </NuxtLink>
+        <NuxtLink
+          to="/admin/subsector"
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Subsector
+        </NuxtLink>
+        <NuxtLink
+          to="/admin/type"
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Type
+        </NuxtLink>
+        <NuxtLink
+          to="/admin/company"
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Company
+        </NuxtLink>
       </div>
     </el-card>
   </div>
 </template>
 
 <script lang="ts" setup>
-
 definePageMeta({
-  middleware: 'auth',
-})
+  middleware: "auth",
+});
 </script>
 
-<style>
-</style>
+<style></style>

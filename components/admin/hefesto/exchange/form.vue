@@ -63,7 +63,7 @@ import { ApiHera } from "~/utils/api/hera";
 import {
   createExchange,
   updateExchange,
-} from "~/utils/service/hefesto/ExchangeService";
+} from "~/service/hefesto/ExchangeService";
 
 const svg = Loading().svg;
 const loading = ref(false);

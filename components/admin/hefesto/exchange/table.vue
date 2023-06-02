@@ -106,7 +106,7 @@ import {
   enableExchange,
   getAllExchanges,
   deleteExchange,
-} from "~/utils/service/hefesto/ExchangeService";
+} from "~/service/hefesto/ExchangeService";
 
 const dialogVisible: Ref<boolean> = ref(false);
 const componentKey: Ref<string> = ref("");
