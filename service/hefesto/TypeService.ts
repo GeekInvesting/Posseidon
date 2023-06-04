@@ -52,4 +52,11 @@ export class TypeService extends ApiService {
             method: "DELETE",
         });
     };
+
+    async listTypeCode(): Promise<Response> {
+        const url = `${this.urlBase}/all/code`;
+        return await apiErrorHandler(this.fetch)(url, {
+            method: "GET",
+        });
+    };
 }

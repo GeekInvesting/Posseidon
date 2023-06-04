@@ -42,6 +42,9 @@
             <el-menu-item index="2-2-5">
               <NuxtLink to="/admin/company">Company</NuxtLink>
             </el-menu-item>
+            <el-menu-item index="2-2-6">
+              <NuxtLink to="/admin/ticket">Ticket</NuxtLink>
+            </el-menu-item>
           </el-sub-menu>
         </el-sub-menu>
         <el-menu-item index="3"

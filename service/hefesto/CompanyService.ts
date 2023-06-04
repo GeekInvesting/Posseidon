@@ -51,4 +51,11 @@ export class CompanyService extends ApiService {
             method: "PUT",
         });
     };
+
+    async listCompanyName(): Promise<Response> {
+        const url = `${this.urlBase}/all/name`;
+        return await this.fetch(url, {
+            method: "GET",
+        });
+    }
 }

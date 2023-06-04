@@ -1,4 +1,6 @@
 import { Exchange, ExchangeDto } from "~/model/hefesto/Exchange";
+import { ApiService } from "../ApiService";
+import { apiErrorHandler } from "~/middleware/apiErrorHandler";
 
 export const createExchange = async (exchange: ExchangeDto) => {
   const response = await fetch(`${urlHefesto}/exchange`, {
@@ -73,4 +75,19 @@ export const deleteExchange = async (exchangeId: string) => {
   });
 
   return response;
+}
+
+export class ExchangeService extends ApiService {
+  urlBase: string = `${urlHefesto}/exchange`;
+
+  constructor() {
+    super();
+  }
+
+  async listExchangeCode(): Promise<Response> {
+    const url = `${this.urlBase}/all/code`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "GET",
+    });
+  }
 }
