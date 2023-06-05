@@ -57,6 +57,10 @@
         v-else-if="props.title == 'Company'"
         class="max-w-screen-md mx-auto"
       />
+      <AdminHefestoTicketForm 
+        v-else-if="props.title == 'Ticket'"
+        class="max-w-screen-md mx-auto"
+      />
     </span>
   </el-dialog>
 </template>
@@ -95,6 +99,8 @@ const handleClose = (done: () => void) => {
         emitEventBus("refreshTypes", true);
       } else if (props.title == "Company") {
         emitEventBus("refreshCompanies", true);
+      } else if (props.title == "Ticket") {
+        emitEventBus("refreshTickets", true);
       }
 
       dialogVisible.value = false;

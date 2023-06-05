@@ -52,4 +52,11 @@ export class SubsectorService extends ApiService {
       method: "DELETE",
     });
   }
+
+  async listSubsectorName(): Promise<Response> {
+    const url = `${this.urlBase}/all/name`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "GET",
+    });
+  }
 }
