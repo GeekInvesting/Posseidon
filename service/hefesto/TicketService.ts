@@ -38,4 +38,18 @@ export class TicketService extends ApiService {
       method: "DELETE",
     });
   }
+
+  async enableTicket(ticket: Partial<TicketDTO>): Promise<Response> {
+    const url = `${this.urlBase}/enable/${ticket.id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "PUT",
+    });
+  }
+
+  async disableTicket(ticket: Partial<TicketDTO>): Promise<Response> {
+    const url = `${this.urlBase}/disable/${ticket.id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "PUT",
+    });
+  }
 }

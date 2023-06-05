@@ -163,6 +163,41 @@ const edit = (row: Ticket) => {
 
 const toggle = (row: Ticket) => {
   //TODO: Toggle Ticket
+  loading.value = true;
+
+  ElMessageBox.confirm(
+    `Are you sure to ${row.ticketEnabled ? "disable" : "enable"} this Ticket?`,
+    `${row.ticketCode}`,
+    {
+      confirmButtonText: `${row.ticketEnabled ? "Disable" : "Enable"}`,
+      cancelButtonText: "Cancel",
+      type: "warning",
+    }
+  )
+    .then(async () => {
+      let response;
+
+      row.ticketEnabled
+        ? (response = await ticketService.disableTicket(row))
+        : (response = await ticketService.enableTicket(row));
+
+      response
+        ? PosseidonNotif(
+            "success",
+            `Ticket ${row.ticketCode} ${
+              row.ticketEnabled ? "disabled" : "enabled"
+            }.`
+          )
+        : null;
+    })
+    .catch((error) => {
+      //console.log(error);
+      PosseidonNotif("warning", `${error} this operation.`);
+    })
+    .finally(() => {
+      fetchTickets();
+      loading.value = false;
+    });
 };
 
 const remove = (row: Ticket) => {
