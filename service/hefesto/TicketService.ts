@@ -31,4 +31,11 @@ export class TicketService extends ApiService {
       body: JSON.stringify(ticket),
     });
   }
+
+  async deleteTicket(ticket: Partial<TicketDTO>): Promise<Response> {
+    const url = `${this.urlBase}/delete/${ticket.id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "DELETE",
+    });
+  }
 }

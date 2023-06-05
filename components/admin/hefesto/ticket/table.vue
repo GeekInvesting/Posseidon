@@ -38,7 +38,7 @@
     />
     <el-table-column prop="ticketType.typeCode" label="Type" sortable />
     <el-table-column
-      prop="ticketExchnge.exchangeCode"
+      prop="ticketExchange.exchangeCode"
       label="Exchange"
       sortable
     />
@@ -72,36 +72,40 @@
                   </el-button>
                 </el-tooltip>
               </el-dropdown-item>
-              <el-dropdown-item>
-                <el-tooltip
-                  class="box-item"
-                  effect="dark"
-                  :content="
-                    row.ticketEnabled ? 'Disable Ticket' : 'Enable Ticket'
-                  "
-                  placement="right"
-                >
-                  <el-button @click="toggle(row)">
-                    <Icon
-                      :name="
-                        row.ticketEnabled ? 'ic:sharp-block' : 'ic:sharp-check'
-                      "
-                    />
-                  </el-button>
-                </el-tooltip>
-              </el-dropdown-item>
-              <el-dropdown-item v-if="!row.ticketDeleted">
-                <el-tooltip
-                  class="box-item"
-                  effect="dark"
-                  content="Delete Ticket"
-                  placement="right"
-                >
-                  <el-button @click="remove(row)">
-                    <Icon name="ic:sharp-delete" />
-                  </el-button>
-                </el-tooltip>
-              </el-dropdown-item>
+              <div v-if="!row.ticketDeleted">
+                <el-dropdown-item>
+                  <el-tooltip
+                    class="box-item"
+                    effect="dark"
+                    :content="
+                      row.ticketEnabled ? 'Disable Ticket' : 'Enable Ticket'
+                    "
+                    placement="right"
+                  >
+                    <el-button @click="toggle(row)">
+                      <Icon
+                        :name="
+                          row.ticketEnabled
+                            ? 'ic:sharp-block'
+                            : 'ic:sharp-check'
+                        "
+                      />
+                    </el-button>
+                  </el-tooltip>
+                </el-dropdown-item>
+                <el-dropdown-item>
+                  <el-tooltip
+                    class="box-item"
+                    effect="dark"
+                    content="Delete Ticket"
+                    placement="right"
+                  >
+                    <el-button @click="remove(row)">
+                      <Icon name="ic:sharp-delete" />
+                    </el-button>
+                  </el-tooltip>
+                </el-dropdown-item>
+              </div>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -137,9 +141,10 @@ const handleClose = () => {
     .catch((error) => {
       //console.log(error);
       PosseidonNotif("warning", `${error} this operation.`);
-    }).finally(() => {
-      loading.value = false;
     })
+    .finally(() => {
+      loading.value = false;
+    });
 };
 
 const hideDialog = () => {
@@ -161,7 +166,28 @@ const toggle = (row: Ticket) => {
 };
 
 const remove = (row: Ticket) => {
-  //TODO: Remove Ticket
+  loading.value = true;
+
+  ElMessageBox.confirm(
+    `Are you sure to delete this Ticket?`,
+    `Delete ${row.ticketCode}`,
+    { confirmButtonText: "Delete", cancelButtonText: "Cancel", type: "warning" }
+  )
+    .then(async () => {
+      let response = await ticketService.deleteTicket(row);
+
+      response
+        ? PosseidonNotif("success", "Ticket deleted.")
+        : PosseidonNotif("error", "Ticket not deleted.");
+    })
+    .catch((error) => {
+      //console.log(error);
+      PosseidonNotif("warning", `${error} this operation.`);
+    })
+    .finally(() => {
+      fetchTickets();
+      loading.value = false;
+    });
 };
 
 const fetchTickets = async () => {
