@@ -19,27 +19,35 @@
     :element-loading-svg="svg"
     element-loading-svg-view-box="-10, -10, 50, 50"
     :data="investors"
-    >
+  >
     <el-table-column prop="investorName" label="Name" sortable />
     <el-table-column prop="investorDoc" label="Document" sortable />
     <el-table-column prop="investorCity.cityName" label="City" sortable />
-    <el-table-column prop="investorCity.cityState.stateName" label="State" sortable />
-    <el-table-column prop="investorCity.cityState.stateCountry.countryName" label="Country" sortable />
-    <el-table-column prop="investorEnabled" label="Enabled" sortable >
+    <el-table-column
+      prop="investorCity.cityState.stateName"
+      label="State"
+      sortable
+    />
+    <el-table-column
+      prop="investorCity.cityState.stateCountry.countryName"
+      label="Country"
+      sortable
+    />
+    <el-table-column prop="investorEnabled" label="Enabled" sortable>
       <template #default="{ row }">
         <el-tag
           :type="row.investorEnabled ? 'success' : 'danger'"
           size="default"
-          >{{ row.investorEnabled ? 'Yes' : 'No' }}</el-tag
+          >{{ row.investorEnabled ? "Yes" : "No" }}</el-tag
         >
       </template>
     </el-table-column>
-    <el-table-column prop="investorDeleted" label="Deleted" sortable >
+    <el-table-column prop="investorDeleted" label="Deleted" sortable>
       <template #default="{ row }">
         <el-tag
           :type="row.investorDeleted ? 'danger' : 'success'"
           size="default"
-          >{{ row.investorDeleted ? 'Yes' : 'No' }}</el-tag
+          >{{ row.investorDeleted ? "Yes" : "No" }}</el-tag
         >
       </template>
     </el-table-column>
@@ -69,7 +77,9 @@
                     class="box-item"
                     effect="dark"
                     :content="
-                      row.investorEnabled ? 'Disable Investor' : 'Enable Investor'
+                      row.investorEnabled
+                        ? 'Disable Investor'
+                        : 'Enable Investor'
                     "
                     placement="right"
                   >
@@ -102,12 +112,13 @@
         </el-dropdown>
       </template>
     </el-table-column>
-    </el-table>
+  </el-table>
 </template>
 
 <script setup lang="ts">
-import { InvestorHera } from '~/model/hera/InvestorHera';
-import { InvestorHeraService } from '~/service/hera/InvestorService';
+import { useEventBus } from "~/events/eventBus";
+import { InvestorHera } from "~/model/hera/InvestorHera";
+import { InvestorHeraService } from "~/service/hera/InvestorService";
 
 const investorSave = ref("update");
 const dialogVisible = ref(false);
@@ -123,6 +134,16 @@ onMounted(() => {
   fetchInvestors();
 });
 
+watch(
+  () => useEventBus().value.refreshInvestors,
+  (newValue) => {
+    if (newValue) {
+      fetchInvestors();
+      useEventBus().value.refreshInvestors = false;
+    }
+  }
+);
+
 const fetchInvestors = async () => {
   loading.value = true;
 
@@ -130,8 +151,9 @@ const fetchInvestors = async () => {
 
   investors.value = await response.json();
 
+  hideDialog();
   loading.value = false;
-}
+};
 
 const handleClose = () => {
   ElMessageBox.confirm("Are you sure to close this dialog Investor?")
@@ -140,7 +162,7 @@ const handleClose = () => {
     })
     .catch((error) => {
       console.log(error);
-      PosseidonNotif(`warning`, `${error} this Operation!`)
+      PosseidonNotif(`warning`, `${error} this Operation!`);
     });
 };
 
@@ -150,14 +172,17 @@ const hideDialog = () => {
 };
 
 const edit = (row: InvestorHera) => {
-  //TODO: Edit Investor
-}
+  investor.value = row;
+  investorSave.value = "update";
+  dialogVisible.value = true;
+  componentKey.value = row.id;
+};
 
 const toggle = (row: InvestorHera) => {
   //TODO: Toggle Investor
-}
+};
 
 const remove = (row: InvestorHera) => {
   //TODO: Remove Investor
-}
+};
 </script>

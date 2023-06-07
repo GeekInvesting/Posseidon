@@ -155,6 +155,16 @@ const investorService = new InvestorHeraService();
 onMounted(() => {
   fetchCountries();
   admin();
+
+  if (props.investorSave === "update") {
+    countryValue.value = props.initialData.investorCity?.cityState.stateCountry.countryName;
+    stateValue.value = props.initialData.investorCity?.cityState.stateName;
+    cityValue.value = props.initialData.investorCity?.cityName;
+    userValue.value = props.initialData.investorUser;
+    fetchStates(props.initialData.investorCity?.cityState.stateCountry.countryName);
+    fetchCities(props.initialData.investorCity?.cityState.stateName);
+    fetchUsers();
+  }
 });
 
 const props = defineProps({
@@ -211,7 +221,7 @@ const submit = () => {
 
       props.investorSave === "create"
         ? (response = await investorService.createInvestor(investor.value))
-        : null; // response = await investorService.updateInvestor(investor.value);
+        : response = await investorService.updateInvestor(investor.value);
 
       response
         ? PosseidonNotif(

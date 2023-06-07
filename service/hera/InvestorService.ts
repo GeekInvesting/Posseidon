@@ -24,4 +24,13 @@ export class InvestorHeraService extends ApiService {
       method: "GET",
     });
   }
+
+  async updateInvestor(investor: InvestorDto): Promise<Response> {
+    const url = `${this.baseUrl}/${investor.id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "PUT",
+      body: JSON.stringify(investor),
+    });
+  }
+  
 }
