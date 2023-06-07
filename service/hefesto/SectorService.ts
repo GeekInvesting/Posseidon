@@ -2,6 +2,7 @@
 import { Sector } from "~/model/hefesto/Sector";
 import { ApiService } from "../ApiService";
 import { apiErrorHandler } from "~/middleware/apiErrorHandler";
+import { urlHefesto } from "../BaseUrl";
 
 export class SectorService extends ApiService {
   private urlBase: string = urlHefesto;

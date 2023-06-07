@@ -1,5 +1,7 @@
-import { User } from "~/modelService/atena/User";
-import { urlAtena } from "~/utils/BaseUrl";
+import { User } from "~/model/atena/User";
+import { urlAtena } from "~/service/BaseUrl";
+import { ApiService } from "../ApiService";
+import { apiErrorHandler } from "~/middleware/apiErrorHandler";
 
 export const createUser = async (data: Partial<User>) => {
   const { userName, userEmail, userPassword, userRole} = data;
@@ -32,4 +34,17 @@ export const getUser = async () => {
   });
 
   return response;
+}
+
+export class UserService extends ApiService {
+  baseUrl = `${urlAtena}/user`
+
+  constructor() { super() }
+
+  async getAllUsers(): Promise<Response> {
+    const url = `${this.baseUrl}/all/name`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "GET",
+    });
+  }
 }

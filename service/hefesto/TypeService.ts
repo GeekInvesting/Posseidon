@@ -1,6 +1,7 @@
 import { TypeModel } from "~/model/hefesto/TypeModel";
 import { ApiService } from "../ApiService";
 import { apiErrorHandler } from "~/middleware/apiErrorHandler";
+import { urlHefesto } from "../BaseUrl";
 
 export class TypeService extends ApiService {
     urlBase: string = `${urlHefesto}/type`;

@@ -1,6 +1,7 @@
 import { Subsector, SubsectorDto } from "~/model/hefesto/Subsector";
 import { ApiService } from "../ApiService";
 import { apiErrorHandler } from "~/middleware/apiErrorHandler";
+import { urlHefesto } from "../BaseUrl";
 
 export class SubsectorService extends ApiService {
   private urlBase: string = `${urlHefesto}/subsector`;
