@@ -1,3 +1,5 @@
+import { urlAtena } from "../BaseUrl";
+
 export const authSignIn = async (userEmail: string, userPassword: string) => {
     const response = await fetch(`${urlAtena}/auth`, {
         method: "POST",

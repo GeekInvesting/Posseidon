@@ -1,6 +1,7 @@
 import { Ticket, TicketDTO } from "~/model/hefesto/Ticket";
 import { ApiService } from "../ApiService";
 import { apiErrorHandler } from "~/middleware/apiErrorHandler";
+import { urlHefesto } from "../BaseUrl";
 
 export class TicketService extends ApiService {
   urlBase: string = `${urlHefesto}/ticket`;

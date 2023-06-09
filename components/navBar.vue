@@ -24,6 +24,9 @@
             <el-menu-item index="2-1-3"
               ><NuxtLink to="/admin/city">City</NuxtLink>
             </el-menu-item>
+            <el-menu-item index="2-1-4">
+              <NuxtLink to="/admin/investor">Investor</NuxtLink>
+            </el-menu-item>
           </el-sub-menu>
           <el-sub-menu index="2-2">
             <template #title>Hefesto</template>

@@ -21,10 +21,10 @@
   <el-dialog
     v-model="dialogVisible"
     :title="props.title"
-    width="90%"
+    width="80%"
     :before-close="handleClose"
   >
-    <span>
+    <span class="flex-center">
       <AdminStateForm
         v-if="props.title == 'State'"
         class="max-w-screen-md mx-auto"
@@ -59,6 +59,10 @@
       />
       <AdminHefestoTicketForm 
         v-else-if="props.title == 'Ticket'"
+        class="max-w-screen-md mx-auto"
+      />
+      <AdminHeraInvestorForm
+        v-else-if="props.title == 'Investor'"
         class="max-w-screen-md mx-auto"
       />
     </span>
@@ -101,6 +105,8 @@ const handleClose = (done: () => void) => {
         emitEventBus("refreshCompanies", true);
       } else if (props.title == "Ticket") {
         emitEventBus("refreshTickets", true);
+      } else if (props.title == "Investor") {
+        emitEventBus("refreshInvestors", true);
       }
 
       dialogVisible.value = false;

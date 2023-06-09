@@ -184,7 +184,6 @@ watch(props.initialData, (newValue) => {
 });
 
 const submitForm = () => {
-  //TODO: Implement submitForm
   loading.value = true;
 
   ElMessageBox.confirm(`Are you sure to ${props.ticketSave} this ticket?`, {

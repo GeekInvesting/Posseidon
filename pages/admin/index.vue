@@ -27,6 +27,12 @@
         >
           City
         </NuxtLink>
+        <NuxtLink
+          to="/admin/investor"
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Investor
+        </NuxtLink>
       </div>
     </el-card>
     <el-card class="card">

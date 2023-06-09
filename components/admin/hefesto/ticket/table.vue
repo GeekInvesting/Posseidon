@@ -52,64 +52,64 @@
         <span>{{ row.ticketDeleted ? "Deleted" : "" }}</span>
       </template>
     </el-table-column>
-    <el-table-column label="Actions">
-      <template #default="{ row }">
-        <el-dropdown size="lager" placement="auto-end">
-          <el-button circle>
-            <Icon name="ic:baseline-format-list-bulleted" />
-          </el-button>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item>
-                <el-tooltip
-                  class="box-item"
-                  effect="dark"
-                  content="Edit Ticket"
-                  placement="right"
-                >
-                  <el-button @click="edit(row)">
-                    <Icon name="ic:twotone-mode-edit" />
-                  </el-button>
-                </el-tooltip>
-              </el-dropdown-item>
-              <div v-if="!row.ticketDeleted">
-                <el-dropdown-item>
-                  <el-tooltip
-                    class="box-item"
-                    effect="dark"
-                    :content="
-                      row.ticketEnabled ? 'Disable Ticket' : 'Enable Ticket'
-                    "
-                    placement="right"
-                  >
-                    <el-button @click="toggle(row)">
-                      <Icon
-                        :name="
-                          row.ticketEnabled
-                            ? 'ic:sharp-block'
-                            : 'ic:sharp-check'
-                        "
-                      />
-                    </el-button>
-                  </el-tooltip>
-                </el-dropdown-item>
-                <el-dropdown-item>
-                  <el-tooltip
-                    class="box-item"
-                    effect="dark"
-                    content="Delete Ticket"
-                    placement="right"
-                  >
-                    <el-button @click="remove(row)">
-                      <Icon name="ic:sharp-delete" />
-                    </el-button>
-                  </el-tooltip>
-                </el-dropdown-item>
-              </div>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-      </template>
+                <el-table-column label="Actions">
+                  <template #default="{ row }">
+                    <el-dropdown size="lager" placement="auto-end">
+                      <el-button circle>
+                        <Icon name="ic:baseline-format-list-bulleted" />
+                      </el-button>
+                      <template #dropdown>
+                        <el-dropdown-menu>
+                          <el-dropdown-item>
+                            <el-tooltip
+                              class="box-item"
+                              effect="dark"
+                              content="Edit Ticket"
+                              placement="right"
+                            >
+                              <el-button @click="edit(row)">
+                                <Icon name="ic:twotone-mode-edit" />
+                              </el-button>
+                            </el-tooltip>
+                          </el-dropdown-item>
+                          <div v-if="!row.ticketDeleted">
+                            <el-dropdown-item>
+                              <el-tooltip
+                                class="box-item"
+                                effect="dark"
+                                :content="
+                                  row.ticketEnabled ? 'Disable Ticket' : 'Enable Ticket'
+                                "
+                                placement="right"
+                              >
+                                <el-button @click="toggle(row)">
+                                  <Icon
+                                    :name="
+                                      row.ticketEnabled
+                                        ? 'ic:sharp-block'
+                                        : 'ic:sharp-check'
+                                    "
+                                  />
+                                </el-button>
+                              </el-tooltip>
+                            </el-dropdown-item>
+                            <el-dropdown-item>
+                              <el-tooltip
+                                class="box-item"
+                                effect="dark"
+                                content="Delete Ticket"
+                                placement="right"
+                              >
+                                <el-button @click="remove(row)">
+                                  <Icon name="ic:sharp-delete" />
+                                </el-button>
+                              </el-tooltip>
+                            </el-dropdown-item>
+                          </div>
+                        </el-dropdown-menu>
+                      </template>
+                    </el-dropdown>
+                  </template>
     </el-table-column>
   </el-table>
 </template>

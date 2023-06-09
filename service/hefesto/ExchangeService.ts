@@ -1,6 +1,7 @@
 import { Exchange, ExchangeDto } from "~/model/hefesto/Exchange";
 import { ApiService } from "../ApiService";
 import { apiErrorHandler } from "~/middleware/apiErrorHandler";
+import { urlHefesto } from "../BaseUrl";
 
 export const createExchange = async (exchange: ExchangeDto) => {
   const response = await fetch(`${urlHefesto}/exchange`, {

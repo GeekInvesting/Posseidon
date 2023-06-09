@@ -1,5 +1,6 @@
 import { Company } from "~/model/hefesto/Company";
 import { ApiService } from "../ApiService";
+import { urlHefesto } from "../BaseUrl";
 
 export class CompanyService extends ApiService {
     urlBase: string = `${urlHefesto}/company`;
