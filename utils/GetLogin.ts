@@ -11,4 +11,8 @@ export class GetLogin {
   isLoged(): boolean {
     return (this.user && this.user.userRole === "admin") || this.user.userRole === "user";
   }
+
+  userName(): string {
+    return this.user.userName;
+  }
 }

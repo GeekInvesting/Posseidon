@@ -72,7 +72,7 @@
 
 <script lang="ts" setup>
 import { useEventBus } from "~/events/eventBus";
-import { getbyUser } from "~/service/atena/InvestorService";
+import { InvestorHeraService } from "~/service/hera/InvestorService";
 
 const eventBus = useEventBus();
 
@@ -80,6 +80,8 @@ const isAdmin = ref(false);
 const isLoged = ref(false);
 const selectInvestor = ref(false);
 const investors = ref([]);
+
+const investorService = new InvestorHeraService();
 
 onMounted(() => {
   setLogin();
@@ -123,7 +125,8 @@ const logout = () => {
 
 const showInvestors = async () => {
   try {
-    const responseInvestor = await getbyUser();
+    const getLogin = new GetLogin();
+    const responseInvestor = await investorService.getInvestorByUser(getLogin.userName())
 
     if (!responseInvestor.ok) {
       const msg = await responseInvestor.json();

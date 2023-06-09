@@ -139,6 +139,7 @@ watch(
   (newValue) => {
     if (newValue) {
       fetchInvestors();
+      hideDialog();
       useEventBus().value.refreshInvestors = false;
     }
   }
@@ -179,10 +180,56 @@ const edit = (row: InvestorHera) => {
 };
 
 const toggle = (row: InvestorHera) => {
-  //TODO: Toggle Investor
+  loading.value = true;
+
+  ElMessageBox.confirm(`Are you sure to ${row.investorEnabled ? "Disable" : "Enable"} this Investor?`, 
+  {
+    title: `${row.investorEnabled ? "Disable" : "Enable"} ${row.investorName}!`,
+    confirmButtonText: `${row.investorEnabled ? "Disable" : "Enable"}`,
+    cancelButtonText: "Cancel",
+    type: "warning",
+  })
+    .then(async () => {
+      let response;
+
+      row.investorEnabled
+        ? (response = await investorService.disableInvestor(row))
+        : (response = await investorService.enableInvestor(row));
+
+      response ? PosseidonNotif(`success`, `Investor ${row.investorEnabled ? "Disabled" : "Enabled"}!`) : PosseidonNotif(`error`, `Investor Not ${row.investorEnabled ? "Disabled" : "Enabled"}!`);
+
+    })
+    .catch((error) => {
+      //console.log(error);
+      PosseidonNotif(`warning`, `${error} this Operation!`);
+  }).finally(() => {
+    fetchInvestors();
+    loading.value = false;
+  });
 };
 
 const remove = (row: InvestorHera) => {
-  //TODO: Remove Investor
+  loading.value = true;
+
+  ElMessageBox.confirm("Are you sure to delete this Investor?", 
+  {
+    title: `Deleting ${row.investorName}!`,
+    confirmButtonText: "Delete",
+    cancelButtonText: "Cancel",
+    type: "warning",
+  })
+    .then(async () => {
+      const response = await investorService.deleteInvestor(row);
+
+      response ? PosseidonNotif(`success`, `Investor Deleted!`) : PosseidonNotif(`error`, `Investor Not Deleted!`);
+
+    })
+    .catch((error) => {
+      //console.log(error);
+      PosseidonNotif(`warning`, `${error} this Operation!`);
+  }).finally(() => {
+    fetchInvestors();
+    loading.value = false;
+  });
 };
 </script>

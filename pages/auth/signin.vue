@@ -73,7 +73,7 @@
 import { emitEventBus } from "~/events/eventBus";
 import { Investor } from "~/model/atena/Investor";
 import { authSignIn } from "~/service/atena/AuthService";
-import { getbyUser } from "~/service/atena/InvestorService";
+import { InvestorHeraService } from "~/service/hera/InvestorService";
 
 const router = useRouter();
 
@@ -87,6 +87,8 @@ const userName = ref("");
 
 const email = ref("");
 const password = ref("");
+
+const investorService = new InvestorHeraService();
 
 const handleSubmit = async () => {
   loading.value = true;
@@ -107,7 +109,7 @@ const handleSubmit = async () => {
 
     emitEventBus("refreshLogin", true);
 
-    const responseInvestor = await getbyUser();
+    const responseInvestor = await investorService.getInvestorByUser(user.userName);
     if (!responseInvestor.ok) {
       const msg = await responseInvestor.json();
       throw new Error(msg.message);

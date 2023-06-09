@@ -33,4 +33,32 @@ export class InvestorHeraService extends ApiService {
     });
   }
   
+  async deleteInvestor(investor: InvestorHera): Promise<Response> {
+    const url = `${this.baseUrl}/delete/${investor.id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "DELETE",
+    });
+  }
+
+  async getInvestorByUser(user: string): Promise<Response> {
+    const url = `${this.baseUrl}/user/${user}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "GET",
+    });
+  }
+
+  async disableInvestor(investor: InvestorHera): Promise<Response> {
+    const url = `${this.baseUrl}/disable/${investor.id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "PUT",
+    });
+  }
+
+  async enableInvestor(investor: InvestorHera): Promise<Response> {
+    const url = `${this.baseUrl}/enable/${investor.id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "PUT",
+    });
+  }
+  
 }
