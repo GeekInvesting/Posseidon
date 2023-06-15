@@ -15,22 +15,24 @@
       <el-form-item label="Email">
         <el-input v-model="user.userEmail"  type="email" placeholder="teste@teste.com"/>
       </el-form-item>
-      <el-form-item label="Password">
-        <el-input
+      <template v-if="props.typeSave === 'Create'">
+        <el-form-item label="Password">
+          <el-input
           v-model="user.userPassword"
           type="password"
           placeholder="Please input password"
           show-password
-        />
-      </el-form-item>
-      <el-form-item label="Confirm Pass">
-        <el-input
+          />
+        </el-form-item>
+        <el-form-item label="Confirm Pass">
+          <el-input
           v-model="userConfirmPassword"
           type="password"
           placeholder="Please repeat password"
           show-password
-        />
-      </el-form-item>
+          />
+        </el-form-item>
+      </template>
       <template v-if="isAdmin">
         <el-form-item label="Role">
           <el-select v-model="user.userRole" placeholder="Select Role">
@@ -137,6 +139,7 @@ watch(() => props.initialData, (newVal) => {
     userCreatedAt: newVal.userCreatedAt || "",
     userUpdatedAt: newVal.userUpdatedAt || "",
   };
+  userConfirmPassword.value = newVal.userPassword || "";
 });
 
 onMounted(() => {
@@ -151,7 +154,11 @@ const submit = () => {
     confirmButtonText: 'Save',
     cancelButtonText: 'Cancel',}
     ).then( async () => {
-      if (user.value.userPassword != userConfirmPassword.value) {
+      if (props.typeSave == "Create" && user.value.userPassword == "") {
+        PosseidonNotif("error", "Password is required");
+        return;
+      }
+      if (props.typeSave == "Create" && user.value.userPassword != userConfirmPassword.value) {
         PosseidonNotif("error", "Password and Confirm Password are different");
         return;
       }
@@ -159,10 +166,12 @@ const submit = () => {
       let response;
       props.typeSave == "Create"
         ? response = await userService.createUser(user.value)
-        : null;
+        : response = await userService.updateUser(user.value);
 
       response ? PosseidonNotif("success", "User saved successfully") : PosseidonNotif("error", "Error saving user");
-      emitEventBus("dialogInvestor", true);
+
+      emitEventBus("dialogInvestor", true)
+      emitEventBus("refreshUsers", true);
     }).catch((error) => {
       PosseidonNotif("warning", `${error} this operation.`);
     });

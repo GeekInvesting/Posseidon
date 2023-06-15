@@ -1,3 +1,4 @@
+//service/atena/UserService.ts
 import { User } from "~/model/atena/User";
 import { urlAtena } from "~/service/BaseUrl";
 import { ApiService } from "../ApiService";
@@ -64,6 +65,18 @@ export class UserService extends ApiService {
     const url = `${this.baseUrl}/all`;
     return await apiErrorHandler(this.fetch)(url, {
       method: "GET",
+    });
+  }
+
+  async updateUser(user: Partial<User>): Promise<Response> {
+    const url = `${this.baseUrl}/${user.id}`;
+    //console.log(url);
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
     });
   }
 }

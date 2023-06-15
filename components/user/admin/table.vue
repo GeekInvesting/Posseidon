@@ -2,14 +2,14 @@
   <el-dialog
     title="Edit User"
     v-model="dialogVisible"
-    width="90"
+    width="90%"
     :before-close="handleClose"
   >
     <span>
       <UserAdminRegister
         :key="componentKey"
         :initialData="user"
-        :userSave="userSave"
+        :typeSave="userSave"
       />
     </span>
   </el-dialog>
@@ -115,13 +115,14 @@
 </template>
 
 <script lang="ts" setup>
+import { useEventBus } from '~/events/eventBus';
 import { User } from '~/model/atena/User';
 import { UserService } from '~/service/atena/UserService';
 
 const svg = Loading().svg;
 const dialogVisible = ref(false);
 const componentKey = ref("");
-const userSave = ref("update");
+const userSave = ref("Update");
 const loading = ref(false);
 const user: Ref<User> = ref({} as User);
 const users: Ref<User[]> = ref([]);
@@ -139,4 +140,37 @@ const fetchUsers = async () => {
   loading.value = false;
 }
 
+watch(() => useEventBus().value.refreshUsers,
+(newValue) => {
+  if (newValue) {
+    fetchUsers();
+    useEventBus().value.refreshUsers = false;
+  }
+})
+
+const edit = (row: User) => {
+  user.value = row;
+  componentKey.value = row.id;
+  dialogVisible.value = true;
+}
+
+const toggle = async (row: User) => {
+  //TODO: Implement toggle
+}
+
+const remove = async (row: User) => {
+  //TODO: Implement remove
+}
+
+const handleClose = () => {
+  ElMessageBox.confirm("Are you sure to close this dialog?")
+    .then(() => {
+      dialogVisible.value = false;
+      user.value = {} as User;
+      componentKey.value = "";
+    })
+    .catch((error) => {
+      PosseidonNotif("warning", `${error} this dialog.`);
+    });
+}
 </script>
