@@ -1,15 +1,16 @@
 export class GetLogin {
   user: any;
   constructor() {
-    this.user = JSON.parse(localStorage.getItem("user") || "{}");;
+    this.user = JSON.parse(localStorage.getItem("user") || "{}");
+    console.log(this.user);
   }
 
   isAdmin(): boolean {
-    return this.user && this.user.userRole === "admin";
+    return this.user && this.user.userRole === "ADMIN";
   }
 
   isLoged(): boolean {
-    return (this.user && this.user.userRole === "admin") || this.user.userRole === "user";
+    return (this.user && this.user.userRole === "ADMIN") || this.user.userRole === "USER";
   }
 
   userName(): string {

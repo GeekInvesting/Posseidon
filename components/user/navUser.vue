@@ -42,11 +42,9 @@
               </button>
             </el-dropdown-item>
             <el-dropdown-item>
-              <button>
-                <NuxtLink to="/user">
-                  <Icon name="ic:round-assignment-ind" />
-                  Sing Up
-                </NuxtLink>
+              <button @click="showUser">
+                <Icon name="ic:round-assignment-ind" />
+                Sing Up
               </button>
             </el-dropdown-item>
           </template>
@@ -55,17 +53,22 @@
     </el-dropdown>
   </div>
   <el-dialog
-    title="Investor"
-    v-model="selectInvestor"
-    width="50%"
-    :before-close="() => (selectInvestor = false)"
+    :title="dialogType"
+    v-model="selectDialog"
+    width="80%"
+    :before-close="() => (selectDialog = false)"
   >
-    <div>
-      <p>Select the investor profile:</p>
+    <div v-if="dialogType == 'Investor'">
+      <div>
+        <p>Select the investor profile:</p>
+      </div>
+      <br />
+      <div v-for="investor in investors">
+        <UserInvestorButton :investor="investor" origin="navUser" />
+      </div>
     </div>
-    <br />
-    <div v-for="investor in investors">
-      <UserInvestorButton :investor="investor" origin="navUser" />
+    <div v-else-if="dialogType == 'User'">
+      <UserAdminRegister />
     </div>
   </el-dialog>
 </template>
@@ -78,9 +81,9 @@ const eventBus = useEventBus();
 
 const isAdmin = ref(false);
 const isLoged = ref(false);
-const selectInvestor = ref(false);
+const selectDialog = ref(false);
 const investors = ref([]);
-
+const dialogType = ref("");
 const investorService = new InvestorHeraService();
 
 onMounted(() => {
@@ -110,11 +113,11 @@ watch(
   () => eventBus.value.dialogInvestor,
   (newValue) => {
     if (newValue) {
-      selectInvestor.value = false;
+      selectDialog.value = false;
       eventBus.value.dialogInvestor = false;
     }
   }
-)
+);
 
 const logout = () => {
   localStorage.removeItem("user");
@@ -124,9 +127,12 @@ const logout = () => {
 };
 
 const showInvestors = async () => {
+  dialogType.value = "Investor";
   try {
     const getLogin = new GetLogin();
-    const responseInvestor = await investorService.getInvestorByUser(getLogin.userName())
+    const responseInvestor = await investorService.getInvestorByUser(
+      getLogin.userName()
+    );
 
     if (!responseInvestor.ok) {
       const msg = await responseInvestor.json();
@@ -135,7 +141,7 @@ const showInvestors = async () => {
 
     investors.value = await responseInvestor.json();
 
-    selectInvestor.value = true;
+    selectDialog.value = true;
   } catch (error) {
     console.log(error);
     Notif().notfError(`Error`, `${error}`);
@@ -143,6 +149,12 @@ const showInvestors = async () => {
 };
 
 const closeDialogInvestor = () => {
-  selectInvestor.value = false;
+  selectDialog.value = false;
+};
+
+const showUser = () => {
+  dialogType.value = "User";
+  selectDialog.value = true;
+  console.log("showUser", selectDialog.value, dialogType.value);
 };
 </script>

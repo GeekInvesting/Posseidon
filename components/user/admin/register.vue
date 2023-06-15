@@ -25,7 +25,7 @@
       </el-form-item>
       <el-form-item label="Confirm Pass">
         <el-input
-          v-model="user.userConfirmPassword"
+          v-model="userConfirmPassword"
           type="password"
           placeholder="Please repeat password"
           show-password
@@ -66,9 +66,18 @@
         </el-form-item>
         <el-form-item label="Created At">
           <el-date-picker
-            v-model="user.UserCreatedAt"
+            v-model="user.userCreatedAt"
             type="date"
             placeholder="Created At"
+            size="large"
+            :disabled="true"
+          />
+        </el-form-item>
+        <el-form-item label="Updated At">
+          <el-date-picker
+            v-model="user.userUpdatedAt"
+            type="date"
+            placeholder="Updated At"
             size="large"
             :disabled="true"
           />
@@ -82,15 +91,20 @@
 </template>
 
 <script lang="ts" setup>
-import { User } from "~/modelService/atena/User";
+import { User } from "~/model/atena/User";
 import { Notif } from "~/utils/Notif";
-import { validToken } from "~/service/atena/AuthService";
-import { createUser } from "~/service/atena/UserService";
+import { UserService, createUser } from "~/service/atena/UserService";
+import { emitEventBus, useEventBus } from "~/events/eventBus";
+import { AuthService } from "~/service/atena/AuthService";
 
 const svg = Loading().svg;
 let loading = ref(false);
+const userConfirmPassword = ref("");
 const isAdmin = ref(false);
 const userAuth: Ref<Partial<User>> = ref({});
+
+const userService = new UserService();
+const authService = new AuthService();
 
 const props = defineProps({
   initialData: {
@@ -104,28 +118,28 @@ const props = defineProps({
 });
 
 const user: Ref<User> = ref({
-  userId: props.initialData.userId || "",
+  id: props.initialData.id || "",
   userName: props.initialData.userName || "",
   userEmail: props.initialData.userEmail || "",
   userPassword: props.initialData.userPassword || "",
-  userConfirmPassword: props.initialData.userConfirmPassword || "",
   userRole: props.initialData.userRole || "",
   userEnabled: props.initialData.userEnabled || false,
   userDeleted: props.initialData.userDeleted || false,
-  UserCreatedAt: props.initialData.UserCreatedAt || "",
+  userCreatedAt: props.initialData.userCreatedAt || "",
+  userUpdatedAt: props.initialData.userUpdatedAt || "",
 });
 
-watch(props.initialData, (newVal) => {
+watch(() => props.initialData, (newVal) => {
   user.value = {
-    userId: props.initialData.userId || "",
+    id: newVal.id || "",
     userName: newVal.userName || "",
     userEmail: newVal.userEmail || "",
     userPassword: newVal.userPassword || "",
-    userConfirmPassword: newVal.userConfirmPassword || "",
     userRole: newVal.userRole || "",
     userEnabled: newVal.userEnabled || true,
     userDeleted: newVal.userDeleted || false,
-    UserCreatedAt: newVal.UserCreatedAt || "",
+    userCreatedAt: newVal.userCreatedAt || "",
+    userUpdatedAt: newVal.userUpdatedAt || "",
   };
 });
 
@@ -139,42 +153,36 @@ onMounted(() => {
 });
 
 
-const submit = async () => {
+const submit = () => {
   loading.value = true;
-  try {
-    if (user.value.userPassword != user.value.userConfirmPassword) {
-      Notif().notfError(
-        "Error",
-        "Password and Confirm Password must be the same"
-      );
-      loading.value = false;
-      return;
-    }
+  ElMessageBox.confirm('Are you sure to save this user?', 'Warning', {
+    confirmButtonText: 'Save',
+    cancelButtonText: 'Cancel',}
+    ).then( async () => {
+      if (user.value.userPassword != userConfirmPassword.value) {
+        PosseidonNotif("error", "Password and Confirm Password are different");
+        return;
+      }
 
-    const response = await createUser(user.value);
+      let response;
+      props.typeSave == "Create"
+        ? response = await userService.createUser(user.value)
+        : null;
 
-    const responseBody = await response.json();
-
-    if (!response.ok) {
-      throw new Error(responseBody.message);
-    }
-
-    Notif().notfSuccess(
-      "Success",
-      `Saved User: ${responseBody.userName}`
-    );
-  } catch (error) {
-    Notif().notfError("Error", `${error}`);
-  }
+      response ? PosseidonNotif("success", "User saved successfully") : PosseidonNotif("error", "Error saving user");
+      emitEventBus("dialogInvestor", true);
+    }).catch((error) => {
+      PosseidonNotif("warning", `${error} this operation.`);
+    });
   loading.value = false;
 };
 
 const validUser = async () => {
-  const response = await validToken();
+  const response = await authService.validateToken();
 
   if (response.ok) {
     const responseBody = await response.json();
-    if (responseBody.userRole == "admin") {
+    if (responseBody.userRole == "ADMIN") {
       isAdmin.value = true;
     }
   }

@@ -1,27 +1,25 @@
+import { apiErrorHandler } from "~/middleware/apiErrorHandler";
+import { ApiService } from "../ApiService";
 import { urlAtena } from "../BaseUrl";
 
-export const authSignIn = async (userEmail: string, userPassword: string) => {
-    const response = await fetch(`${urlAtena}/auth`, {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userEmail, userPassword }),
-    });
-    
-    return response;
-}
+export class AuthService extends ApiService {
+  constructor() {
+    super();
+  }
+  private baseUrl = `${urlAtena}/auth`;
 
-export const validToken = async () => {
-    const token = localStorage.getItem("token");
-    
-    const response = await fetch(`${urlAtena}/valid`, {
-        method: "GET",
-        headers: {
-        "Content-Type": "application/json",
-        "authorization": "Bearer " + token
-        }
+  async login(userEmail: string, userPassword: string): Promise<Response> {
+    const url = `${this.baseUrl}/login`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "POST",
+      body: JSON.stringify({ userEmail, userPassword }),
     });
+  }
 
-    return response;
+  async validateToken(): Promise<Response> {
+    const url = `${this.baseUrl}/validate`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "POST",
+    });
+  }
 }

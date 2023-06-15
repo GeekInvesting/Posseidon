@@ -46,6 +46,6 @@ const getUserData = async () => {
 
 definePageMeta({
   layout: "layout-user",
-  middleware: "auth",
+  //middleware: "auth",
 });
 </script>

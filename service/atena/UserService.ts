@@ -47,4 +47,16 @@ export class UserService extends ApiService {
       method: "GET",
     });
   }
+
+  async createUser(user: Partial<User>): Promise<Response> {
+    //console.log(user);
+    const url = `${this.baseUrl}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+  }
 }
