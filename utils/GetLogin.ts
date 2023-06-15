@@ -2,7 +2,7 @@ export class GetLogin {
   user: any;
   constructor() {
     this.user = JSON.parse(localStorage.getItem("user") || "{}");
-    console.log(this.user);
+    //console.log(this.user);
   }
 
   isAdmin(): boolean {

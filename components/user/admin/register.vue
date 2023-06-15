@@ -144,12 +144,8 @@ watch(() => props.initialData, (newVal) => {
 });
 
 onMounted(() => {
-  const userStorage = localStorage.getItem("user");
-  if (userStorage) {
-    userAuth.value = JSON.parse(userStorage);
-    validUser();
-    //console.log(userStorage);
-  }
+  const getLogin = new GetLogin();
+  isAdmin.value = getLogin.isAdmin();
 });
 
 
@@ -176,15 +172,4 @@ const submit = () => {
     });
   loading.value = false;
 };
-
-const validUser = async () => {
-  const response = await authService.validateToken();
-
-  if (response.ok) {
-    const responseBody = await response.json();
-    if (responseBody.userRole == "ADMIN") {
-      isAdmin.value = true;
-    }
-  }
-}
 </script>

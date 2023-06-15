@@ -9,7 +9,7 @@
       <el-menu
         mode="horizontal"
         class="md:flex-row md:items-center hover:transition-all"
-        ellipsis="true"
+        ellipsis=true
       >
         <el-menu-item index="1"><NuxtLink to="/">Home</NuxtLink></el-menu-item>
         <el-sub-menu v-if="isAdmin" index="2">
@@ -48,6 +48,12 @@
             </el-menu-item>
             <el-menu-item index="2-2-6">
               <NuxtLink to="/admin/ticket">Ticket</NuxtLink>
+            </el-menu-item>
+          </el-sub-menu>
+          <el-sub-menu index="2-3">
+            <template #title>Atena</template>
+            <el-menu-item index="2-3-1">
+              <NuxtLink to="/admin/user">User</NuxtLink>
             </el-menu-item>
           </el-sub-menu>
         </el-sub-menu>

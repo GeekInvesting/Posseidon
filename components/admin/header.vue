@@ -57,12 +57,16 @@
         v-else-if="props.title == 'Company'"
         class="max-w-screen-md mx-auto"
       />
-      <AdminHefestoTicketForm 
+      <AdminHefestoTicketForm
         v-else-if="props.title == 'Ticket'"
         class="max-w-screen-md mx-auto"
       />
       <AdminHeraInvestorForm
         v-else-if="props.title == 'Investor'"
+        class="max-w-screen-md mx-auto"
+      />
+      <UserAdminRegister
+        v-else-if="props.title == 'User'"
         class="max-w-screen-md mx-auto"
       />
     </span>
@@ -107,6 +111,8 @@ const handleClose = (done: () => void) => {
         emitEventBus("refreshTickets", true);
       } else if (props.title == "Investor") {
         emitEventBus("refreshInvestors", true);
+      } else if (props.title == "User") {
+        emitEventBus("refreshUsers", true);
       }
 
       dialogVisible.value = false;
