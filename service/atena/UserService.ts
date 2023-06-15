@@ -86,4 +86,18 @@ export class UserService extends ApiService {
       method: "DELETE",
     });
   }
+
+  async enableUser(user: Partial<User>): Promise<Response> {
+    const url = `${this.baseUrl}/enable/${user.id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "PATCH",
+    });
+  }
+
+  async disableUser(user: Partial<User>): Promise<Response> {
+    const url = `${this.baseUrl}/disable/${user.id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "PATCH",
+    });
+  }
 }

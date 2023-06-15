@@ -156,7 +156,27 @@ const edit = (row: User) => {
 }
 
 const toggle = async (row: User) => {
-  //TODO: Implement toggle
+  loading.value = true;
+  ElMessageBox.confirm(`Are you sure ${row.userEnabled ? "disable" : "enable"} this user?`, "Warning", {
+    confirmButtonText: `${row.userEnabled ? "DISABLE" : "ENABLE"}`,
+    cancelButtonText: "CANCEL",
+  }).then(async () => {
+      let response;
+
+      row.userEnabled
+        ? (response = await userService.disableUser(row))
+        : (response = await userService.enableUser(row));
+
+      response
+        ? PosseidonNotif("success", `User ${row.userEnabled ? "disabled" : "enabled"} successfully.`)
+        : PosseidonNotif("error", `Error ${row.userEnabled ? "disabling" : "enabling"} user.`);
+
+    }).catch((error) => {
+      PosseidonNotif("warning", `${error} ${row.userEnabled ? "disabling" : "enabling"} user.`);
+    }).finally(() => {
+      fetchUsers();
+      loading.value = false;
+    });
 }
 
 const remove = async (row: User) => {
