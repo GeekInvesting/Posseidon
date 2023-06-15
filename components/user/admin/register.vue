@@ -59,11 +59,11 @@
             class="ml-2"
             inline-prompt
             style="
-              --el-switch-on-color: #13ce66;
-              --el-switch-off-color: #ff4949;
+              --el-switch-off-color: #13ce66;
+              --el-switch-on-color: #ff4949;
             "
-            active-text="Actived"
-            inactive-text="Deleted"
+            active-text="Deleted"
+            inactive-text="Actived"
           />
         </el-form-item>
         <el-form-item label="Created At">

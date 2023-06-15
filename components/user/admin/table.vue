@@ -144,6 +144,7 @@ watch(() => useEventBus().value.refreshUsers,
 (newValue) => {
   if (newValue) {
     fetchUsers();
+    dialogVisible.value = false;
     useEventBus().value.refreshUsers = false;
   }
 })
@@ -159,7 +160,22 @@ const toggle = async (row: User) => {
 }
 
 const remove = async (row: User) => {
-  //TODO: Implement remove
+  loading.value = true;
+  ElMessageBox.confirm("Are you sure to remove this user?", "Warning", {
+    confirmButtonText: "REMOVE",
+    cancelButtonText: "CANCEL",
+  }).then(async () => {
+      const response = await userService.removeUser(row);
+
+      response
+        ? PosseidonNotif("success", "User removed successfully.")
+        : PosseidonNotif("error", "Error removing user.");
+    }).catch((error) => {
+      PosseidonNotif("warning", `${error} removing user.`);
+    }).finally(() => {
+      fetchUsers();
+      loading.value = false;
+    });
 }
 
 const handleClose = () => {

@@ -79,4 +79,11 @@ export class UserService extends ApiService {
       body: JSON.stringify(user),
     });
   }
+
+  async removeUser(user: Partial<User>): Promise<Response> {
+    const url = `${this.baseUrl}/${user.id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "DELETE",
+    });
+  }
 }
