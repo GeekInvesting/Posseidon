@@ -9,7 +9,7 @@
       <el-menu
         mode="horizontal"
         class="md:flex-row md:items-center hover:transition-all"
-        ellipsis=true
+        :ellipsis="false"
       >
         <el-menu-item index="1"><NuxtLink to="/">Home</NuxtLink></el-menu-item>
         <el-sub-menu v-if="isAdmin" index="2">

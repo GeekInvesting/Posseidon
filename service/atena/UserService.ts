@@ -42,7 +42,7 @@ export class UserService extends ApiService {
   constructor() { super() }
 
   async getAllUsers(): Promise<Response> {
-    const url = `${this.baseUrl}/all/name`;
+    const url = `${this.baseUrl}/name/all`;
     return await apiErrorHandler(this.fetch)(url, {
       method: "GET",
     });
@@ -57,6 +57,13 @@ export class UserService extends ApiService {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(user),
+    });
+  }
+
+  async findAll(): Promise<Response> {
+    const url = `${this.baseUrl}/all`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "GET",
     });
   }
 }

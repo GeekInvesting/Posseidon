@@ -92,19 +92,15 @@
 
 <script lang="ts" setup>
 import { User } from "~/model/atena/User";
-import { Notif } from "~/utils/Notif";
-import { UserService, createUser } from "~/service/atena/UserService";
-import { emitEventBus, useEventBus } from "~/events/eventBus";
-import { AuthService } from "~/service/atena/AuthService";
+import { UserService } from "~/service/atena/UserService";
+import { emitEventBus } from "~/events/eventBus";
 
 const svg = Loading().svg;
 let loading = ref(false);
 const userConfirmPassword = ref("");
 const isAdmin = ref(false);
-const userAuth: Ref<Partial<User>> = ref({});
 
 const userService = new UserService();
-const authService = new AuthService();
 
 const props = defineProps({
   initialData: {
@@ -123,7 +119,7 @@ const user: Ref<User> = ref({
   userEmail: props.initialData.userEmail || "",
   userPassword: props.initialData.userPassword || "",
   userRole: props.initialData.userRole || "",
-  userEnabled: props.initialData.userEnabled || false,
+  userEnabled: props.initialData.userEnabled || true,
   userDeleted: props.initialData.userDeleted || false,
   userCreatedAt: props.initialData.userCreatedAt || "",
   userUpdatedAt: props.initialData.userUpdatedAt || "",
