@@ -25,7 +25,7 @@
     ></el-table-column>
     <el-table-column prop="stateEnabled" label="Enable">
       <template #default="{ row }">
-        <span>{{ row.stateEnabled ? "True" : "False" }}</span>
+        <span>{{ row.stateEnabled ? "Enable" : "Disable" }}</span>
       </template>
     </el-table-column>
     <el-table-column prop="stateDeleted" label="Deleted">
@@ -91,11 +91,11 @@
 <script setup lang="ts">
 import { List } from "lodash";
 import { useEventBus } from "~~/events/eventBus";
-import { State } from "~~/model/State";
-import { StateDto } from "~~/model/StateDto";
-import { Notification } from "~~/utils/Notification";
+import { State } from "~/modelService/hera/State";
+import { StateDto } from "~/modelService/hera/StateDto";
+import { Notif } from "~/utils/Notif";
 import { ApiHera } from "~~/utils/api/hera";
-import { StateUtils } from "~~/utils/models/StateUtils";
+import { StateUtils } from "~/utils/modelUtils/StateUtils";
 
 const componentKey: Ref<string> = ref('');
 const dialogVisible = ref(false);
@@ -107,7 +107,7 @@ const handleClose = (done: () => void) => {
     })
     .catch((error) => {
       //console.log(error);
-      Notification().notfWarn("Warn", `${error} this operation.`);
+      Notif().notfWarn("Warn", `${error} this operation.`);
     });
 };
 
@@ -139,7 +139,7 @@ const fetchStates = async () => {
     console.log(data);
     states.value = data;
   } catch (error) {
-    Notification().notfError("Error", `To fetch states ${error}`);
+    Notif().notfError("Error", `To fetch states ${error}`);
   }
   loading.value = false;
 };
@@ -154,6 +154,7 @@ watch(
   (newValue) => {
     if (newValue) {
       refreshStates();
+      eventBus.value.refreshStates = false;
     }
   }
 );
@@ -180,7 +181,7 @@ const remove = (row: State) => {
     request("delete", "DELETE", row);
 }).catch((error) => {
   //console.log(error);
-  Notification().notfWarn("Warn Delete", `${error} this operation.`);
+  Notif().notfWarn("Warn Delete", `${error} this operation.`);
 })
 };
 
@@ -189,7 +190,7 @@ const request = async (type: any, method: any, state: State) => {
     const response = await ApiHera().requestState(type, method, state);
 
     if (response.ok) {
-      Notification().notfSuccess(
+      Notif().notfSuccess(
         "Success",
         `State ${state.stateName} ${type} with success`
       );
@@ -199,7 +200,7 @@ const request = async (type: any, method: any, state: State) => {
       throw new Error(`Error to ${type} state ${state.stateName} - ${data}`);
     }
   } catch (error) {
-    Notification().notfError("Error", `${error}`);
+    Notif().notfError("Error", `${error}`);
   }
 };
 

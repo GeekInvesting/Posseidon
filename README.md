@@ -1,3 +1,17 @@
+# Posseidon
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
+
+Service to frontend access system **Kronos Invest** from web.
+
+## Release
+### Version 0.0.1
+Create Project usign Nuxt 3
+
+### Version 0.0.2
+Implement pages for admin services Hera, Hefesto and Atena.
+
+
 # Nuxt 3 Minimal Starter
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.

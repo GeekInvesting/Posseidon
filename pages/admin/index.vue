@@ -6,7 +6,9 @@
           <span>Hera</span>
         </div>
       </template>
-      <div class="card-content text-center grid grid-cols-3 justify-items-stretch gap-3">
+      <div
+        class="card-content text-center grid grid-cols-3 justify-items-stretch gap-3"
+      >
         <NuxtLink
           to="/admin/country"
           class="bg-blue-500 text-white px-4 py-2 rounded"
@@ -25,6 +27,12 @@
         >
           City
         </NuxtLink>
+        <NuxtLink
+          to="/admin/investor"
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Investor
+        </NuxtLink>
       </div>
     </el-card>
     <el-card class="card">
@@ -33,17 +41,71 @@
           <span>Hefesto</span>
         </div>
       </template>
-      <div class="card-content text-center grid grid-cols-3 justify-items-stretch gap-3">
+      <div
+        class="card-content text-center grid grid-cols-3 justify-items-stretch gap-3"
+      >
         <NuxtLink
-          to="/admin/country"
+          to="/admin/exchange"
           class="bg-blue-500 text-white px-4 py-2 rounded"
         >
           Exchange
+        </NuxtLink>
+        <NuxtLink
+          to="/admin/sector"
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Sector
+        </NuxtLink>
+        <NuxtLink
+          to="/admin/subsector"
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Subsector
+        </NuxtLink>
+        <NuxtLink
+          to="/admin/type"
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Type
+        </NuxtLink>
+        <NuxtLink
+          to="/admin/company"
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Company
+        </NuxtLink>
+        <NuxtLink
+          to="/admin/ticket"
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Ticket
+        </NuxtLink>
+      </div>
+    </el-card>
+    <el-card class="card">
+      <template #header>
+        <div class="card-header text-center font-bold text-xl">
+          <span>Atena</span>
+        </div>
+      </template>
+      <div
+        class="card-content text-center grid grid-cols-3 justify-items-stretch gap-3"
+      >
+        <NuxtLink
+          to="/admin/user"
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          User
         </NuxtLink>
       </div>
     </el-card>
   </div>
 </template>
 
-<style>
-</style>
+<script lang="ts" setup>
+definePageMeta({
+  middleware: "auth",
+});
+</script>
+
+<style></style>

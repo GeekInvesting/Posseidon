@@ -86,9 +86,9 @@
 
 <script lang="ts" setup>
 import { useEventBus } from "~~/events/eventBus";
-import { Country } from "~~/model/Country";
+import { Country } from "~/modelService/hera/Country";
 
-import { Notification } from "~~/utils/Notification";
+import { Notif } from "~/utils/Notif";
 import { ApiHera } from "~~/utils/api/hera";
 
 const apiHera = ApiHera();
@@ -108,7 +108,7 @@ const handleClose = (done: () => void) => {
     })
     .catch((error) => {
       //console.log(error);
-      Notification().notfWarn("Warn", `${error} this operation.`);
+      Notif().notfWarn("Warn", `${error} this operation.`);
     });
 };
 
@@ -122,12 +122,12 @@ const fetchCountries = async () => {
     const response = await apiHera.getAllCountry();
     const data = await response.json();
 
-    //console.log("Dados recebidos:", data);
+    console.log("Dados recebidos:", data);
 
     countries.value = data;
   } catch (error) {
-    //console.error("Erro ao buscar os dados:", error);
-    Notification().notfError("Error", "Get data: " + error);
+    console.error("Erro ao buscar os dados:", error);
+    Notif().notfError("Error", "Get data: " + error);
   }
 
   loading.value = false;
@@ -173,7 +173,7 @@ const remove = (row: Country) => {
   postRequest("delete", "DELETE", row);
 }).catch((error) => {
   //console.log(error);
-  Notification().notfWarn("Warn Delete", `${error} this operation.`);
+  Notif().notfWarn("Warn Delete", `${error} this operation.`);
 })
 };
 
@@ -184,7 +184,7 @@ const postRequest = async (type: any, method: any, country: Country) => {
     if (response.ok) {
       const data = await response.json();
       //console.log(`Success ${data} Country: ${country.countryName}`);
-      Notification().notfSuccess(
+      Notif().notfSuccess(
         "Success",
         `${type} Country: ${country.countryName}`
       );
@@ -195,7 +195,7 @@ const postRequest = async (type: any, method: any, country: Country) => {
     }
   } catch (error) {
     //console.error(error);
-    Notification().notfError(
+    Notif().notfError(
       "Error",
       `${type} Country: ${country.countryName} - ${error}`
     );

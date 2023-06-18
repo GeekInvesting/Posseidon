@@ -1,0 +1,1 @@
+export type notifTitle = 'success' | 'error' | 'warning' | 'info';

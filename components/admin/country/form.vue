@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-1 rounded-lg shadow-md mx-5 md:mx-10 lg:mx-20 xl:mx-40"
+    class="p-1 rounded-lg shadow-md mx-5 md:mx-5 lg:mx-10 xl:mx-20"
   >
     <form
       @submit.prevent="submitForm"
@@ -28,10 +28,10 @@
 
 <script lang="ts" setup>
 import { emitEventBus } from "~~/events/eventBus";
-import { Country } from "~~/model/Country";
+import { Country } from "~/modelService/hera/Country";
 
 import { Loading } from "~~/utils/Loading";
-import { Notification } from "~~/utils/Notification";
+import { Notif } from "~/utils/Notif";
 import { ApiHera } from "~~/utils/api/hera";
 
 const apiHera = ApiHera();
@@ -83,12 +83,12 @@ const submitForm = async () => {
 
     const responseBody = await response.json();
 
-    Notification().notfSuccess("Success", `Saved successfully: ${responseBody.countryName}`);
+    Notif().notfSuccess("Success", `Saved successfully: ${responseBody.countryName}`);
 
     emptyCountry();
 
   } catch (error: any) {
-    Notification().notfError("Error", `Saving country: ${error}`);
+    Notif().notfError("Error", `Saving country: ${error}`);
     //console.error(error);
   }
   

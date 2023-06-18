@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-8 bg-white rounded-lg shadow-md mx-5 md:mx-10 lg:mx-20 xl:mx-40"
+    class="p-4 bg-white rounded-lg shadow-md mx-5 md:mx-5 lg:mx-10 xl:mx-20"
   >
     <el-form
       class="mb-4"
@@ -44,9 +44,9 @@
 </template>
 
 <script setup lang="ts">
-import { StateDto } from "~/model/StateDto";
+import { StateDto } from "~/modelService/hera/StateDto.js";
 import { emitEventBus } from "~~/events/eventBus";
-import { Notification } from "~~/utils/Notification";
+import { Notif } from "~/utils/Notif";
 
 import { ApiHera } from "~~/utils/api/hera";
 
@@ -122,7 +122,7 @@ const submitForm = async () => {
     }
     const data = await response.json();
 
-    Notification().notfSuccess(
+    Notif().notfSuccess(
       "Success",
       `Save State: ${data.stateName}`
     );
@@ -137,7 +137,7 @@ const submitForm = async () => {
     };
     selectValue.value = "";
   } catch (error) {
-    Notification().notfError("Error", `Save State: ${error}`);
+    Notif().notfError("Error", `Save State: ${error}`);
   }
 
   emitEventBus("refreshStates", true);

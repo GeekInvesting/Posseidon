@@ -1,12 +1,15 @@
-import { Country } from "~~/model/Country";
-import { State } from "~~/model/State";
-import { StateDto } from "~~/model/StateDto";
+import { CityDto } from "~/model/hera/CityDto";
+import { Country } from "~/model/hera/Country";
+import { State } from "~/model/hera/State";
+import { StateDto } from "~/model/hera/StateDto";
 
-let heraUrl = 'http://localhost:8100/hera'
+const heraUrl = 'http://localhost:80/hera'
+//const heraUrl = 'http://hera:8100/hera'
 
 export function ApiHera() {
     const getAllCountry = async () => {
         const response = await fetch(`${heraUrl}/country/all`);
+        console.log(heraUrl, response);
         return response;
   }
 
@@ -88,6 +91,54 @@ export function ApiHera() {
     return response;
   }
 
+  const getAllStateName = async (countryName: string) => {
+    const response = await fetch(`${heraUrl}/state/country/${countryName}`);
+    return response;
+  };
+
+  const createCity = async (city: CityDto) => {
+    const response = await fetch(`${heraUrl}/city`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(city),
+    });
+
+    return response;
+  };
+
+  const updateCity = async (city: CityDto) => {
+    const response = await fetch(`${heraUrl}/city/${city.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(city),
+    });
+
+    return response;
+  };
+
+  const getAllCity = async () => {
+    const response = await fetch(`${heraUrl}/city/all`);
+    //console.log(heraUrl, response);
+    return response;
+  }
+
+  const requestCity = async (data: any, method: any, city: CityDto) => {
+    const url = `${heraUrl}/city/${data}/${city.id}`;
+    console.log(url);
+      const response = await fetch(url, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      return response;
+  }
+
   return {
     getAllCountry,
     requestCountry,
@@ -96,5 +147,10 @@ export function ApiHera() {
     getAllState,
     requestState,
     postState,
+    getAllStateName,
+    createCity,
+    updateCity,
+    getAllCity,
+    requestCity,
   }
 }
