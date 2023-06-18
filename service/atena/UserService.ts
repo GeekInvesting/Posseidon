@@ -1,3 +1,4 @@
+//service/atena/UserService.ts
 import { User } from "~/model/atena/User";
 import { urlAtena } from "~/service/BaseUrl";
 import { ApiService } from "../ApiService";
@@ -42,9 +43,61 @@ export class UserService extends ApiService {
   constructor() { super() }
 
   async getAllUsers(): Promise<Response> {
-    const url = `${this.baseUrl}/all/name`;
+    const url = `${this.baseUrl}/name/all`;
     return await apiErrorHandler(this.fetch)(url, {
       method: "GET",
+    });
+  }
+
+  async createUser(user: Partial<User>): Promise<Response> {
+    //console.log(user);
+    const url = `${this.baseUrl}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+  }
+
+  async findAll(): Promise<Response> {
+    const url = `${this.baseUrl}/all`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "GET",
+    });
+  }
+
+  async updateUser(user: Partial<User>): Promise<Response> {
+    const url = `${this.baseUrl}/${user.id}`;
+    //console.log(url);
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+  }
+
+  async removeUser(user: Partial<User>): Promise<Response> {
+    const url = `${this.baseUrl}/${user.id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "DELETE",
+    });
+  }
+
+  async enableUser(user: Partial<User>): Promise<Response> {
+    const url = `${this.baseUrl}/enable/${user.id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "PATCH",
+    });
+  }
+
+  async disableUser(user: Partial<User>): Promise<Response> {
+    const url = `${this.baseUrl}/disable/${user.id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "PATCH",
     });
   }
 }

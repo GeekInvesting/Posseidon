@@ -1,11 +1,11 @@
 export interface User {
-    userId: string;
+    id: string;
     userName: string;
     userEmail: string;
     userPassword: string;
     userRole: string;
     userEnabled: boolean;
     userDeleted: boolean;
-    UserCreatedAt: Date;
-    userConfirmPassword: string;
+    userCreatedAt: Date;
+    userUpdatedAt: Date;
 }

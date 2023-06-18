@@ -71,13 +71,13 @@
 
 <script setup lang="ts">
 import { emitEventBus } from "~/events/eventBus";
-import { Investor } from "~/model/atena/Investor";
-import { authSignIn } from "~/service/atena/AuthService";
+import { InvestorHera } from "~/model/hera/InvestorHera";
+import { AuthService } from "~/service/atena/AuthService";
 import { InvestorHeraService } from "~/service/hera/InvestorService";
 
 const router = useRouter();
 
-const investors: Ref<Array<Partial<Investor>>> = ref([]);
+const investors: Ref<Array<Partial<InvestorHera>>> = ref([]);
 const existInvestor: Ref<boolean> = ref(false);
 
 const svg = Loading().svg;
@@ -89,16 +89,13 @@ const email = ref("");
 const password = ref("");
 
 const investorService = new InvestorHeraService();
+const authService = new AuthService();
 
 const handleSubmit = async () => {
   loading.value = true;
-  try {
-    const response = await authSignIn(email.value, password.value);
 
-    if (!response.ok) {
-      const msg = await response.json();
-      throw new Error(msg.message);
-    }
+  const response = await authService.login(email.value, password.value);
+  try {
     const responseBody = await response.json();
     const { token, user } = responseBody;
 
@@ -106,8 +103,8 @@ const handleSubmit = async () => {
     //console.log(userStorage, token);
     await localStorage.setItem("user", userStorage);
     await localStorage.setItem("token", token);
-
-    emitEventBus("refreshLogin", true);
+    
+    await emitEventBus("refreshLogin", true);
 
     const responseInvestor = await investorService.getInvestorByUser(user.userName);
     if (!responseInvestor.ok) {

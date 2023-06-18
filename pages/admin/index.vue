@@ -82,6 +82,23 @@
         </NuxtLink>
       </div>
     </el-card>
+    <el-card class="card">
+      <template #header>
+        <div class="card-header text-center font-bold text-xl">
+          <span>Atena</span>
+        </div>
+      </template>
+      <div
+        class="card-content text-center grid grid-cols-3 justify-items-stretch gap-3"
+      >
+        <NuxtLink
+          to="/admin/user"
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          User
+        </NuxtLink>
+      </div>
+    </el-card>
   </div>
 </template>
 

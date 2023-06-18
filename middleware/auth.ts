@@ -1,4 +1,7 @@
-import { validToken } from "~/service/atena/AuthService";
+import { AuthService } from "~/service/atena/AuthService";
+import { UnauthorizedError } from "~/utils/error/unauthorized.utils";
+
+const authService = new AuthService();
 
 const directSignin = (msg: string) => {
   const router = useRouter();
@@ -33,17 +36,18 @@ export default defineNuxtRouteMiddleware((to, from) => {
           return;
         }
 
-        const valid = await validToken();
+        const valid = await authService.validateToken();
 
         if (valid.status === 401) {
-          directSignin('Session expired, please login again');
+          new UnauthorizedError().directUnauthorized('Restricted area, please login');
           resolve();
           return;
         }
 
         const validUser = await valid.json();
+        const getLogin = new GetLogin();
 
-        if (to.path.includes('/admin') && validUser.userRole !== 'admin') {
+        if (!getLogin.isAdmin()) {
           directHome('Restricted area, please login');
           resolve();
           return;

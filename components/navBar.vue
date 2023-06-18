@@ -3,12 +3,13 @@
     class="flex flex-wrap items-center justify-between w-full py-4 md:py-0 px-4 text-lg text-gray-700 bg-white"
   >
     <div class="flex items-center md:w-auto">
-      <NuxtLink to="/" class="text-xl font-bold text-indigo-500">Logo</NuxtLink>
+      <NuxtLink to="/" class="text-xl font-bold text-indigo-500">PulseInvest</NuxtLink>
     </div>
     <div class="md:flex md:flex-wrap items-center justify-center md:w-auto">
       <el-menu
         mode="horizontal"
         class="md:flex-row md:items-center hover:transition-all"
+        :ellipsis="false"
       >
         <el-menu-item index="1"><NuxtLink to="/">Home</NuxtLink></el-menu-item>
         <el-sub-menu v-if="isAdmin" index="2">
@@ -49,10 +50,15 @@
               <NuxtLink to="/admin/ticket">Ticket</NuxtLink>
             </el-menu-item>
           </el-sub-menu>
+          <el-sub-menu index="2-3">
+            <template #title>Atena</template>
+            <el-menu-item index="2-3-1">
+              <NuxtLink to="/admin/user">User</NuxtLink>
+            </el-menu-item>
+          </el-sub-menu>
         </el-sub-menu>
-        <el-menu-item index="3"
-          ><NuxtLink to="/about">About</NuxtLink>
-        </el-menu-item>
+        <el-menu-item index="3"><NuxtLink to="/about">About</NuxtLink></el-menu-item>
+        <el-menu-item index="4"><NuxtLink to="/contact">Contact</NuxtLink></el-menu-item>
       </el-menu>
     </div>
     <div class="flex-shrink-0">
@@ -74,12 +80,9 @@ onMounted(() => {
 });
 
 const setLogin = () => {
-  if (process.client) {
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-    isAdmin.value = user && user.userRole === "admin";
-    isLoged.value =
-      (user && user.userRole === "admin") || user.userRole === "user";
-  }
+  const getLogin = new GetLogin();
+  isAdmin.value = getLogin.isAdmin();
+  isLoged.value = getLogin.isLoged();
 };
 
 watch(
