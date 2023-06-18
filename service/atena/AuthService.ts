@@ -18,7 +18,7 @@ export class AuthService extends ApiService {
 
   async validateToken(): Promise<Response> {
     const url = `${this.baseUrl}/validate`;
-    return await apiErrorHandler(this.fetch)(url, {
+    return await this.fetch(url, {
       method: "POST",
     });
   }

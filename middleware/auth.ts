@@ -1,4 +1,5 @@
 import { AuthService } from "~/service/atena/AuthService";
+import { UnauthorizedError } from "~/utils/error/unauthorized.utils";
 
 const authService = new AuthService();
 
@@ -38,7 +39,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
         const valid = await authService.validateToken();
 
         if (valid.status === 401) {
-          directSignin('Session expired, please login again');
+          new UnauthorizedError().directUnauthorized('Restricted area, please login');
           resolve();
           return;
         }

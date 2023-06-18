@@ -22,7 +22,7 @@
           placeholder="000.000.000-00"
         />
       </el-form-item>
-      <el-form-item label="Adress" prop="investorAdress" class="mb-4">
+      <el-form-item label="Address" prop="investorAdress" class="mb-4">
         <el-input
           v-model="investor.investorAdress"
           class="shadow-sm"
@@ -97,29 +97,33 @@
         </el-select>
       </el-form-item>
       <el-form-item
-        v-if="isAdmin"
-        label="User"
-        prop="investorUser"
-        class="mb-4"
+      v-if="isAdmin"
+      label="User"
+      prop="investorUser"
+      class="mb-4"
       >
-        <el-select
-          v-model="userValue"
-          class="shadow-sm"
-          placeholder="JOAO"
-          :disabled="!users.length"
-          @change="
+      <el-select
+      v-model="userValue"
+      class="shadow-sm"
+      placeholder="JOAO"
+      :disabled="!users.length"
+      @change="
             () => {
               investor.investorUser = userValue;
+              userLabel = users.find((user) => user? user.userEmail === userValue : null)?.userEmail || '';
             }
-          "
+            "
         >
-          <el-option
-            v-for="item in users"
-            :key="item"
-            :label="item"
-            :value="item"
+        <el-option
+        v-for="item in (users as Partial<User>[])"
+          :key="item.userEmail"
+          :label="item.userName"
+          :value="item.userEmail"
           />
         </el-select>
+        <div class="mx-5 flex items-center flex-grow">
+        <el-text class="ml-2"  >{{ userLabel }}</el-text>
+        </div>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" class="shadow-sm" @click="submit">
@@ -144,11 +148,13 @@ import { StateService } from "~/service/hera/StateService";
 import { UserService } from "~/service/atena/UserService";
 import { InvestorHeraService } from "~/service/hera/InvestorService";
 import { emitEventBus } from "~/events/eventBus";
+import { User } from "~/model/atena/User";
 
 const loading = ref(false);
 const svg = Loading().svg;
 const isAdmin = ref(false);
 const anotherInvestor = ref(false);
+const userLabel: Ref<string> = ref("");
 
 const investorService = new InvestorHeraService();
 
@@ -288,12 +294,12 @@ const fetchCities = async (stateName: string) => {
 };
 
 const userValue = ref("");
-const users: Ref<string[]> = ref([]);
+const users: Ref<Partial<User[]>> = ref([]);
 const userService = new UserService();
 const fetchUsers = async () => {
   let response = await userService.getAllUsers();
   const data = await response.json();
-  const usersNames = data.map((data: { userName: any }) => data.userName);
-  users.value = usersNames;
+  //const usersNames = data.map((data: { userName: any }) => data.userName);
+  users.value = data;
 };
 </script>
