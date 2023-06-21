@@ -69,6 +69,10 @@
         v-else-if="props.title == 'User'"
         class="max-w-screen-md mx-auto"
       />
+      <AdminZeusOperationForm
+        v-else-if="props.title == 'Operation'"
+        class="max-w-screen-md mx-auto"
+      />
     </span>
   </el-dialog>
 </template>
@@ -113,11 +117,13 @@ const handleClose = (done: () => void) => {
         emitEventBus("refreshInvestors", true);
       } else if (props.title == "User") {
         emitEventBus("refreshUsers", true);
+      } else if (props.title == "Operation") {
+        emitEventBus("refreshOperations", true);
       }
 
       dialogVisible.value = false;
     })
-    .catch((error) => {
+    .catch((error:any) => {
       console.log(error);
     });
 };
@@ -133,7 +139,7 @@ const goToAdmin = () => {
 
 watch(
   () => useEventBus().value.dialogCreate,
-  (newValue) => {
+  (newValue:any) => {
     if (newValue) {
       dialogVisible.value = true;
     }

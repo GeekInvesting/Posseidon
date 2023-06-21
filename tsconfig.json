@@ -1,7 +1,9 @@
+//tsconfig.json
 {
   // https://nuxt.com/docs/guide/concepts/typescript
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "typeRoots": ["modelService"]
   },
+  "types": ["node"],
 }

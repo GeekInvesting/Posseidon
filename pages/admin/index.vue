@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 m-3">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 m-3" >
     <el-card class="card">
       <template #header>
         <div class="card-header text-center font-bold text-xl">
@@ -96,6 +96,23 @@
           class="bg-blue-500 text-white px-4 py-2 rounded"
         >
           User
+        </NuxtLink>
+      </div>
+    </el-card>
+    <el-card class="card">
+      <template #header>
+        <div class="card-header text-center font-bold text-xl">
+          <span>Zeus</span>
+        </div>
+      </template>
+      <div
+        class="card-content text-center grid grid-cols-3 justify-items-stretch gap-3"
+      >
+        <NuxtLink
+          to="/admin/operation"
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Operation
         </NuxtLink>
       </div>
     </el-card>
