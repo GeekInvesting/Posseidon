@@ -125,8 +125,8 @@ const dialogVisible = ref(false);
 const componentKey = ref("");
 const loading = ref(false);
 const svg = Loading().svg;
-const investor: Ref<InvestorHera> = ref({} as InvestorHera);
-const investors: Ref<InvestorHera[]> = ref([]);
+let investor: InvestorHera = {} as InvestorHera;
+let investors: InvestorHera[] = [];
 
 const investorService = new InvestorHeraService();
 
@@ -150,7 +150,7 @@ const fetchInvestors = async () => {
 
   const response = await investorService.getAllInvestors();
 
-  investors.value = await response.json();
+  investors = await response.json();
 
   hideDialog();
   loading.value = false;
@@ -173,7 +173,7 @@ const hideDialog = () => {
 };
 
 const edit = (row: InvestorHera) => {
-  investor.value = row;
+  investor = row;
   investorSave.value = "update";
   dialogVisible.value = true;
   componentKey.value = row.id;
@@ -182,7 +182,7 @@ const edit = (row: InvestorHera) => {
 const toggle = (row: InvestorHera) => {
   loading.value = true;
 
-  ElMessageBox.confirm(`Are you sure to ${row.investorEnabled ? "Disable" : "Enable"} this Investor?`, 
+  ElMessageBox.confirm(`Are you sure to ${row.investorEnabled ? "Disable" : "Enable"} this Investor?`,
   {
     title: `${row.investorEnabled ? "Disable" : "Enable"} ${row.investorName}!`,
     confirmButtonText: `${row.investorEnabled ? "Disable" : "Enable"}`,
@@ -211,7 +211,7 @@ const toggle = (row: InvestorHera) => {
 const remove = (row: InvestorHera) => {
   loading.value = true;
 
-  ElMessageBox.confirm("Are you sure to delete this Investor?", 
+  ElMessageBox.confirm("Are you sure to delete this Investor?",
   {
     title: `Deleting ${row.investorName}!`,
     confirmButtonText: "Delete",

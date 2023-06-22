@@ -28,7 +28,7 @@
 
 <script lang="ts" setup>
 import { emitEventBus } from "~~/events/eventBus";
-import { Country } from "~/modelService/hera/Country";
+import { Country } from "~/model/hera/Country";
 
 import { Loading } from "~~/utils/Loading";
 import { Notif } from "~/utils/Notif";
@@ -91,9 +91,9 @@ const submitForm = async () => {
     Notif().notfError("Error", `Saving country: ${error}`);
     //console.error(error);
   }
-  
+
   emitEventBus("refreshCountries", true);
-  
+
     loading.value = false;
 };
 
