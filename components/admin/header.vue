@@ -20,8 +20,8 @@
   </el-page-header>
   <el-dialog
     v-model="dialogVisible"
-    :title="props.title"
-    width="80%"
+    :title="title"
+    width="90%"
     :before-close="handleClose"
   >
     <span class="flex-center">
@@ -80,6 +80,7 @@
 <script setup lang="ts">
 import { emitEventBus, useEventBus } from "~~/events/eventBus";
 
+const title = ref("");
 const router = useRouter();
 
 const props = defineProps({
@@ -87,6 +88,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+});
+
+onMounted(() => {
+  title.value = props.title;
 });
 
 const dialogVisible = ref(false);

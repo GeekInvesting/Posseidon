@@ -5,13 +5,13 @@
     @click="selectInvestor"
     size="large"
     >
-    {{ investor.investorName }}
+    {{ investor }}
     </el-button>
 </template>
 
 <script lang="ts" setup>
 import { emitEventBus } from '~/events/eventBus';
-import { Investor } from '~/model/atena/Investor';
+import {InvestorHera} from "~/model/hera/InvestorHera";
 
 const router = useRouter();
 
@@ -28,8 +28,8 @@ const props = defineProps({
 
 const origin = ref(props.origin);
 
-const investor: Ref<Partial<Investor>> = ref({
-  investorId: props.investor.investorId || "",
+const investor: Ref<Partial<InvestorHera>> = ref({
+  id: props.investor.id || "",
   investorName: props.investor.investorName || "",
   investorEnabled: props.investor.investorEnabled || false,
   investorDeleted: props.investor.investorDeleted || false,
@@ -37,7 +37,7 @@ const investor: Ref<Partial<Investor>> = ref({
 
 watch(props.investor, (newVal) => {
   investor.value = {
-    investorId: newVal.investorId || "",
+    id: newVal.id || "",
     investorName: newVal.investorName || "",
     investorEnabled: newVal.investorEnabled || false,
     investorDeleted: newVal.investorDeleted || false,
@@ -46,7 +46,7 @@ watch(props.investor, (newVal) => {
 
 const selectInvestor = () => {
   localStorage.setItem("investor", JSON.stringify(investor.value));
-  
+
   if (origin.value == "signin") {
     setTimeout(() => {
         router.push("/");
