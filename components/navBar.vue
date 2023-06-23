@@ -56,6 +56,15 @@
               <NuxtLink to="/admin/user">User</NuxtLink>
             </el-menu-item>
           </el-sub-menu>
+          <el-sub-menu index="2-4">
+            <template #title>Zeus</template>
+            <el-menu-item index="2-4-1">
+              <NuxtLink to="/admin/operation">Operation</NuxtLink>
+            </el-menu-item>
+            <el-menu-item index="2-4-2">
+              <NuxtLink to="/admin/broker">Broker</NuxtLink>
+            </el-menu-item>
+          </el-sub-menu>
         </el-sub-menu>
         <el-menu-item index="3"><NuxtLink to="/about">About</NuxtLink></el-menu-item>
         <el-menu-item index="4"><NuxtLink to="/contact">Contact</NuxtLink></el-menu-item>

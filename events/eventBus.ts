@@ -17,6 +17,7 @@ export interface EventBusType {
   refreshInvestors: boolean;
   refreshUsers: boolean;
   refreshOperations: boolean;
+  refreshBrokers: boolean;
 }
 
 const eventBusState: EventBusType = {
@@ -35,6 +36,7 @@ const eventBusState: EventBusType = {
   refreshInvestors: false,
   refreshUsers: false,
   refreshOperations: false,
+  refreshBrokers: false,
 };
 
 

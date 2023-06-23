@@ -1,8 +1,8 @@
 <template>
   <div class="p-3 rounded-lg">
-    <AdminHeader title="Operation"/>
+    <AdminHeader title="Broker"/>
     <div class="p-3 rounded-lg">
-      <AdminZeusOperationTable/>
+      <AdminZeusBrokerTable/>
     </div>
   </div>
 </template>
