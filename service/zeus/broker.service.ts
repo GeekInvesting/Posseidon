@@ -42,4 +42,24 @@ export class BrokerService extends ApiService {
       body: JSON.stringify(rest),
     });
   }
+
+  async enableBroker(id: string): Promise<Response> {
+    const url = `${this.urlbase}/${id}/enable`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
+  async disableBroker(id: string): Promise<Response> {
+    const url = `${this.urlbase}/${id}/disable`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
 }

@@ -151,7 +151,24 @@ const edit = (row: BrokerEntity) => {
 }
 
 const toggle = (row: BrokerEntity) => {
-  //TODO toggle broker
+  loading.value = true;
+  ElMessageBox.confirm(`Are you sure to ${row.brokerEnabled ? "Disable" : "Enable"} this Broker.`, {
+    confirmButtonText: `${row.brokerEnabled ? "Disable" : "Enable"}`,
+  }).then(async () => {
+    let response;
+
+    row.brokerEnabled
+      ? (response = await brokerService.disableBroker(row.id))
+      : (response = await brokerService.enableBroker(row.id));
+
+    response
+      ? PosseidonNotif(`success`, `${row.brokerEnabled ? "Disable" : "Enable"}d this Broker!`)
+      : PosseidonNotif(`error`, `${row.brokerEnabled ? "Disable" : "Enable"}d this Broker!`)
+  }).catch((error) => {
+    PosseidonNotif(`warning`, `${error} this Broker!`)
+  }).finally(() => {
+    fetchBrokers();
+  })
 }
 
 const remove = (row: BrokerEntity) => {
