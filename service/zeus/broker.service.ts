@@ -62,4 +62,14 @@ export class BrokerService extends ApiService {
       },
     });
   }
+
+  async deleteBroker(id: string): Promise<Response> {
+    const url = `${this.urlbase}/${id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
 }

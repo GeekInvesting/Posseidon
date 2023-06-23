@@ -133,14 +133,14 @@ const submitForm = () => {
       ? ElMessage.success(`${props.typeSave} successfully`)
       : ElMessage.error(`Error to ${props.typeSave} this Broker`);
 
-    emitEventBus("refreshBrokers", true);
-    anotherCreate.value
-      ? resetForm()
-      : emitEventBus("dialogCreate", true);
   }).catch((error:any) => {
     console.log(error);
     ElMessage.error(`Error to ${props.typeSave} this Broker`);
   }).finally(() => {
+    emitEventBus("refreshBrokers", true);
+    anotherCreate.value
+      ? resetForm()
+      : emitEventBus("dialogCreate", true);
     loading.value = false;
   })
 }

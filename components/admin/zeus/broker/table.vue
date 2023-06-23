@@ -104,6 +104,7 @@
 <script setup lang="ts">
 import {BrokerEntity} from "~/model/zeus/broker.entity";
 import {BrokerService} from "~/service/zeus/broker.service";
+import {useEventBus} from "~/events/eventBus";
 
 const brokerVisible = ref(false)
 const brokers = ref([])
@@ -117,6 +118,15 @@ const brokerService = new BrokerService()
 onMounted(() => {
   fetchBrokers()
 })
+
+watch(() => useEventBus().value.refreshBrokers,
+  (value) => {
+    if (value) {
+      fetchBrokers();
+      useEventBus().value.refreshBrokers = false;
+    }
+  }
+)
 
 const fetchBrokers = async () => {
   loading.value = true;
@@ -172,6 +182,23 @@ const toggle = (row: BrokerEntity) => {
 }
 
 const remove = (row: BrokerEntity) => {
-  //TODO remove broker
+  loading.value = true;
+  ElMessageBox.confirm(`Are you sure to delete this Broker.`, {
+    confirmButtonText: "Yes",
+    cancelButtonText: "No",
+    type: "warning",
+  })
+    .then(async () => {
+      const response = await brokerService.deleteBroker(row.id);
+      response
+        ? PosseidonNotif(`success`, `Deleted this Broker!`)
+        : PosseidonNotif(`error`, `Deleted this Broker!`)
+    })
+    .catch((error) => {
+      PosseidonNotif(`warning`, `${error} this Broker!`)
+    })
+    .finally(() => {
+      fetchBrokers();
+    })
 }
 </script>
