@@ -114,6 +114,12 @@
         >
           Operation
         </NuxtLink>
+        <NuxtLink
+          to="/admin/broker"
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Broker
+        </NuxtLink>
       </div>
     </el-card>
   </div>

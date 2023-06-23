@@ -1,10 +1,8 @@
 <template>
-  <div class="container mx-auto">
-    <AdminHeader title="Operation" />
-    <div class="flex flex-wrap">
-      <div class="w-full">
-        <AdminZeusOperationTable />
-      </div>
+  <div class="p-3 rounded-lg">
+    <AdminHeader title="Operation"/>
+    <div class="p-3 rounded-lg">
+      <AdminZeusOperationTable/>
     </div>
   </div>
 </template>
