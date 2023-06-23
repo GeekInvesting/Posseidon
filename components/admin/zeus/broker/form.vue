@@ -127,7 +127,7 @@ const submitForm = () => {
 
     props.typeSave === 'Create'
       ? response = await brokerService.createBroker(broker.value)
-      : null;
+      : response = await brokerService.updateBroker(broker.value);
 
     response
       ? ElMessage.success(`${props.typeSave} successfully`)

@@ -18,7 +18,7 @@
     element-loading-svg-view-box="-10, -10, 50, 50"
     :data="brokers">
     <el-table-column prop="brokerName" label="Name" sortable/>
-    <el-table-column label="Url" prop="brockerUrl" sortable/>
+    <el-table-column label="Url" prop="brokerUrl" sortable/>
     <el-table-column prop="brokerEnabled" label="Enabled" sortable>
       <template #default="{ row }">
         <el-tag
@@ -112,7 +112,7 @@ const loading = ref(false)
 const svg = Loading().svg
 const componentKey = ref('')
 
-const brockerService = new BrokerService()
+const brokerService = new BrokerService()
 
 onMounted(() => {
   fetchBrokers()
@@ -120,7 +120,7 @@ onMounted(() => {
 
 const fetchBrokers = async () => {
   loading.value = true;
-  const response = await brockerService.getAllBrokers();
+  const response = await brokerService.getAllBrokers();
   brokers.value = await response.json();
   brokerVisible.value = false;
   loading.value = false;
@@ -134,7 +134,8 @@ const handleClose = () => {
     type: "warning",
   })
     .then(() => {
-      brokerVisible.value = false
+      brokerVisible.value = false;
+      fetchBrokers();
     })
     .catch((error) => {
       brokerVisible.value = true
@@ -143,7 +144,10 @@ const handleClose = () => {
 }
 
 const edit = (row: BrokerEntity) => {
-  //TODO edit broker
+  loading.value = true;
+  broker.value = row;
+  componentKey.value = row.id;
+  brokerVisible.value = true;
 }
 
 const toggle = (row: BrokerEntity) => {

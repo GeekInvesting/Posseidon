@@ -30,4 +30,16 @@ export class BrokerService extends ApiService {
       },
     });
   }
+
+  async updateBroker(broker: CreateBrokerDto): Promise<Response> {
+    const {id, ...rest} = broker;
+    const url = `${this.urlbase}/${id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(rest),
+    });
+  }
 }
