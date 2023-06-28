@@ -17,4 +17,11 @@ export class YieldService extends ApiService {
       body: JSON.stringify(yieldCreateDto),
     })
   }
+
+  async getAllYields(): Promise<Response> {
+    const url = `${this.baseUrl}/all`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "GET",
+    });
+  }
 }

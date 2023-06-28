@@ -1,7 +1,11 @@
+import {Operation} from "~/model/zeus/operation.entity";
+import {Ticket} from "~/model/hefesto/Ticket";
 
 export interface YieldEntity {
   id: string;
+  Ticket: Ticket
   ticketId: string;
+  Operation: Operation;
   operationId: string;
   dateCom: Date | undefined;
   datePay: Date | undefined;
