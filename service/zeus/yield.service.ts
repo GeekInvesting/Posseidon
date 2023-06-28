@@ -24,4 +24,13 @@ export class YieldService extends ApiService {
       method: "GET",
     });
   }
+
+  async updateYield(yieldUpdate: CreateYieldDto): Promise<Response> {
+    const { id, ...yieldUpdateDto } = yieldUpdate;
+    const url = `${this.baseUrl}/${id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "PATCH",
+      body: JSON.stringify(yieldUpdateDto),
+    });
+  }
 }

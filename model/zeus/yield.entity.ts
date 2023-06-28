@@ -7,8 +7,8 @@ export interface YieldEntity {
   ticketId: string;
   Operation: Operation;
   operationId: string;
-  dateCom: Date | undefined;
-  datePay: Date | undefined;
+  dateCom: Date;
+  datePay: Date;
   value: number;
   quotation: number;
   income: number;

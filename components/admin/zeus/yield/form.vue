@@ -131,7 +131,6 @@ import {Ticket} from "~/model/hefesto/Ticket";
 import {CompleteItem} from "~/model/complete.entity";
 import {copyProperties} from "~/utils/copyProperties.utils";
 import {YieldService} from "~/service/zeus/yield.service";
-import {Ref} from "vue";
 import {emitEventBus} from "~/events/eventBus";
 
 const loading = ref(false);
@@ -150,7 +149,10 @@ const operationService = new OperationService();
 const yieldService = new YieldService();
 
 onMounted(async () => {
-  datas().then(r => r);
+  await datas();
+
+  ticketSelect.value = props.initialData.Ticket?.ticketCode || "";
+  operationSelect.value = props.initialData.Operation?.name || "";
 })
 
 const props = defineProps({
@@ -168,8 +170,8 @@ const yieldEntity: Ref<CreateYieldDto> = ref({
   id: props.initialData.id || "",
   ticketId: props.initialData.ticketId || "",
   operationId: props.initialData.operationId || "",
-  dateCom: props.initialData.dateCom || "",
-  datePay: props.initialData.datePay || "",
+  dateCom: new Date(props.initialData.dateCom) || "",
+  datePay: new Date(props.initialData.datePay)|| "",
   value: props.initialData.value || 0,
   quotation: props.initialData.quotation || 0,
   income: props.initialData.income || 0,
@@ -180,12 +182,13 @@ const yieldEntity: Ref<CreateYieldDto> = ref({
 
 watch(() => props.initialData,
   (value) => {
+    console.log(`new Value ${value}`);
     yieldEntity.value = {
       id: value.id || "",
       ticketId: value.ticketId || "",
       operationId: value.operationId || "",
-      dateCom: value.dateCom || "",
-      datePay: value.datePay || "",
+      dateCom: new Date(value.dateCom) || "",
+      datePay: new Date(value.datePay) || "",
       value: value.value || 0,
       quotation: value.quotation || 0,
       income: value.income || 0,
@@ -193,6 +196,8 @@ watch(() => props.initialData,
       createdAt: value.createdAt || "",
       updatedAt: value.updatedAt || ""
     }
+    ticketSelect.value = value.Ticket.ticketCode;
+    operationSelect.value = value.Operation.operationName;
   }
 )
 
@@ -202,11 +207,12 @@ async function datas() {
 
   codes = await responseTicket.json();
   ticketsCodes.value = copyProperties(codes);
-  console.log(codes, ticketsCodes.value);
+  //console.log(codes, ticketsCodes.value);
 
   operations = await responseOperation.json();
   operationsNames.value = copyProperties(operations);
-  console.log(operations, operationsNames.value);
+  //console.log(operations, operationsNames.value);
+
 }
 
 const querySearchOp = (queryString: string, cb: any) => {
@@ -226,22 +232,17 @@ const createFilter = (queryString: string) => {
 
 const handleSelectOp = (item: CompleteItem) => {
   yieldEntity.value.operationId = item.link;
-  console.log(item);
-  console.log(yieldEntity.value);
 }
 
 const querySearchTicket = (queryString: string, cb: any) => {
   const results = queryString
     ? ticketsCodes.value.filter(createFilter(queryString))
     : ticketsCodes.value
-  // call callback function to return suggestions
   cb(results)
 }
 
 const handleSelectTicket = (item: CompleteItem) => {
   yieldEntity.value.ticketId = item.link;
-  console.log(item);
-  console.log(yieldEntity.value);
 }
 
 const calIncome = () => {
@@ -251,7 +252,6 @@ const calIncome = () => {
 }
 
 const submit = async () => {
-  //TODO: Submit yield
   const {createdAt, updatedAt, ...yieldDto} = yieldEntity.value;
   loading.value = true;
   ElMessageBox.confirm(`Are you sure to ${props.typeSave?.toLocaleLowerCase()} this Yield?`, {
@@ -260,7 +260,7 @@ const submit = async () => {
     let response;
     props.typeSave === 'Create'
       ? response = await yieldService.createYield(yieldDto)
-      : null;
+      : response = await yieldService.updateYield(yieldDto);
 
     response
       ? PosseidonNotif( 'success', `Yield ${props.typeSave?.toLocaleLowerCase()}d successfully`)

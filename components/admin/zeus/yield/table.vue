@@ -17,6 +17,9 @@
     :data="yields"
     :width="1350"
     :height="800"
+    :loading="loading"
+    :element-loading-svg="svg"
+    element-loading-svg-view-box="-10, -10, 50, 50"
   />
 </template>
 
@@ -36,25 +39,31 @@ import {
 import {Timer, ArrowRightBold} from '@element-plus/icons-vue'
 import type {Column} from 'element-plus'
 import {Ref} from "vue";
+import {useEventBus} from "~/events/eventBus";
 
 const yieldService = new YieldService();
 
+const loading = ref(false);
+const svg = Loading().svg;
 const yields = ref([]);
 const yieldEntity: Ref<YieldEntity> = ref({} as YieldEntity);
 const dialogVisible = ref(false);
 const componentKey = ref('');
 
-
 onMounted(() => {
   fetchYields().then(r => r);
 })
 
-const fetchYields = async () => {
+watch(() => useEventBus().value.refreshYields,
+  () => fetchYields().then(r => r)
+)
 
+const fetchYields = async () => {
+  loading.value = true;
   const response = await yieldService.getAllYields();
   yields.value = await response.json();
-
-  //console.log(yields.value);
+  dialogVisible.value = false;
+  loading.value = false;
 }
 
 const columns: Column<any>[] = [
