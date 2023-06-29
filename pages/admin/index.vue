@@ -120,6 +120,12 @@
         >
           Broker
         </NuxtLink>
+        <NuxtLink
+          to="admin/yield"
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Yield
+        </NuxtLink>
       </div>
     </el-card>
   </div>

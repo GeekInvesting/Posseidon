@@ -77,6 +77,10 @@
         v-else-if="props.title == 'Broker'"
         class="max-w-screen-md mx-auto"
       />
+      <AdminZeusYieldForm
+        v-else-if="props.title == 'Yield'"
+        class="max-w-screen-md mx-auto"
+      />
     </span>
   </el-dialog>
 </template>
@@ -130,6 +134,8 @@ const handleClose = (done: () => void) => {
         emitEventBus("refreshOperations", true);
       } else if (props.title == "Broker") {
         emitEventBus("refreshBrokers", true);
+      } else if (props.title == "Yield") {
+        emitEventBus("refreshYields", true);
       }
 
       dialogVisible.value = false;

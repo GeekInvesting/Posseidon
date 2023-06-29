@@ -60,4 +60,11 @@ export class OperationService extends ApiService {
       method: "DELETE",
     });
   }
+
+  async getOperationBySystem(system: string): Promise<Response> {
+    const url = `${this.baseUrl}/system/${system}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "GET",
+    });
+  }
 }
