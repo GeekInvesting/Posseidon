@@ -102,14 +102,25 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button
-          type="primary"
-          @click="submit"
-          :loading="loading"
-          :disabled="loading"
-        >
-          {{typeSave}}
-        </el-button>
+        <el-button-group>
+          <el-button
+            type="primary"
+            @click="submit"
+            :loading="loading"
+            :disabled="loading"
+          >
+            {{ typeSave }}
+          </el-button>
+          <el-button
+            type="danger"
+            @click="removeYield"
+            :loading="loading"
+            :disabled="loading"
+            v-if="typeSave === 'Update'"
+          >
+            Delete
+          </el-button>
+        </el-button-group>
       </el-form-item>
     </el-form>
     <el-form-item
@@ -152,7 +163,7 @@ onMounted(async () => {
   await datas();
 
   ticketSelect.value = props.initialData.Ticket?.ticketCode || "";
-  operationSelect.value = props.initialData.Operation?.name || "";
+  operationSelect.value = props.initialData.Operation?.operationName || "";
 })
 
 const props = defineProps({
@@ -171,7 +182,7 @@ const yieldEntity: Ref<CreateYieldDto> = ref({
   ticketId: props.initialData.ticketId || "",
   operationId: props.initialData.operationId || "",
   dateCom: new Date(props.initialData.dateCom) || "",
-  datePay: new Date(props.initialData.datePay)|| "",
+  datePay: new Date(props.initialData.datePay) || "",
   value: props.initialData.value || 0,
   quotation: props.initialData.quotation || 0,
   income: props.initialData.income || 0,
@@ -263,15 +274,15 @@ const submit = async () => {
       : response = await yieldService.updateYield(yieldDto);
 
     response
-      ? PosseidonNotif( 'success', `Yield ${props.typeSave?.toLocaleLowerCase()}d successfully`)
-      : PosseidonNotif( 'error', `Yield ${props.typeSave?.toLocaleLowerCase()}d failed`);
-  }).catch((error) => {
-    PosseidonNotif('warning', `Yield ${props.typeSave?.toLocaleLowerCase()}d ${error}`);
-  }).finally(() => {
+      ? PosseidonNotif('success', `Yield ${props.typeSave?.toLocaleLowerCase()}d successfully`)
+      : PosseidonNotif('error', `Yield ${props.typeSave?.toLocaleLowerCase()}d failed`);
+
     anotherYield
       ? emptyForm()
       : emitEventBus('dialogCreate', true);
-
+  }).catch((error) => {
+    PosseidonNotif('warning', `Yield ${props.typeSave?.toLocaleLowerCase()}d ${error}`);
+  }).finally(() => {
     emitEventBus('refreshYields', true);
     loading.value = false;
   })
@@ -293,5 +304,29 @@ const emptyForm = () => {
   };
   operationSelect.value = "";
   ticketSelect.value = "";
+}
+
+const removeYield = async () => {
+  loading.value = true;
+  ElMessageBox.confirm(`Are you sure to delete this Yield?`, {
+    confirmButtonText: `Delete`,
+    type: 'warning'
+  }).then(async () => {
+    let response;
+
+    yieldEntity.value.id
+      ? response = await yieldService.removeYield(yieldEntity.value.id)
+      : PosseidonNotif('warning', `Yield not found`);
+
+    response
+      ? PosseidonNotif('success', `Yield deleted successfully`)
+      : PosseidonNotif('error', `Yield deleted failed`);
+  }).catch((error) => {
+    PosseidonNotif('warning', `Yield deleted ${error}`);
+  }).finally(() => {
+    emitEventBus('dialogCreate', true);
+    emitEventBus('refreshYields', true);
+    loading.value = false;
+  })
 }
 </script>

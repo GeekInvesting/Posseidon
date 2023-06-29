@@ -33,4 +33,11 @@ export class YieldService extends ApiService {
       body: JSON.stringify(yieldUpdateDto),
     });
   }
+
+  async removeYield(id: string): Promise<Response> {
+    const url = `${this.baseUrl}/${id}/confirm`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "DELETE",
+    });
+  }
 }

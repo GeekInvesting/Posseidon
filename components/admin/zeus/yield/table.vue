@@ -55,7 +55,12 @@ onMounted(() => {
 })
 
 watch(() => useEventBus().value.refreshYields,
-  () => fetchYields().then(r => r)
+  (value) => {
+    if (value) {
+      fetchYields();
+      useEventBus().value.refreshYields = false;
+    }
+  }
 )
 
 const fetchYields = async () => {
@@ -174,7 +179,7 @@ const details = (rowData: YieldEntity) => {
   yieldEntity.value = rowData;
   componentKey.value = rowData.id;
   dialogVisible.value = true;
-  console.log(yieldEntity.value);
+  //console.log(yieldEntity.value);
 }
 
 const handleClose = () => {
