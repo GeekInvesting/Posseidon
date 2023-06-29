@@ -5,7 +5,7 @@
     @click="selectInvestor"
     size="large"
     >
-    {{ investor }}
+    {{ investor.investorName }}
     </el-button>
 </template>
 

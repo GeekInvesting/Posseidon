@@ -8,13 +8,12 @@
         class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md"
       >
         <p class="text-2xl font-bold mb-4">Welcome, {{ userName }}!</p>
-        <div v-if="existInvestor" class="flex justify-space-between mb-4 flex-wrap gap-4">
+        <div v-if="existInvestor" class="flex flex-col mb-4 gap-4">
           <div>
             <p>Select the investor profile: </p>
           </div>
-          <br>
           <div v-for="investor in investors">
-            <UserInvestorButton :investor="investor" origin="signin"/>
+            <UserInvestorButton :investor="investor" origin="signin" class="mt-4"/>
           </div>
         </div>
       </div>
@@ -103,16 +102,17 @@ const handleSubmit = async () => {
     //console.log(userStorage, token);
     await localStorage.setItem("user", userStorage);
     await localStorage.setItem("token", token);
-    
+
     await emitEventBus("refreshLogin", true);
 
-    const responseInvestor = await investorService.getInvestorByUser(user.userName);
+    const responseInvestor = await investorService.getInvestorByUser(user.userEmail);
     if (!responseInvestor.ok) {
       const msg = await responseInvestor.json();
       throw new Error(msg.message);
     }
 
     const listInvestor = await responseInvestor.json();
+    //console.log(listInvestor);
 
     investors.value = JSON.parse(JSON.stringify(listInvestor));
 
@@ -120,7 +120,8 @@ const handleSubmit = async () => {
     userName.value = user.userName;
 
     existInvestor.value = investors.value.length > 0;
-    if (!existInvestor) {
+    //console.log(existInvestor.value);
+    if (!existInvestor.value) {
       setTimeout(() => {
         router.push("/");
       }, 2000);

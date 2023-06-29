@@ -93,9 +93,9 @@ onMounted(() => {
 const setLogin = () => {
   if (process.client) {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
-    isAdmin.value = user && user.userRole === "admin";
+    isAdmin.value = user && user.userRole === "ADMIN";
     isLoged.value =
-      (user && user.userRole === "admin") || user.userRole === "user";
+      (user && user.userRole === "ADMIN") || user.userRole === "USER";
   }
 };
 

@@ -23,6 +23,13 @@ const directHome = (msg: string) => {
   }, 500);
 };
 
+const logout = () => {
+  localStorage.removeItem("user");
+  localStorage.removeItem("token");
+  localStorage.removeItem("investor");
+  window.location.reload();
+};
+
 export default defineNuxtRouteMiddleware((to, from) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -40,6 +47,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
         if (valid.status === 401) {
           new UnauthorizedError().directUnauthorized('Restricted area, please login');
+          logout();
           resolve();
           return;
         }
@@ -49,6 +57,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
         if (!getLogin.isAdmin()) {
           directHome('Restricted area, please login');
+          logout()
           resolve();
           return;
         }

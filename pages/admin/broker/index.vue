@@ -6,3 +6,13 @@
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+
+definePageMeta({
+  title: 'Broker',
+  auth: true,
+  middleware: 'auth',
+})
+
+</script>

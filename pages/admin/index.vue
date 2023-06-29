@@ -129,9 +129,7 @@
       </div>
     </el-card>
   </div>
-</template>
-
-<script lang="ts" setup>
+</template><script lang="ts" setup>
 definePageMeta({
   middleware: "auth",
 });

@@ -6,3 +6,10 @@
     <AdminHefestoTicketTable />
   </div>
 </template>
+
+<script lang="ts" setup>
+definePageMeta({
+  middleware: "auth",
+  name: "Ticket",
+});
+</script>

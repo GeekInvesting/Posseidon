@@ -6,3 +6,11 @@
     <AdminHeraInvestorTable />
   </div>
 </template>
+
+<script lang="ts" setup>
+definePageMeta({
+  middleware: 'auth',
+  name: 'Investor',
+})
+
+</script>

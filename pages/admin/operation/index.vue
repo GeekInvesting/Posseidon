@@ -6,3 +6,10 @@
     </div>
   </div>
 </template>
+
+<script lang="ts" setup>
+definePageMeta({
+  middleware: 'auth',
+  name: 'Operation',
+})
+</script>
