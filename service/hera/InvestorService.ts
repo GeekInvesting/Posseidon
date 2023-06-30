@@ -32,7 +32,7 @@ export class InvestorHeraService extends ApiService {
       body: JSON.stringify(investor),
     });
   }
-  
+
   async deleteInvestor(investor: InvestorHera): Promise<Response> {
     const url = `${this.baseUrl}/delete/${investor.id}`;
     return await apiErrorHandler(this.fetch)(url, {
@@ -60,5 +60,11 @@ export class InvestorHeraService extends ApiService {
       method: "PUT",
     });
   }
-  
+
+  async getInvestorComplete(): Promise<Response> {
+    const url = `${this.baseUrl}/name/complete`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "GET",
+    });
+  }
 }
