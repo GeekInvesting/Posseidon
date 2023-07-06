@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 m-3" >
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 m-3">
     <el-card class="card">
       <template #header>
         <div class="card-header text-center font-bold text-xl">
@@ -126,13 +126,19 @@
         >
           Yield
         </NuxtLink>
+        <NuxtLink
+          to="admin/wallet"
+          class="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Wallet
+        </NuxtLink>
       </div>
     </el-card>
   </div>
-</template><script lang="ts" setup>
+</template>
+<script lang="ts" setup>
 definePageMeta({
   middleware: "auth",
+  name: "Admin Panel"
 });
 </script>
-
-<style></style>

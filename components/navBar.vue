@@ -67,10 +67,17 @@
             <el-menu-item index="2-4-3">
               <NuxtLink to="admin/yield">Yield</NuxtLink>
             </el-menu-item>
+            <el-menu-item index="2-4-4">
+              <NuxtLink to="/admin/wallet">Wallet</NuxtLink>
+            </el-menu-item>
           </el-sub-menu>
         </el-sub-menu>
-        <el-menu-item index="3"><NuxtLink to="/about">About</NuxtLink></el-menu-item>
-        <el-menu-item index="4"><NuxtLink to="/contact">Contact</NuxtLink></el-menu-item>
+        <el-menu-item index="3">
+          <NuxtLink to="/about">About</NuxtLink>
+        </el-menu-item>
+        <el-menu-item index="4">
+          <NuxtLink to="/contact">Contact</NuxtLink>
+        </el-menu-item>
       </el-menu>
     </div>
     <div class="flex-shrink-0">

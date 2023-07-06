@@ -72,4 +72,14 @@ export class BrokerService extends ApiService {
       },
     });
   }
+
+  async getBrokerComplete(): Promise<Response> {
+    const url = `${this.urlbase}/complete`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
 }
