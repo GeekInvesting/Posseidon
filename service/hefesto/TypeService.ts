@@ -60,4 +60,11 @@ export class TypeService extends ApiService {
             method: "GET",
         });
     };
+
+    async listTypeCodeAutocomplete(): Promise<Response> {
+      const url = `${this.urlBase}/code/autocomplete`;
+      return await apiErrorHandler(this.fetch)(url, {
+        method: "GET",
+      });
+    }
 }
