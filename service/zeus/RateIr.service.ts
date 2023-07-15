@@ -19,4 +19,11 @@ export class RateIrService extends ApiService {
       body: JSON.stringify(rateIr),
     });
   }
+
+  findAll(): Promise<Response> {
+    const url = `${this.baseUrl}`;
+    return apiErrorHandler(this.fetch)(url, {
+      method: "GET",
+    });
+  }
 }
