@@ -38,4 +38,11 @@ export class RateIrService extends ApiService {
       body: JSON.stringify(rateIrUpdate),
     });
   }
+
+  removeRateIr(rateIr: CreateRateIrDto): Promise<Response> {
+    const url = `${this.baseUrl}/${rateIr.id}`;
+    return apiErrorHandler(this.fetch)(url, {
+      method: "DELETE",
+    })
+  }
 }

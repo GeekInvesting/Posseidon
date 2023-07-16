@@ -105,6 +105,14 @@
             :disabled="!rateIrEntity.system || !rateIrEntity.operationId || !rateIrEntity.rate">
             {{ typeSave }}
           </el-button>
+          <el-button
+            v-if="props.typeSave !== `Create`"
+            @click="removeRateIr"
+            type="danger"
+            :loading="loading"
+            :disable="loading">
+            Delete
+          </el-button>
         </el-button-group>
       </el-form-item>
     </el-form>
@@ -273,5 +281,17 @@ const setCompletes = (value: CreateRateIrDto) => {
     typeSelect.value = value.Type?.typeCode || "";
     fetchOperation();
   }
+}
+
+const removeRateIr = async () => {
+  loading.value = true;
+  const response = await rateIrService.removeRateIr(rateIrEntity.value)
+
+  response
+    ? PosseidonNotif('success', `Rate Ir Removed Success!`)
+    : PosseidonNotif('error', `Rate Ir Removed Faill`);
+
+  emitEventBus('refreshRatesIr', true);
+  loading.value = false;
 }
 </script>
