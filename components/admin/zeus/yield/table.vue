@@ -33,7 +33,6 @@ import {
   ElIcon,
   ElTag,
   ElText,
-  ElTooltip,
   TableV2FixedDir,
 } from 'element-plus'
 import {Timer, ArrowRightBold} from '@element-plus/icons-vue'

@@ -85,6 +85,10 @@
         v-else-if="props.title == 'Wallet'"
         class="max-w-screen-md mx-auto"
       />
+      <AdminZeusRateIrForm
+        v-else-if="props.title == 'Rate IR'"
+        class="max-w-screen-md mx-auto"
+      />
     </span>
   </el-dialog>
 </template>
@@ -142,6 +146,8 @@ const handleClose = (done: () => void) => {
         emitEventBus("refreshYields", true);
       } else if (props.title == "Wallet") {
         emitEventBus("refreshWallets", true);
+      } else if (props.title == "Rate IR") {
+        emitEventBus("refreshRatesIr", true);
       }
 
       dialogVisible.value = false;

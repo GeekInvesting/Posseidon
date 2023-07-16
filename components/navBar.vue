@@ -70,6 +70,9 @@
             <el-menu-item index="2-4-4">
               <NuxtLink to="/admin/wallet">Wallet</NuxtLink>
             </el-menu-item>
+            <el-menu-item index="2-4-5">
+              <NuxtLink to="/admin/rateIr">Rate IR</NuxtLink>
+            </el-menu-item>
           </el-sub-menu>
         </el-sub-menu>
         <el-menu-item index="3">
