@@ -86,7 +86,7 @@
           placeholder=" YYYY-MM-DD "
           class="inline-input w-50"
           :disabled="true"
-          />
+        />
       </el-form-item>
       <el-form-item label="Updated At" prop="updatedAt">
         <el-date-picker
@@ -103,7 +103,7 @@
             type="primary"
             @click="submitForm"
             :disabled="!rateIrEntity.system || !rateIrEntity.operationId || !rateIrEntity.rate">
-            {{typeSave}}
+            {{ typeSave }}
           </el-button>
         </el-button-group>
       </el-form-item>
@@ -147,6 +147,7 @@ const props = defineProps({
 
 onMounted(() => {
   fetchType();
+  setCompletes(props.initialData);
 })
 
 const rateIrEntity = ref<CreateRateIrDto>({
@@ -156,7 +157,7 @@ const rateIrEntity = ref<CreateRateIrDto>({
   typeId: props.initialData.typeId || "",
   rate: props.initialData.rate || 0,
   limit: props.initialData.limit || 0,
-  valid: new Date(props.initialData.valid) || "",
+  valid: new Date(props.initialData.valid) || new Date(31/12/9999),
   enabled: props.initialData.enabled || true,
   createdAt: new Date(props.initialData.createdAt) || "",
   updatedAt: new Date(props.initialData.updatedAt) || "",
@@ -171,11 +172,12 @@ watch(() => props.initialData,
       typeId: value.typeId || "",
       rate: value.rate || 0,
       limit: value.limit || 0,
-      valid: new Date(value.valid) || "",
+      valid: new Date(value.valid) || new Date(31/12/9999),
       enabled: value.enabled || true,
       createdAt: new Date(value.createdAt) || "",
       updatedAt: new Date(value.updatedAt) || "",
     }
+    setCompletes(value);
   })
 
 const operationsNames = ref<CompleteItem[]>([]);
@@ -222,7 +224,7 @@ const fetchOperation = async () => {
 const fetchType = async () => {
   const responseType = await typeService.listTypeCodeAutocomplete();
   typesCodes.value = copyProperties(await responseType.json());
-  console.log(typesCodes.value);
+  //console.log(typesCodes.value);
 }
 
 const submitForm = async () => {
@@ -230,11 +232,11 @@ const submitForm = async () => {
   ElMessageBox.confirm(`Are you sure to ${props.typeSave} this Rate`, {
     confirmButtonText: `${props.typeSave}`,
   }).then(async () => {
-    console.log(rateIrEntity.value);
+    //console.log(rateIrEntity.value);
     let response;
     props.typeSave === "Create"
       ? response = await rateIrService.createRateIr(rateIrEntity.value)
-      : null;
+      : response = await rateIrService.updateRateIr(rateIrEntity.value);
 
     response
       ? PosseidonNotif('success', `The Rate IR was ${props.typeSave}d successfully`)
@@ -262,6 +264,14 @@ const emptyForm = () => {
     enabled: true,
     createdAt: "",
     updatedAt: "",
+  }
+}
+
+const setCompletes = (value: CreateRateIrDto) => {
+  if (props.typeSave !== "Create") {
+    operationSelect.value = value.Operation?.operationName || "";
+    typeSelect.value = value.Type?.typeCode || "";
+    fetchOperation();
   }
 }
 </script>

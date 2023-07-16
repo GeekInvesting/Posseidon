@@ -26,4 +26,16 @@ export class RateIrService extends ApiService {
       method: "GET",
     });
   }
+
+  updateRateIr(rateIr: CreateRateIrDto): Promise<Response> {
+    const {id, ...rateIrUpdate} = rateIr;
+    const url = `${this.baseUrl}/${id}`;
+    return apiErrorHandler(this.fetch)(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(rateIrUpdate),
+    });
+  }
 }
