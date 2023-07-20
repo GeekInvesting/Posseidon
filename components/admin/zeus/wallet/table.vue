@@ -16,7 +16,7 @@
     :columns="columns"
     :data="walletList"
     :width="windowWidth * 0.95"
-    :height="800"
+    :height="windowHeight * 0.8"
   />
 </template>
 
@@ -34,6 +34,7 @@ const walletList = ref([]);
 const svg = Loading().svg;
 
 const windowWidth = ref(window.innerWidth);
+const windowHeight = ref(window.innerHeight);
 const withColumns: Ref<number> = ref(150);
 
 const walletService = new WalletService();
@@ -42,6 +43,7 @@ onMounted(() => {
   fetchWallet().then(r => r);
   window.addEventListener('resize', () => {
     windowWidth.value = window.innerWidth;
+    windowHeight.value = window.innerHeight;
   });
   updateWidth();
 })
@@ -75,6 +77,7 @@ const loading = ElLoading.service({
 })
 
 const fetchWallet = async () => {
+  dialogVisible.value = false;
   loading;
   const response = await walletService.findAllWallets();
   walletList.value = await response.json();

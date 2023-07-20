@@ -201,10 +201,7 @@ onMounted(() => {
   fetchBroker().then(r => r);
   fetchOperation().then(r => r);
 
-  investorSelect.value = props.initialData.Investor?.investorName || "";
-  ticketSelect.value = props.initialData.Ticket?.ticketName || "";
-  brokerSelect.value = props.initialData.Broker?.brokerName || "";
-  operationSelect.value = props.initialData.Operation?.operationName || "";
+  setCompletes(props.initialData);
 })
 
 const props = defineProps({
@@ -251,8 +248,16 @@ watch(() => props.initialData, (value) => {
     enabled: value.enabled || true,
     createdAt: value.createdAt || "",
     updatedAt: value.updatedAt || ""
-  }
+  };
+  setCompletes(value);
 })
+
+const setCompletes = (value: any) => {
+  investorSelect.value = value.Investor?.investorName || "";
+  ticketSelect.value = value.Ticket?.ticketCode || "";
+  operationSelect.value = value.Operation?.operationName || "";
+  brokerSelect.value = value.Broker?.brokerName || "";
+}
 
 const fetchInvestor = async () => {
   let responseInvestors = await investorService.getInvestorComplete();
@@ -344,7 +349,7 @@ const submit = async () => {
 
     props.typeSave === "Create"
       ? response = await walletService.createWallet(walletEntity.value)
-      : null;
+      : response = await walletService.updateWallet(walletEntity.value);
 
     response
       ? PosseidonNotif('success', `${props.typeSave} wallet successfully`)
