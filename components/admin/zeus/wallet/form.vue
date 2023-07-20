@@ -101,6 +101,15 @@
         :disabled="true"
       />
     </el-form-item>
+    <el-form-item label="IR" prop="ir" v-if="sellAction">
+      <el-input-number
+        v-model="walletEntity.ir"
+        class="inline-input w-50"
+        :precision="2"
+        :controls="false"
+        :min="0"
+        :disabled="true"/>
+    </el-form-item>
     <el-form-item label="Enabled" prop="enabled">
       <el-switch
         v-model="walletEntity.enabled"
@@ -167,17 +176,24 @@ import {BrokerService} from "~/service/zeus/broker.service";
 import {OperationService} from "~/service/zeus/operation.service";
 import {WalletService} from "~/service/zeus/wallet.service";
 import {emitEventBus} from "~/events/eventBus";
+import {RateIrService} from "~/service/zeus/RateIr.service";
+import {Ticket} from "~/model/hefesto/Ticket";
+import {RateIrEntity} from "~/model/zeus/rateIr.entity";
 
 const investorService = new InvestorHeraService();
 const ticketService = new TicketService();
 const brokerService = new BrokerService();
 const operationService = new OperationService();
 const walletService = new WalletService();
+const rateIrService = new RateIrService();
 
 const loading = ref(false);
 const svg = Loading().svg;
 const isAdmin = ref(true);
 const anotherWallet = ref(false);
+const sellAction = ref(false);
+
+//TODO:  implements IR calculate to sell wallets
 
 onMounted(() => {
   fetchInvestor().then(r => r);
@@ -213,6 +229,7 @@ const walletEntity = ref<CreateWalletDto>({
   price: props.initialData.price || 0,
   tax: props.initialData.tax || 0,
   total: props.initialData.total || 0,
+  ir: props.initialData.ir || 0,
   enabled: props.initialData.enabled || true,
   createdAt: props.initialData.createdAt || "",
   updatedAt: props.initialData.updatedAt || ""
@@ -230,6 +247,7 @@ watch(() => props.initialData, (value) => {
     price: value.price || 0,
     tax: value.tax || 0,
     total: value.total || 0,
+    ir: value.ir || 0,
     enabled: value.enabled || true,
     createdAt: value.createdAt || "",
     updatedAt: value.updatedAt || ""
@@ -314,7 +332,7 @@ const createFilter = (queryString: string) => {
 }
 
 const calTotal = () => {
-  walletEntity.value.total = (walletEntity.value.amount || 0 )  * (walletEntity.value.price || 0) + (walletEntity.value.tax || 0);
+  walletEntity.value.total = (walletEntity.value.amount || 0) * (walletEntity.value.price || 0) + (walletEntity.value.tax || 0);
 }
 
 const submit = async () => {

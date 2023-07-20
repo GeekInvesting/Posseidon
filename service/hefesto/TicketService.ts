@@ -60,4 +60,11 @@ export class TicketService extends ApiService {
       method: "GET",
     });
   }
+
+  async getTicketById(id: string): Promise<Response> {
+    const url = `${this.urlBase}/${id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "GET",
+    });
+  }
 }
