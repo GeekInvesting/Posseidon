@@ -165,7 +165,7 @@ const rateIrEntity = ref<CreateRateIrDto>({
   typeId: props.initialData.typeId || "",
   rate: props.initialData.rate || 0,
   limit: props.initialData.limit || 0,
-  valid: new Date(props.initialData.valid) || new Date(31/12/9999),
+  valid: new Date(props.initialData.valid) || new Date('9999-12-31T03:00:00.000Z'),
   enabled: props.initialData.enabled || true,
   createdAt: new Date(props.initialData.createdAt) || "",
   updatedAt: new Date(props.initialData.updatedAt) || "",

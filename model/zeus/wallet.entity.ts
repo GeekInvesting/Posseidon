@@ -19,6 +19,7 @@ export interface WalletEntity {
   price: number;
   tax: number;
   total: number;
+  ir: number;
   enabled: boolean;
   createdAt: Date | string;
   updatedAt: Date | string;

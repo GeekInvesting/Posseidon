@@ -45,4 +45,16 @@ export class RateIrService extends ApiService {
       method: "DELETE",
     })
   }
+
+  getRateCalculate(operationId: string, typeId: string, system: string): Promise<Response> {
+    const url = `${this.baseUrl}/calculate`;
+    return apiErrorHandler(this.fetch)(url, {
+      method: "GET",
+      headers: {
+        "operationId": operationId,
+        "typeId": typeId,
+        "system": system,
+      }
+    })
+  }
 }

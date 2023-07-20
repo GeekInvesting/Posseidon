@@ -15,6 +15,29 @@ export class WalletService extends ApiService {
     return await apiErrorHandler(this.fetch)(url, {
       method: 'POST',
       body: JSON.stringify(createWalletDto),
-    })
+    });
+  }
+
+  async findAllWallets(): Promise<Response> {
+    const url = `${this.urlBase}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: 'GET',
+    });
+  }
+
+  async updateWallet(updateWallet: CreateWalletDto): Promise<Response> {
+    const { id, ...updateWalletDto } = updateWallet;
+    const url = `${this.urlBase}/${id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: 'PATCH',
+      body: JSON.stringify(updateWalletDto),
+    });
+  }
+
+  async removeWallet(deleteWallet: CreateWalletDto): Promise<Response> {
+    const url = `${this.urlBase}/${deleteWallet.id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: 'DELETE',
+    });
   }
 }
