@@ -389,6 +389,19 @@ const emptyForm = () => {
 }
 
 const deleteWallet = async () => {
-  //TODO implement Delete
+  loading.value = true;
+  ElMessageBox.confirm(`Are you to delete this wallet?`, {
+    confirmButtonText: `Delete`,
+  }).then(async () => {
+    let response = await walletService.removeWallet(walletEntity.value);
+    response
+      ? PosseidonNotif('success', `Delete wallet successfully`)
+      : PosseidonNotif('error', `Error to delete wallet`);
+  }).catch(() => {
+    PosseidonNotif('info', `Canceled delete wallet`);
+  }).finally(() => {
+    emitEventBus('refreshWallets', true);
+    loading.value = false;
+  })
 }
 </script>

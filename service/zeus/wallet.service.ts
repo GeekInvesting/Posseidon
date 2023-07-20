@@ -33,4 +33,11 @@ export class WalletService extends ApiService {
       body: JSON.stringify(updateWalletDto),
     });
   }
+
+  async removeWallet(deleteWallet: CreateWalletDto): Promise<Response> {
+    const url = `${this.urlBase}/${deleteWallet.id}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: 'DELETE',
+    });
+  }
 }
