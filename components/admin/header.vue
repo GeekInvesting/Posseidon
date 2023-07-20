@@ -20,8 +20,8 @@
   </el-page-header>
   <el-dialog
     v-model="dialogVisible"
-    :title="props.title"
-    width="80%"
+    :title="title"
+    width="90%"
     :before-close="handleClose"
   >
     <span class="flex-center">
@@ -69,6 +69,26 @@
         v-else-if="props.title == 'User'"
         class="max-w-screen-md mx-auto"
       />
+      <AdminZeusOperationForm
+        v-else-if="props.title == 'Operation'"
+        class="max-w-screen-md mx-auto"
+      />
+      <AdminZeusBrokerForm
+        v-else-if="props.title == 'Broker'"
+        class="max-w-screen-md mx-auto"
+      />
+      <AdminZeusYieldForm
+        v-else-if="props.title == 'Yield'"
+        class="max-w-screen-md mx-auto"
+      />
+      <AdminZeusWalletForm
+        v-else-if="props.title == 'Wallet'"
+        class="max-w-screen-md mx-auto"
+      />
+      <AdminZeusRateIrForm
+        v-else-if="props.title == 'Rate IR'"
+        class="max-w-screen-md mx-auto"
+      />
     </span>
   </el-dialog>
 </template>
@@ -76,6 +96,7 @@
 <script setup lang="ts">
 import { emitEventBus, useEventBus } from "~~/events/eventBus";
 
+const title = ref("");
 const router = useRouter();
 
 const props = defineProps({
@@ -83,6 +104,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+});
+
+onMounted(() => {
+  title.value = props.title;
 });
 
 const dialogVisible = ref(false);
@@ -113,11 +138,21 @@ const handleClose = (done: () => void) => {
         emitEventBus("refreshInvestors", true);
       } else if (props.title == "User") {
         emitEventBus("refreshUsers", true);
+      } else if (props.title == "Operation") {
+        emitEventBus("refreshOperations", true);
+      } else if (props.title == "Broker") {
+        emitEventBus("refreshBrokers", true);
+      } else if (props.title == "Yield") {
+        emitEventBus("refreshYields", true);
+      } else if (props.title == "Wallet") {
+        emitEventBus("refreshWallets", true);
+      } else if (props.title == "Rate IR") {
+        emitEventBus("refreshRatesIr", true);
       }
 
       dialogVisible.value = false;
     })
-    .catch((error) => {
+    .catch((error:any) => {
       console.log(error);
     });
 };
@@ -135,7 +170,8 @@ watch(
   () => useEventBus().value.dialogCreate,
   (newValue) => {
     if (newValue) {
-      dialogVisible.value = true;
+      dialogVisible.value = false;
+      useEventBus().value.dialogCreate = false;
     }
   }
 );

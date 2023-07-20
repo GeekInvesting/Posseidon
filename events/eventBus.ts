@@ -16,6 +16,11 @@ export interface EventBusType {
   refreshTickets: boolean;
   refreshInvestors: boolean;
   refreshUsers: boolean;
+  refreshOperations: boolean;
+  refreshBrokers: boolean;
+  refreshYields: boolean;
+  refreshWallets: boolean;
+  refreshRatesIr: boolean;
 }
 
 const eventBusState: EventBusType = {
@@ -33,6 +38,11 @@ const eventBusState: EventBusType = {
   refreshTickets: false,
   refreshInvestors: false,
   refreshUsers: false,
+  refreshOperations: false,
+  refreshBrokers: false,
+  refreshYields: false,
+  refreshWallets: false,
+  refreshRatesIr: false,
 };
 
 

@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import { User } from "~/modelService/atena/User";
+import { User } from "~/model/atena/User";
 
 const userView = ref({})
 
@@ -30,7 +30,7 @@ onMounted(async () => {
     "Name": user.userName,
     "E-mail": user.userEmail,
     "Enabled": user.userEnabled ? "Yes" : "Not",
-    "Created at": user.UserCreatedAt,
+    "Created at": user.userCreatedAt,
   }
 });
 

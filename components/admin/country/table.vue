@@ -86,7 +86,7 @@
 
 <script lang="ts" setup>
 import { useEventBus } from "~~/events/eventBus";
-import { Country } from "~/modelService/hera/Country";
+import { Country } from "~/model/hera/Country";
 
 import { Notif } from "~/utils/Notif";
 import { ApiHera } from "~~/utils/api/hera";
