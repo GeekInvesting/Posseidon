@@ -17,4 +17,11 @@ export class WalletService extends ApiService {
       body: JSON.stringify(createWalletDto),
     })
   }
+
+  async findAllWallets(): Promise<Response> {
+    const url = `${this.urlBase}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: 'GET',
+    })
+  }
 }
