@@ -40,4 +40,14 @@ export class WalletService extends ApiService {
       method: 'DELETE',
     });
   }
+
+  async averageCalculate(investorId: string): Promise<Response> {
+    const url = `${this.urlBase}/average`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: 'GET',
+      headers: {
+        investorId,
+      },
+    });
+  }
 }

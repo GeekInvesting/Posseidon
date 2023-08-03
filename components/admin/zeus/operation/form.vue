@@ -14,7 +14,7 @@
       <el-form-item label="System" props="operationSystem">
         <el-select v-model="operation.operationSystem" placeholder="BROKER">
           <el-option
-            v-for="item in ['BROKER', 'YIELD']"
+            v-for="item in ['WALLET', 'YIELD']"
             :key="item"
             :label="item"
             :value="item"/>

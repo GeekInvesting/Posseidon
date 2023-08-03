@@ -186,6 +186,8 @@ const brokerService = new BrokerService();
 const operationService = new OperationService();
 const walletService = new WalletService();
 const rateIrService = new RateIrService();
+const getInvestor = new GetInvestor();
+const getLogin = new GetLogin();
 
 const loading = ref(false);
 const svg = Loading().svg;
@@ -196,12 +198,15 @@ const sellAction = ref(false);
 //TODO:  implements IR calculate to sell wallets
 
 onMounted(() => {
+  //isAdmin.value = getLogin.isAdmin();
+
   fetchInvestor().then(r => r);
   fetchTicket().then(r => r);
   fetchBroker().then(r => r);
   fetchOperation().then(r => r);
 
   setCompletes(props.initialData);
+  getInvestorData();
 })
 
 const props = defineProps({
@@ -359,6 +364,7 @@ const submit = async () => {
     emptyForm();
   }).finally(() => {
     emitEventBus('refreshWallets', true);
+    emitEventBus('refreshWalletAverage', true);
     anotherWallet.value
       ? emptyForm()
       : emitEventBus('dialogCreate', true);
@@ -369,7 +375,6 @@ const submit = async () => {
 const emptyForm = () => {
   walletEntity.value = {
     id: "",
-    investorId: "",
     ticketId: "",
     operationId: "",
     brokerId: "",
@@ -378,11 +383,11 @@ const emptyForm = () => {
     price: 0,
     tax: 0,
     total: 0,
+    ir: 0,
     enabled: true,
     createdAt: "",
     updatedAt: ""
   };
-  investorSelect.value = "";
   ticketSelect.value = "";
   operationSelect.value = "";
   brokerSelect.value = "";
@@ -403,5 +408,10 @@ const deleteWallet = async () => {
     emitEventBus('refreshWallets', true);
     loading.value = false;
   })
+}
+
+const getInvestorData = () => {
+  walletEntity.value.investorId = getInvestor.investorId()
+  investorSelect.value = getInvestor.investorName();
 }
 </script>

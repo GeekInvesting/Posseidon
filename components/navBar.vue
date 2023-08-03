@@ -3,7 +3,7 @@
     class="flex flex-wrap items-center justify-between w-full py-4 md:py-0 px-4 text-lg text-gray-700 bg-white"
   >
     <div class="flex items-center md:w-auto">
-      <NuxtLink to="/" class="text-xl font-bold text-indigo-500">PulseInvest</NuxtLink>
+      <NuxtLink to="/" class="text-xl font-bold text-indigo-500">Kronos Invest</NuxtLink>
     </div>
     <div class="md:flex md:flex-wrap items-center justify-center md:w-auto">
       <el-menu
@@ -75,10 +75,13 @@
             </el-menu-item>
           </el-sub-menu>
         </el-sub-menu>
-        <el-menu-item index="3">
-          <NuxtLink to="/about">About</NuxtLink>
+        <el-menu-item index="3" v-if="isLoged">
+          <NuxtLink to="/wallet">Wallet</NuxtLink>
         </el-menu-item>
         <el-menu-item index="4">
+          <NuxtLink to="/about">About</NuxtLink>
+        </el-menu-item>
+        <el-menu-item index="5">
           <NuxtLink to="/contact">Contact</NuxtLink>
         </el-menu-item>
       </el-menu>
@@ -103,8 +106,8 @@ onMounted(() => {
 
 const setLogin = () => {
   const getLogin = new GetLogin();
-  isAdmin.value = getLogin.isAdmin();
-  isLoged.value = getLogin.isLoged();
+  isAdmin.value = true //getLogin.isAdmin();
+  isLoged.value = true //getLogin.isLoged();
 };
 
 watch(

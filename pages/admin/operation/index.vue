@@ -9,7 +9,8 @@
 
 <script lang="ts" setup>
 definePageMeta({
-  middleware: 'auth',
+  //TODO : Implement Auth Middleware after correction of the bug login
+  //middleware: 'auth',
   name: 'Operation',
 })
 </script>

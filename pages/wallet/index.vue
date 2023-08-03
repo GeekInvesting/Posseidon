@@ -1,8 +1,8 @@
 <template>
   <div class="p-3 rounded-lg">
-    <AdminHeader title="Wallet"/>
+    <WalletHeader title="Wallet"/>
     <div class="p-3 rounded-lg">
-      <AdminZeusWalletTable/>
+      <WalletAverage />
     </div>
   </div>
 </template>
