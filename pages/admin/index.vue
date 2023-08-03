@@ -144,8 +144,7 @@
 </template>
 <script lang="ts" setup>
 definePageMeta({
-  //TODO : Implement Auth Middleware after correction of the bug login
-  //middleware: "auth",
+  middleware: "auth",
   name: "Admin Panel"
 });
 </script>

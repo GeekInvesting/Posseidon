@@ -106,8 +106,8 @@ onMounted(() => {
 
 const setLogin = () => {
   const getLogin = new GetLogin();
-  isAdmin.value = true //getLogin.isAdmin();
-  isLoged.value = true //getLogin.isLoged();
+  isAdmin.value = getLogin.isAdmin();
+  isLoged.value = getLogin.isLoged();
 };
 
 watch(

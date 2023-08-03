@@ -191,14 +191,14 @@ const getLogin = new GetLogin();
 
 const loading = ref(false);
 const svg = Loading().svg;
-const isAdmin = ref(true);
+const isAdmin = ref(false);
 const anotherWallet = ref(false);
 const sellAction = ref(false);
 
 //TODO:  implements IR calculate to sell wallets
 
 onMounted(() => {
-  //isAdmin.value = getLogin.isAdmin();
+  isAdmin.value = getLogin.isAdmin();
 
   fetchInvestor().then(r => r);
   fetchTicket().then(r => r);
