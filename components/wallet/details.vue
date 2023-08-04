@@ -2,21 +2,27 @@
   <div class="flex flex-rows">
     <div class="shadow-md container mx-auto basis-1/8 p-3 hover:italic" >
       Amount:
-      <p class="normal-nums font-bold">{{ walletAverange.amount }}</p>
+      <p class="normal-nums font-bold">{{ walletAverage.amount }}</p>
     </div>
     <div class="shadow-md container mx-auto basis-1/8 p-3 hover:italic" >
       Average Price:
-      <p class="normal-nums font-bold">{{ walletAverange.averagePrice.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}) }}</p>
+      <p class="normal-nums font-bold">{{
+          walletAverage.averagePrice.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})
+        }}</p>
     </div>
     <div class="shadow-md container mx-auto basis-1/8 p-3 hover:italic" >
       Total:
-      <p class="normal-nums font-bold">{{ walletAverange.total.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}) }}</p>
+      <p class="normal-nums font-bold">{{
+          walletAverage.total.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})
+        }}</p>
     </div>
   </div>
   <div class="flex flex-rows">
     <div class="shadow-md container mx-auto basis-1/8 p-3 hover:italic" >
       Current Price:
-      <p class="normal-nums font-bold">{{ walletAverange.currentPrice.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}) }}</p>
+      <p class="normal-nums font-bold">{{
+          walletAverage.currentPrice.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})
+        }}</p>
     </div>
     <div class="shadow-md container mx-auto basis-1/8 p-3 hover:italic" >
       Result:
@@ -24,7 +30,7 @@
           class="normal-nums font-bold"
           :class="resultPositive ? 'text-green-600' : 'text-red-600'"
       >
-        {{ walletAverange.result.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}) }}
+        {{ walletAverage.result.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}) }}
       </p>
     </div>
     <div class="shadow-md container mx-auto basis-1/8 p-3 hover:italic" >
@@ -33,7 +39,7 @@
           class="normal-nums font-bold"
           :class="resultPositive ? 'text-green-600' : 'text-red-600'"
       >
-        {{ walletAverange.resultPercent.toLocaleString('pt-BR', {style: 'percent', minimumFractionDigits: 2}) }}
+        {{ walletAverage.resultPercent.toLocaleString('pt-BR', {style: 'percent', minimumFractionDigits: 2}) }}
       </p>
     </div>
   </div>
@@ -44,7 +50,7 @@
           class="normal-nums font-bold"
           :class="profitPositive ? 'text-green-600' : 'text-red-600'"
       >
-        {{ walletAverange.profit.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}) }}
+        {{ walletAverage.profit.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}) }}
       </p>
     </div>
     <div class="shadow-md container mx-auto basis-1/8 p-3 hover:italic" >
@@ -53,7 +59,7 @@
           class="normal-nums font-bold"
           :class="profitPositive ? 'text-green-600' : 'text-red-600'"
       >
-        {{ walletAverange.profitability.toLocaleString('pt-BR', {style: 'percent', minimumFractionDigits: 2}) }}
+        {{ walletAverage.profitability.toLocaleString('pt-BR', {style: 'percent', minimumFractionDigits: 2}) }}
       </p>
     </div>
   </div>
@@ -67,7 +73,10 @@
       List of operations
     </span>
     <span class="shadow-md container mx-auto basis-1/8 p-3 hover:italic" >
-      List of Yields
+      <WalletListYieldCalc
+          :investor-id="walletAverage.investorId"
+          :broker-id="walletAverage.brokerId"
+          :ticket-id="walletAverage.ticketId"/>
     </span>
   </div>
 </template>
@@ -80,8 +89,8 @@ const profitPositive = ref(true)
 
 onMounted(() => {
   //console.log('walletAverange', walletAverange.value)
-  resultPositive.value = walletAverange.value.result >= 0
-  profitPositive.value = walletAverange.value.profit >= 0
+  resultPositive.value = walletAverage.value.result >= 0
+  profitPositive.value = walletAverage.value.profit >= 0
 })
 
 const props = defineProps({
@@ -91,7 +100,7 @@ const props = defineProps({
   },
 })
 
-const walletAverange: Ref<WalletAverageEntity> = ref({
+const walletAverage: Ref<WalletAverageEntity> = ref({
   investorId: props.initialData.investorId || '',
   Investor: props.initialData.Investor,
   ticketId: props.initialData.ticketId || '',
@@ -109,7 +118,7 @@ const walletAverange: Ref<WalletAverageEntity> = ref({
 })
 
 watch(() => props.initialData, (value) => {
-  walletAverange.value = {
+  walletAverage.value = {
     investorId: value.investorId || '',
     Investor: value.Investor,
     ticketId: value.ticketId || '',
