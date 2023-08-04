@@ -1,13 +1,18 @@
 <template>
   <el-dialog
-      title="Wallet"
+      :title="detailsScope ? `${ticketDetails} Details` : 'Update Wallet'"
       v-model="dialogVisible"
       width="90%"
       :before-close="handleClose">
-    <span>
+    <span v-if="detailsScope">
+      <WalletDetails
+          :key="detailsKey"
+          :initialData="walletAverage"
+      />
+    </span>
+    <span v-else>
       <AdminZeusWalletForm
           :key="componentKey"
-          :initialData="walletEntity"
           typeSave="Update"
       />
     </span>
@@ -30,9 +35,12 @@ import dayjs from "dayjs";
 
 const dialogVisible = ref(false);
 const componentKey = ref('');
-const walletEntity = ref({});
+const detailsKey = ref('');
+const walletAverage = ref({});
 const walletList = ref([]);
 const svg = Loading().svg;
+const detailsScope = ref(false);
+const ticketDetails = ref('');
 
 const windowWidth = ref(window.innerWidth);
 const windowHeight = ref(window.innerHeight);
@@ -206,7 +214,11 @@ const columns = computed(() => [
 ]);
 
 const details = (rowData: any) => {
-  //TODO : implement show details
+  detailsScope.value = true;
+  dialogVisible.value = true;
+  detailsKey.value = rowData.ticketId;
+  walletAverage.value = rowData;
+  ticketDetails.value = rowData.Ticket.ticketCode;
 }
 </script>
 
