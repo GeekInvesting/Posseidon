@@ -59,7 +59,7 @@ const columns = computed(() => [
   },
   {
     key: 'datePay',
-    title: 'Date Pay',
+    title: 'Pay',
     dataKey: 'datePay',
     width: 100,
     align: 'center',

@@ -84,6 +84,7 @@ const loading = ElLoading.service({
   lock: true,
   text: 'Loading',
   background: 'rgba(0, 0, 0, 0.7)',
+  fullscreen: true,
 })
 
 const fetchWallet = async () => {
@@ -92,7 +93,7 @@ const fetchWallet = async () => {
   const investorId = 'f58c9a63-b445-417e-9ce5-c29b3625b40b';
   const response = await walletService.averageCalculate(investorId);
   walletList.value = await response.json();
-  console.log(walletList.value);
+  //console.log(walletList.value);
   loading.close();
 }
 

@@ -52,4 +52,16 @@ export class YieldService extends ApiService {
       },
     });
   }
+
+  async calcYield(ticketId: string, brokerId: string, investorId: string): Promise<Response> {
+    const url = `${this.baseUrl}/calc`;
+    return await apiErrorHandler(this.fetch)(url, {
+        method: "GET",
+      headers: {
+        ticketId,
+        brokerId,
+        investorId,
+      },
+    });
+  }
 }
