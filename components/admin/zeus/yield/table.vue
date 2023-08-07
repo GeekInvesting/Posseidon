@@ -63,10 +63,10 @@ watch(() => useEventBus().value.refreshYields,
 )
 
 const fetchYields = async () => {
+  dialogVisible.value = false;
   loading.value = true;
   const response = await yieldService.getAllYields();
   yields.value = await response.json();
-  dialogVisible.value = false;
   loading.value = false;
 }
 

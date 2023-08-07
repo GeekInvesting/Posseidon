@@ -28,7 +28,7 @@ export class TicketService extends ApiService {
   async updateTicket(ticket: Partial<TicketDTO>): Promise<Response> {
     const url = `${this.urlBase}/${ticket.id}`;
     return await apiErrorHandler(this.fetch)(url, {
-      method: "PUT",
+      method: "PATCH",
       body: JSON.stringify(ticket),
     });
   }

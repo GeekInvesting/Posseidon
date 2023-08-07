@@ -40,4 +40,28 @@ export class YieldService extends ApiService {
       method: "DELETE",
     });
   }
+
+  async listYield(ticketId: string, brokerId: string, investorId: string): Promise<Response> {
+    const url = `${this.baseUrl}/list`;
+    return await apiErrorHandler(this.fetch)(url, {
+        method: "GET",
+      headers: {
+        ticketId,
+        brokerId,
+        investorId,
+      },
+    });
+  }
+
+  async calcYield(ticketId: string, brokerId: string, investorId: string): Promise<Response> {
+    const url = `${this.baseUrl}/calc`;
+    return await apiErrorHandler(this.fetch)(url, {
+        method: "GET",
+      headers: {
+        ticketId,
+        brokerId,
+        investorId,
+      },
+    });
+  }
 }
