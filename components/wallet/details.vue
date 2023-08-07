@@ -88,13 +88,20 @@
   </div>
   <div class="grid grid-cols-2">
     <span class="shadow-md container mx-auto basis-1/8 p-3 hover:italic">
-      List of operations
+      <WalletListWallet
+        :investor-id="walletAverage.investorId"
+        :broker-id="walletAverage.brokerId"
+        :ticket-id="walletAverage.ticketId"
+        class="justify-center"
+      />
     </span>
     <span class="shadow-md container mx-auto basis-1/8 p-3 hover:italic">
       <WalletListYieldCalc
         :investor-id="walletAverage.investorId"
         :broker-id="walletAverage.brokerId"
-        :ticket-id="walletAverage.ticketId"/>
+        :ticket-id="walletAverage.ticketId"
+        class="justify-center"
+      />
     </span>
   </div>
 </template>

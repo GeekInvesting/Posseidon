@@ -50,4 +50,16 @@ export class WalletService extends ApiService {
       },
     });
   }
+
+  async listTickets(investorId: string, brokerId: string, ticketId: string): Promise<Response> {
+    const url = `${this.urlBase}/list`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: 'GET',
+      headers: {
+        investorId,
+        brokerId,
+        ticketId,
+      },
+    });
+  }
 }
