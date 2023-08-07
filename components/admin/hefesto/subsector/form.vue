@@ -73,7 +73,7 @@ const props = defineProps({
 const subsectorDto = ref<Partial<SubsectorDto>>({
   id: props.initialData.id || "",
   subsectorName: props.initialData.subsectorName || "",
-  sectorName: props.initialData.sectorModel.sectorName || "",
+  sectorName: props.initialData.sectorModel?.sectorName || "",
   subsectorEnabled: props.initialData.subsectorEnabled || true,
   subsectorDeleted: props.initialData.subsectorDeleted || false,
 });
@@ -84,7 +84,7 @@ watch(
     subsectorDto.value = {
       id: value.id || "",
       subsectorName: value.subsectorName || "",
-      sectorName: value.sectorModel.sectorName || "",
+      sectorName: value.sectorModel?.sectorName || "",
       subsectorEnabled: value.subsectorEnabled || true,
       subsectorDeleted: value.subsectorDeleted || false,
     };

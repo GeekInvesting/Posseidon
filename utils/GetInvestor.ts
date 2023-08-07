@@ -17,4 +17,5 @@ export class GetInvestor {
   investorId(): string {
     return this.investor.id;
   }
+
 }
