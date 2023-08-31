@@ -32,6 +32,7 @@ import {useEventBus} from "~/events/eventBus";
 import {TableV2FixedDir, ElIcon, ElButton, ElText, ElTag} from "element-plus";
 import {Timer, ArrowRightBold} from '@element-plus/icons-vue'
 import dayjs from "dayjs";
+import {Ref} from "vue";
 
 const dialogVisible = ref(false);
 const componentKey = ref('');
@@ -65,14 +66,18 @@ watch(() => useEventBus().value.refreshWalletAverage,
     }
 )
 
-
 watch(() => windowWidth.value, () => {
   updateWidth();
 })
 
 const updateWidth = () => {
-  windowWidth.value = window.innerWidth;
-  withColumns.value = windowWidth.value * 0.95 / columns.value.length;
+  const limit = 1100
+  if(windowWidth.value > limit) {
+    withColumns.value = windowWidth.value * 0.95 / columns.value.length;
+    return;
+  }
+  windowWidth.value = limit;
+  withColumns.value = limit * 0.95 / columns.value.length;
 }
 
 const handleClose = () => {
@@ -108,7 +113,7 @@ const columns = computed(() => [
   },
   {
     key: 'wallet',
-    title: 'Actions',
+    title: 'Details',
     width: 150,
     align: 'center',
     fixed: TableV2FixedDir.RIGHT,
