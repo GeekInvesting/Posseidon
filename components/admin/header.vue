@@ -89,6 +89,10 @@
         v-else-if="props.title == 'Rate IR'"
         class="max-w-screen-md mx-auto"
       />
+      <AdminAtenaSchedulerForm
+        v-else-if="props.title == 'Scheduler'"
+        class="max-w-screen-md mx-auto"
+      />
     </span>
   </el-dialog>
 </template>
@@ -148,6 +152,8 @@ const handleClose = (done: () => void) => {
         emitEventBus("refreshWallets", true);
       } else if (props.title == "Rate IR") {
         emitEventBus("refreshRatesIr", true);
+      } else if (props.title == "Scheduler") {
+        emitEventBus("refreshSchedulers", true);
       }
 
       dialogVisible.value = false;
