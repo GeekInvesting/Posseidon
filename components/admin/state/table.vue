@@ -91,8 +91,8 @@
 <script setup lang="ts">
 import { List } from "lodash";
 import { useEventBus } from "~~/events/eventBus";
-import { State } from "~/model/hera/State";
-import { StateDto } from "~/model/hera/StateDto";
+import { State } from "~/entities/hera/State";
+import { StateDto } from "~/entities/hera/StateDto";
 import { Notif } from "~/utils/Notif";
 import { ApiHera } from "~~/utils/api/hera";
 import { StateUtils } from "~/utils/modelUtils/StateUtils";

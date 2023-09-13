@@ -81,7 +81,7 @@
 
 <script lang="ts" setup>
 import { emitEventBus } from "~/events/eventBus";
-import { Company } from "~/model/hefesto/Company";
+import { Company } from "~/entities/hefesto/Company";
 import { CompanyService } from "~/service/hefesto/CompanyService";
 
 const loading = ref(false);

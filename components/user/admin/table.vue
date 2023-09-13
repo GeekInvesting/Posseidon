@@ -116,7 +116,7 @@
 
 <script lang="ts" setup>
 import { useEventBus } from '~/events/eventBus';
-import { User } from '~/model/atena/User';
+import { User } from '~/entities/atena/User';
 import { UserService } from '~/service/atena/UserService';
 
 const svg = Loading().svg;

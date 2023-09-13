@@ -119,7 +119,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Ticket, TicketDTO } from "~/model/hefesto/Ticket";
+import { Ticket, TicketDTO } from "~/entities/hefesto/Ticket";
 import { CompanyService } from "~/service/hefesto/CompanyService";
 import { TypeService } from "~/service/hefesto/TypeService";
 import { ExchangeService } from "~/service/hefesto/ExchangeService";

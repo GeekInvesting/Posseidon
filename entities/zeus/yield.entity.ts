@@ -1,5 +1,5 @@
-import {Operation} from "~/model/zeus/operation.entity";
-import {Ticket} from "~/model/hefesto/Ticket";
+import {Operation} from "~/entities/zeus/operation.entity";
+import {Ticket} from "~/entities/hefesto/Ticket";
 
 export interface YieldEntity {
   id: string;

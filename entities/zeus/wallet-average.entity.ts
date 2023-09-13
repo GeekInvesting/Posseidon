@@ -1,6 +1,6 @@
-import {BrokerEntity} from "~/model/zeus/broker.entity";
-import {InvestorHera} from "~/model/hera/InvestorHera";
-import {Ticket} from "~/model/hefesto/Ticket";
+import {BrokerEntity} from "~/entities/zeus/broker.entity";
+import {InvestorHera} from "~/entities/hera/InvestorHera";
+import {Ticket} from "~/entities/hefesto/Ticket";
 
 export interface WalletAverageEntity {
     investorId: string;

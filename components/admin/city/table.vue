@@ -92,10 +92,10 @@
 </template>
 
 <script lang="ts" setup>
-import { CityDto } from '~/model/hera/CityDto';
+import { CityDto } from '~/entities/hera/CityDto';
 import { ApiHera } from '~/utils/api/hera';
 import { useEventBus } from '~/events/eventBus';
-import { City } from '~/model/hera/City';
+import { City } from '~/entities/hera/City';
 import { CityUtils } from '~/utils/modelUtils/CityUtils';
 
 let cityDto: Ref<CityDto> = ref({} as CityDto);
@@ -151,13 +151,13 @@ const fetchCities = async () => {
   loading.value = false;
 }
 
-const edit = (city: City) => { 
+const edit = (city: City) => {
   cityDto.value = CityUtils().cityToDto(city);
   componentKey.value = city.id;
   dialogVisible.value = true;
 };
 
-const toggle = (city: City) => { 
+const toggle = (city: City) => {
   if (city.cityEnabled) {
     request("disable", "PUT", city);
   } else {
@@ -165,7 +165,7 @@ const toggle = (city: City) => {
   }
 }
 
-const remove = (city: City) => { 
+const remove = (city: City) => {
   request("delete", "DELETE", city);
 }
 

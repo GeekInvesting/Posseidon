@@ -70,7 +70,7 @@
 
 <script setup lang="ts">
 import { emitEventBus } from "~/events/eventBus";
-import { InvestorHera } from "~/model/hera/InvestorHera";
+import { InvestorHera } from "~/entities/hera/InvestorHera";
 import { AuthService } from "~/service/atena/AuthService";
 import { InvestorHeraService } from "~/service/hera/InvestorService";
 

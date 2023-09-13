@@ -3,7 +3,7 @@
     class="flex flex-wrap items-center justify-between w-full py-4 md:py-0 px-4 text-lg text-gray-700 bg-white"
   >
     <div class="flex items-center md:w-auto">
-      <NuxtLink to="/" class="text-xl font-bold text-indigo-500">Kronos Invest</NuxtLink>
+      <NuxtLink to="/" class="text-xl font-bold text-indigo-500">Olimpo Project</NuxtLink>
     </div>
     <div class="md:flex md:flex-wrap items-center justify-center md:w-auto">
       <el-menu
@@ -54,6 +54,9 @@
             <template #title>Atena</template>
             <el-menu-item index="2-3-1">
               <NuxtLink to="/admin/user">User</NuxtLink>
+            </el-menu-item>
+            <el-menu-item index="2-3-2">
+              <NuxtLink to="/admin/scheduler">Scheduler</NuxtLink>
             </el-menu-item>
           </el-sub-menu>
           <el-sub-menu index="2-4">

@@ -107,7 +107,7 @@
 </template>
 
 <script lang="ts" setup>
-import {WalletAverageEntity} from "~/model/zeus/wallet-average.entity";
+import {WalletAverageEntity} from "~/entities/zeus/wallet-average.entity";
 import {YieldService} from "~/service/zeus/yield.service";
 
 const resultPositive = ref(true)

@@ -102,7 +102,7 @@
 </template>
 
 <script lang="ts" setup>
-import {Operation} from "~/model/zeus/operation.entity";
+import {Operation} from "~/entities/zeus/operation.entity";
 import {OperationService} from "~/service/zeus/operation.service";
 import {useEventBus} from "~/events/eventBus";
 

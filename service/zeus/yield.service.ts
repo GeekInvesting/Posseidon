@@ -1,7 +1,7 @@
 import {ApiService} from "~/service/ApiService";
 import {urlZeus} from "~/service/BaseUrl";
 import {apiErrorHandler} from "~/middleware/apiErrorHandler";
-import {CreateYieldDto} from "~/model/zeus/yield.entity";
+import {CreateYieldDto} from "~/entities/zeus/yield.entity";
 
 export class YieldService extends ApiService {
   constructor() {

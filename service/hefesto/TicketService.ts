@@ -1,4 +1,4 @@
-import { Ticket, TicketDTO } from "~/model/hefesto/Ticket";
+import { Ticket, TicketDTO } from "~/entities/hefesto/Ticket";
 import { ApiService } from "../ApiService";
 import { apiErrorHandler } from "~/middleware/apiErrorHandler";
 import { urlHefesto } from "../BaseUrl";

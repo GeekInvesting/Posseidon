@@ -127,9 +127,9 @@
 </template>
 
 <script lang="ts" setup>
-import {CreateRateIrDto} from "~/model/zeus/rateIr.entity";
+import {CreateRateIrDto} from "~/entities/zeus/rateIr.entity";
 import {OperationService} from "~/service/zeus/operation.service";
-import {CompleteItem} from "~/model/complete.entity";
+import {CompleteItem} from "~/entities/complete.entity";
 import {RateIrService} from "~/service/zeus/RateIr.service";
 import {emitEventBus} from "~/events/eventBus";
 import {TypeService} from "~/service/hefesto/TypeService";
