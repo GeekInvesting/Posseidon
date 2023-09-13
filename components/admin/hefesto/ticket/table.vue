@@ -116,7 +116,7 @@
 
 <script lang="ts" setup>
 import { useEventBus } from "~/events/eventBus";
-import { Ticket } from "~/model/hefesto/Ticket";
+import { Ticket } from "~/entities/hefesto/Ticket";
 import { TicketService } from "~/service/hefesto/TicketService";
 
 const dialogVisible = ref(false);

@@ -1,4 +1,4 @@
-import {CompleteItem} from "~/model/complete.entity";
+import {CompleteItem} from "~/entities/complete.entity";
 
 export function copyProperties(obj: { [key: string]: any }): CompleteItem[] {
   let results: CompleteItem[] = [];

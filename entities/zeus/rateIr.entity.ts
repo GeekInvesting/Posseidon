@@ -1,5 +1,5 @@
-import {Operation} from "~/model/zeus/operation.entity";
-import {TypeModel} from "~/model/hefesto/TypeModel";
+import {Operation} from "~/entities/zeus/operation.entity";
+import {TypeModel} from "~/entities/hefesto/TypeModel";
 
 export interface RateIrEntity {
   id: string;

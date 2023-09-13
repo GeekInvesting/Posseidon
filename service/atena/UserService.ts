@@ -1,5 +1,5 @@
 //service/atena/UserService.ts
-import { User } from "~/model/atena/User";
+import { User } from "~/entities/atena/User";
 import { urlAtena } from "~/service/BaseUrl";
 import { ApiService } from "../ApiService";
 import { apiErrorHandler } from "~/middleware/apiErrorHandler";
@@ -98,6 +98,13 @@ export class UserService extends ApiService {
     const url = `${this.baseUrl}/disable/${user.id}`;
     return await apiErrorHandler(this.fetch)(url, {
       method: "PATCH",
+    });
+  }
+
+  async listAltoComplete(): Promise<Response> {
+    const url = `${this.baseUrl}/list`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: "GET",
     });
   }
 }

@@ -5,6 +5,7 @@ export interface SchedulerEntity {
     name: string;
     type: string;
     queue: string;
+    mail: boolean;
     userId: string;
     enabled: boolean;
     deleted: boolean;

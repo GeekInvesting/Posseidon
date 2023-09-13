@@ -58,7 +58,7 @@
 
 <script lang="ts" setup>
 import { emitEventBus } from "~~/events/eventBus";
-import { ExchangeDto } from "~/model/hefesto/Exchange";
+import { ExchangeDto } from "~/entities/hefesto/Exchange";
 import { ApiHera } from "~/utils/api/hera";
 import {
   createExchange,

@@ -92,7 +92,7 @@
 
 <script setup lang="ts">
 import { useEventBus } from "~/events/eventBus";
-import { TypeModel } from "~/model/hefesto/TypeModel";
+import { TypeModel } from "~/entities/hefesto/TypeModel";
 import { TypeService } from "~/service/hefesto/TypeService";
 
 const dialogVisible = ref(false);

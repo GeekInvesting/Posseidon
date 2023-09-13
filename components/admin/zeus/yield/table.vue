@@ -25,7 +25,7 @@
 
 <script lang="tsx" setup>
 import {YieldService} from "~/service/zeus/yield.service";
-import {YieldEntity} from "~/model/zeus/yield.entity";
+import {YieldEntity} from "~/entities/zeus/yield.entity";
 
 import dayjs from 'dayjs'
 import {

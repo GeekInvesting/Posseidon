@@ -35,7 +35,7 @@
 
 <script lang="ts" setup>
 import { emitEventBus } from '~/events/eventBus';
-import { TypeModel } from '~/model/hefesto/TypeModel';
+import { TypeModel } from '~/entities/hefesto/TypeModel';
 import { TypeService } from '~/service/hefesto/TypeService';
 
 const loading = ref(false);

@@ -1,4 +1,4 @@
-import { TypeModel } from "~/model/hefesto/TypeModel";
+import { TypeModel } from "~/entities/hefesto/TypeModel";
 import { ApiService } from "../ApiService";
 import { apiErrorHandler } from "~/middleware/apiErrorHandler";
 import { urlHefesto } from "../BaseUrl";

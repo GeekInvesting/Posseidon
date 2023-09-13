@@ -1,5 +1,5 @@
 //utils/service/hefesto/SectorService.ts
-import { Sector } from "~/model/hefesto/Sector";
+import { Sector } from "~/entities/hefesto/Sector";
 import { ApiService } from "../ApiService";
 import { apiErrorHandler } from "~/middleware/apiErrorHandler";
 import { urlHefesto } from "../BaseUrl";

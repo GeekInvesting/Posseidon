@@ -11,7 +11,7 @@
 
 <script lang="ts" setup>
 import { emitEventBus } from '~/events/eventBus';
-import {InvestorHera} from "~/model/hera/InvestorHera";
+import {InvestorHera} from "~/entities/hera/InvestorHera";
 
 const router = useRouter();
 

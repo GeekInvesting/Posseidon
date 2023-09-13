@@ -97,7 +97,7 @@
 //components/admin/hefesto/subsector/form.vue
 <script lang="ts" setup>
 import { useEventBus } from "~/events/eventBus";
-import { Subsector } from "~/model/hefesto/Subsector";
+import { Subsector } from "~/entities/hefesto/Subsector";
 import { SubsectorService } from "~/service/hefesto/SubsectorService";
 
 const dialogVisible = ref(false);
@@ -157,13 +157,13 @@ const toggle = async (row: Subsector) => {
   )
     .then(async () => {
       let response;
-    
+
       row.subsectorEnabled
         ? (response = await subsectorService.disableSubsector(row))
         : (response = await subsectorService.enableSubsector(row));
-    
+
       response
-        ? PosseidonNotif("success", `Subsector ${row.subsectorName} ${row.subsectorEnabled ? "Disabled" : "Enabled"}!`) 
+        ? PosseidonNotif("success", `Subsector ${row.subsectorName} ${row.subsectorEnabled ? "Disabled" : "Enabled"}!`)
         : null;
     })
     .catch((error) => {

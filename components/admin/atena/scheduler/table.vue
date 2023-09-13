@@ -25,8 +25,8 @@ import {SchedulerService} from "~/service/atena/scheduler.service";
 import {useEventBus} from "~/events/eventBus";
 import {TableV2FixedDir, ElIcon, ElButton, ElText, ElTag, ElSwitch} from "element-plus";
 import {Timer, ArrowRightBold} from '@element-plus/icons-vue'
-import {SchedulerEntity} from "~/model/atena/scheduler.entity";
-import {User} from "~/model/atena/User";
+import {SchedulerEntity} from "~/entities/atena/scheduler.entity";
+import {User} from "~/entities/atena/User";
 
 const dialogVisible = ref(false);
 const componentKey = ref('');
@@ -44,13 +44,13 @@ const schedulerService = new SchedulerService();
 
 onMounted(() => {
   Loading();
+  updateUser();
   fetchScheduler().then(() => {
     loading.close();
   }).catch((error) => {
     loading.close();
     PosseidonNotif(`warning`, `${error} this Yield!`)
   });
-  updateUser();
   updateWidth();
 })
 
@@ -63,11 +63,11 @@ onBeforeMount(() => {
   });
 })
 
-
 watch(() => useEventBus().value.refreshSchedulers,
     (value) => {
       if (value) {
         fetchScheduler();
+        dialogVisible.value = false;
       }
     }
 )
@@ -80,6 +80,7 @@ const updateUser = () => {
   const getLogin = new GetLogin();
   isAdmin.value = getLogin.isAdmin();
   userId.value = getLogin.getUserId();
+  //console.log(isAdmin.value);
 }
 
 const updateWidth = () => {
@@ -116,12 +117,13 @@ const loading = ElLoading.service({
 const fetchScheduler = async () => {
   dialogVisible.value = false;
   let response;
+  //console.log(isAdmin.value);
   isAdmin.value
       ? response = await schedulerService.findAll()
       : response = await schedulerService.findAllNotAdmin(userId.value);
 
   schedulerList.value = await response.json();
-  console.log(schedulerList.value);
+  //console.log(schedulerList.value);
 }
 
 const details = (rowData: any) => {
@@ -160,6 +162,15 @@ const columns = computed(() => {
       dataKey: 'User.userName',
       width: withColumns.value,
       align: 'center',
+    },
+    {
+      key: 'mail',
+      title: 'Mail',
+      dataKey: 'mail',
+      width: withColumns.value,
+      align: 'center',
+      cellRenderer: ({cellData: mail}: { cellData: boolean }) => <ElTag
+          type={mail ? 'success' : 'danger'}>{mail ? 'Send' : 'Not Send'}</ElTag>,
     },
     {
       key: 'Scheduler',

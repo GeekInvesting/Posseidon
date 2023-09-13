@@ -1,7 +1,7 @@
-import { CityDto } from "~/model/hera/CityDto";
-import { Country } from "~/model/hera/Country";
-import { State } from "~/model/hera/State";
-import { StateDto } from "~/model/hera/StateDto";
+import { CityDto } from "~/entities/hera/CityDto";
+import { Country } from "~/entities/hera/Country";
+import { State } from "~/entities/hera/State";
+import { StateDto } from "~/entities/hera/StateDto";
 
 const heraUrl = 'http://localhost:80/hera'
 //const heraUrl = 'http://hera:8100/hera'

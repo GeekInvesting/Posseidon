@@ -1,4 +1,4 @@
-import { Subsector, SubsectorDto } from "~/model/hefesto/Subsector";
+import { Subsector, SubsectorDto } from "~/entities/hefesto/Subsector";
 import { ApiService } from "../ApiService";
 import { apiErrorHandler } from "~/middleware/apiErrorHandler";
 import { urlHefesto } from "../BaseUrl";

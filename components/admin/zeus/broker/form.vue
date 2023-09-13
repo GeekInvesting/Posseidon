@@ -73,7 +73,7 @@
 </template>
 
 <script setup lang="ts">
-import {CreateBrokerDto} from "~/model/zeus/broker.entity";
+import {CreateBrokerDto} from "~/entities/zeus/broker.entity";
 import {BrokerService} from "~/service/zeus/broker.service";
 import {emitEventBus} from "~/events/eventBus";
 

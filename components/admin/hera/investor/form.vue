@@ -141,14 +141,14 @@
 </template>
 
 <script lang="ts" setup>
-import { InvestorDto, InvestorHera } from "~/model/hera/InvestorHera";
+import { InvestorDto, InvestorHera } from "~/entities/hera/InvestorHera";
 import { CityService } from "~/service/hera/CityService";
 import { CountryService } from "~/service/hera/CountryService";
 import { StateService } from "~/service/hera/StateService";
 import { UserService } from "~/service/atena/UserService";
 import { InvestorHeraService } from "~/service/hera/InvestorService";
 import { emitEventBus } from "~/events/eventBus";
-import { User } from "~/model/atena/User";
+import { User } from "~/entities/atena/User";
 
 const loading = ref(false);
 const svg = Loading().svg;

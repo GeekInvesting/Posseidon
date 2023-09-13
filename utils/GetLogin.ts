@@ -1,4 +1,4 @@
-import {User} from "~/model/atena/User";
+import {User} from "~/entities/atena/User";
 
 export class GetLogin {
   user: User;

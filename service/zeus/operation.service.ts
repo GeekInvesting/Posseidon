@@ -1,6 +1,6 @@
 import {ApiService} from "~/service/ApiService";
 import {urlZeus} from "~/service/BaseUrl";
-import {CreateOperationDto} from "~/model/zeus/operation.entity";
+import {CreateOperationDto} from "~/entities/zeus/operation.entity";
 import {apiErrorHandler} from "~/middleware/apiErrorHandler";
 
 export class OperationService extends ApiService {

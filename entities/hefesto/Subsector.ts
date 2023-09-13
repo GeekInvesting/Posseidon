@@ -1,4 +1,4 @@
-//model/hefesto/Subsector.ts
+//entities/hefesto/Subsector.ts
 import { Sector } from "./Sector";
 
 export interface Subsector {

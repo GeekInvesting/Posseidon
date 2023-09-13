@@ -93,7 +93,7 @@
 </template>
 
 <script lang="ts" setup>
-import { User } from "~/model/atena/User";
+import { User } from "~/entities/atena/User";
 import { UserService } from "~/service/atena/UserService";
 import { emitEventBus } from "~/events/eventBus";
 

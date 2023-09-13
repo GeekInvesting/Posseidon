@@ -81,7 +81,7 @@
 </template>
 
 <script lang="ts" setup>
-import {Operation} from "~/model/zeus/operation.entity";
+import {Operation} from "~/entities/zeus/operation.entity";
 import {Ref} from "vue";
 import {OperationService} from "~/service/zeus/operation.service";
 import {emitEventBus} from "~/events/eventBus";

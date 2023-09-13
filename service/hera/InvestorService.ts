@@ -1,4 +1,4 @@
-import { InvestorDto, InvestorHera } from "~/model/hera/InvestorHera";
+import { InvestorDto, InvestorHera } from "~/entities/hera/InvestorHera";
 import { ApiService } from "../ApiService";
 import { urlHera } from "../BaseUrl";
 import { apiErrorHandler } from "~/middleware/apiErrorHandler";

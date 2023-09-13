@@ -102,7 +102,7 @@
 </template>
 
 <script setup lang="ts">
-import {BrokerEntity} from "~/model/zeus/broker.entity";
+import {BrokerEntity} from "~/entities/zeus/broker.entity";
 import {BrokerService} from "~/service/zeus/broker.service";
 import {useEventBus} from "~/events/eventBus";
 

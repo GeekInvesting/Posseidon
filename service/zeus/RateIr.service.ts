@@ -1,6 +1,6 @@
 import {ApiService} from "~/service/ApiService";
 import {urlZeus} from "~/service/BaseUrl";
-import {CreateRateIrDto} from "~/model/zeus/rateIr.entity";
+import {CreateRateIrDto} from "~/entities/zeus/rateIr.entity";
 import {apiErrorHandler} from "~/middleware/apiErrorHandler";
 
 export class RateIrService extends ApiService {
