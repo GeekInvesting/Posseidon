@@ -55,6 +55,9 @@
             <el-menu-item index="2-3-1">
               <NuxtLink to="/admin/user">User</NuxtLink>
             </el-menu-item>
+            <el-menu-item index="2-3-2">
+              <NuxtLink to="/admin/scheduler">Scheduler</NuxtLink>
+            </el-menu-item>
           </el-sub-menu>
           <el-sub-menu index="2-4">
             <template #title>Zeus</template>

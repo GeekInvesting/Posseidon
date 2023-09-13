@@ -117,7 +117,7 @@
 
 <script setup lang="ts">
 import { useEventBus } from "~/events/eventBus";
-import { InvestorHera } from "~/model/hera/InvestorHera";
+import { InvestorHera } from "~/entities/hera/InvestorHera";
 import { InvestorHeraService } from "~/service/hera/InvestorService";
 
 const investorSave = ref("update");

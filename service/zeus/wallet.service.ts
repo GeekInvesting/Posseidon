@@ -1,7 +1,7 @@
 import {ApiService} from "~/service/ApiService";
 import {urlZeus} from "~/service/BaseUrl";
 import {apiErrorHandler} from "~/middleware/apiErrorHandler";
-import {CreateWalletDto} from "~/model/zeus/wallet.entity";
+import {CreateWalletDto} from "~/entities/zeus/wallet.entity";
 
 export class WalletService extends ApiService {
   constructor() {

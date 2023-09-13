@@ -43,7 +43,7 @@
 
 <script lang="ts" setup>
 import { emitEventBus } from "~/events/eventBus";
-import { Subsector, SubsectorDto } from "~/model/hefesto/Subsector";
+import { Subsector, SubsectorDto } from "~/entities/hefesto/Subsector";
 import { SectorService } from "~/service/hefesto/SectorService";
 import { SubsectorService } from "~/service/hefesto/SubsectorService";
 

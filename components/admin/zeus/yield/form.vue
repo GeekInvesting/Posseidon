@@ -134,12 +134,12 @@
 </template>
 
 <script lang="ts" setup>
-import {CreateYieldDto} from "~/model/zeus/yield.entity";
+import {CreateYieldDto} from "~/entities/zeus/yield.entity";
 import {TicketService} from "~/service/hefesto/TicketService";
 import {OperationService} from "~/service/zeus/operation.service";
-import {Operation} from "~/model/zeus/operation.entity";
-import {Ticket} from "~/model/hefesto/Ticket";
-import {CompleteItem} from "~/model/complete.entity";
+import {Operation} from "~/entities/zeus/operation.entity";
+import {Ticket} from "~/entities/hefesto/Ticket";
+import {CompleteItem} from "~/entities/complete.entity";
 import {copyProperties} from "~/utils/copyProperties.utils";
 import {YieldService} from "~/service/zeus/yield.service";
 import {emitEventBus} from "~/events/eventBus";

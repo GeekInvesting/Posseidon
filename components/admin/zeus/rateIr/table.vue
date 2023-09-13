@@ -27,7 +27,7 @@ import {useEventBus} from "~/events/eventBus";
 import {TableV2FixedDir, ElText, ElButton, ElIcon, ElTag} from "element-plus";
 import {Timer, ArrowRightBold} from '@element-plus/icons-vue'
 import dayjs from "dayjs";
-import {RateIrEntity} from "~/model/zeus/rateIr.entity";
+import {RateIrEntity} from "~/entities/zeus/rateIr.entity";
 
 const rateIrService = new RateIrService();
 

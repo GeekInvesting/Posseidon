@@ -1,5 +1,7 @@
+import {User} from "~/entities/atena/User";
+
 export class GetLogin {
-  user: any;
+  user: User;
   constructor() {
     this.user = JSON.parse(localStorage.getItem("user") || "{}");
     //console.log(this.user);
@@ -15,5 +17,13 @@ export class GetLogin {
 
   userName(): string {
     return this.user.userName;
+  }
+
+  getUser(): User {
+    return this.user;
+  }
+
+  getUserId(): string {
+    return this.user.id;
   }
 }

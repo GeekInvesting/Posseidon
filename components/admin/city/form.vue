@@ -66,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { CityDto } from "~/model/hera/CityDto.js";
+import { CityDto } from "~/entities/hera/CityDto";
 import { emitEventBus } from "~~/events/eventBus";
 
 import { ApiHera } from "~~/utils/api/hera";
@@ -115,7 +115,7 @@ watch(props.initialData, (newVal) => {
 
 onMounted( () => {
   loading.value = true;
-  
+
   getCountryName();
 
   if (props.typeSave == "update") {

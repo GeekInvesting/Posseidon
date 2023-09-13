@@ -7,7 +7,7 @@
 
 <script lang="ts" setup>
 import { useEventUser } from "~/events/eventUser";
-import { User } from "~/model/atena/User";
+import { User } from "~/entities/atena/User";
 import { getUser } from "~/service/atena/UserService";
 
 const eventUser = useEventUser();

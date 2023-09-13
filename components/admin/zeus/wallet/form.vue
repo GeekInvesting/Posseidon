@@ -168,8 +168,8 @@
 </template>
 
 <script lang="ts" setup>
-import {CreateWalletDto} from "~/model/zeus/wallet.entity";
-import {CompleteItem} from "~/model/complete.entity";
+import {CreateWalletDto} from "~/entities/zeus/wallet.entity";
+import {CompleteItem} from "~/entities/complete.entity";
 import {InvestorHeraService} from "~/service/hera/InvestorService";
 import {TicketService} from "~/service/hefesto/TicketService";
 import {BrokerService} from "~/service/zeus/broker.service";
@@ -177,8 +177,8 @@ import {OperationService} from "~/service/zeus/operation.service";
 import {WalletService} from "~/service/zeus/wallet.service";
 import {emitEventBus} from "~/events/eventBus";
 import {RateIrService} from "~/service/zeus/RateIr.service";
-import {Ticket} from "~/model/hefesto/Ticket";
-import {RateIrEntity} from "~/model/zeus/rateIr.entity";
+import {Ticket} from "~/entities/hefesto/Ticket";
+import {RateIrEntity} from "~/entities/zeus/rateIr.entity";
 
 const investorService = new InvestorHeraService();
 const ticketService = new TicketService();
@@ -361,7 +361,6 @@ const submit = async () => {
       : PosseidonNotif('error', `Error to ${props.typeSave} wallet`);
   }).catch(() => {
     PosseidonNotif('info', `Canceled ${props.typeSave} wallet`);
-    emptyForm();
   }).finally(() => {
     emitEventBus('refreshWallets', true);
     emitEventBus('refreshWalletAverage', true);

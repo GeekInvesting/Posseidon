@@ -1,4 +1,4 @@
-import { Company } from "~/model/hefesto/Company";
+import { Company } from "~/entities/hefesto/Company";
 import { ApiService } from "../ApiService";
 import { urlHefesto } from "../BaseUrl";
 

@@ -1,5 +1,5 @@
-import { City } from "~/model/hera/City"
-import { CityDto } from "~/model/hera/CityDto"
+import { City } from "~/entities/hera/City"
+import { CityDto } from "~/entities/hera/CityDto"
 
 export function CityUtils() {
 

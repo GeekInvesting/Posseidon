@@ -1,7 +1,7 @@
-import {Ticket} from "~/model/hefesto/Ticket";
-import {InvestorHera} from "~/model/hera/InvestorHera";
-import {Operation} from "~/model/zeus/operation.entity";
-import {BrokerEntity} from "~/model/zeus/broker.entity";
+import {Ticket} from "~/entities/hefesto/Ticket";
+import {InvestorHera} from "~/entities/hera/InvestorHera";
+import {Operation} from "~/entities/zeus/operation.entity";
+import {BrokerEntity} from "~/entities/zeus/broker.entity";
 import {integer} from "vscode-languageserver-types";
 
 export interface WalletEntity {

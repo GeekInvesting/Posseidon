@@ -1,4 +1,4 @@
-import { Exchange, ExchangeDto } from "~/model/hefesto/Exchange";
+import { Exchange, ExchangeDto } from "~/entities/hefesto/Exchange";
 import { ApiService } from "../ApiService";
 import { apiErrorHandler } from "~/middleware/apiErrorHandler";
 import { urlHefesto } from "../BaseUrl";

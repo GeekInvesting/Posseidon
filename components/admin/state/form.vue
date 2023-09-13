@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { StateDto } from "~/model/hera/StateDto.js";
+import { StateDto } from "~/entities/hera/StateDto.js";
 import { emitEventBus } from "~~/events/eventBus";
 import { Notif } from "~/utils/Notif";
 

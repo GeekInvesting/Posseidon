@@ -1,6 +1,6 @@
 import {ApiService} from "~/service/ApiService";
 import {urlZeus} from "~/service/BaseUrl";
-import {CreateBrokerDto} from "~/model/zeus/broker.entity";
+import {CreateBrokerDto} from "~/entities/zeus/broker.entity";
 import {apiErrorHandler} from "~/middleware/apiErrorHandler";
 
 export class BrokerService extends ApiService {
