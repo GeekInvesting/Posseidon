@@ -5,7 +5,7 @@ export function CityUtils() {
 
     const cityToDto = (city: City) :CityDto => {
         return {
-            id: city.id,
+            _id: city.id,
             cityName: city.cityName,
             cityCode: city.cityCode,
             cityState: city.cityState.stateName,

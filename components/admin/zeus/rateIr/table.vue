@@ -88,16 +88,16 @@ const columns = computed(() => [
     fixed: TableV2FixedDir.LEFT
   },
   {
-    key: 'Operation.operationName',
+    key: 'operationId.operationName',
     title: 'Operation',
-    dataKey: 'Operation.operationName',
+    dataKey: 'operationId.operationName',
     width: withColumns.value,
     align: "center",
   },
   {
-    key: 'Type.typeCode',
+    key: 'typeId.typeCode',
     title: 'Type',
-    dataKey: 'Type.typeCode',
+    dataKey: 'typeId.typeCode',
     width: withColumns.value,
     align: "center",
   },
@@ -166,6 +166,6 @@ const columns = computed(() => [
 const details = (rowData: RateIrEntity) => {
   rateIrEntity.value = rowData;
   dialogVisible.value = true;
-  componentKey.value = rowData.id;
+  componentKey.value = rowData._id;
 }
 </script>

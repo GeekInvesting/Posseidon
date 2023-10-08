@@ -3,7 +3,7 @@ export class GetInvestor {
 
   constructor() {
     this.investor = JSON.parse(localStorage.getItem("investor") || "{}");
-    console.log(this.investor);
+    //console.log(this.investor);
   }
 
   isInvestor(): boolean {

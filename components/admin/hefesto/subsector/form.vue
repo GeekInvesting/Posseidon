@@ -82,7 +82,7 @@ watch(
   () => props.initialData,
   (value) => {
     subsectorDto.value = {
-      id: value.id || "",
+      _id: value.id || "",
       subsectorName: value.subsectorName || "",
       sectorName: value.sectorModel?.sectorName || "",
       subsectorEnabled: value.subsectorEnabled || true,
@@ -124,7 +124,7 @@ const fetchSectorsNames = async () => {
 
 const emptyForm = () => {
   subsectorDto.value = {
-    id: "",
+    _id: "",
     subsectorName: "",
     sectorName: "",
     subsectorEnabled: true,

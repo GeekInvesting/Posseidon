@@ -12,7 +12,7 @@
         <el-input v-model="operation.operationName" placeholder="SELL" />
       </el-form-item>
       <el-form-item label="System" props="operationSystem">
-        <el-select v-model="operation.operationSystem" placeholder="BROKER">
+        <el-select v-model="operation.operationSystem" placeholder="WALLET">
           <el-option
             v-for="item in ['WALLET', 'YIELD']"
             :key="item"
@@ -104,7 +104,7 @@ const props = defineProps({
 });
 
 const operation: Ref<Operation> = ref({
-  id: props.initialData.id || "",
+  _id: props.initialData._id || "",
   operationName: props.initialData.operationName || "",
   operationSystem: props.initialData.operationSystem || "",
   operationEnabled: props.initialData.operationEnabled || true,
@@ -117,7 +117,7 @@ watch(
   () => props.initialData,
   (newVal) => {
     operation.value = {
-      id: newVal.id || "",
+      _id: newVal._id || "",
       operationName: newVal.operationName || "",
       operationSystem: newVal.operationSystem || "",
       operationEnabled: newVal.operationEnabled || true,
@@ -156,7 +156,7 @@ const resetForm = () => {
   //console.log(`${anotherOperation.value} new Operation`)
    if (anotherOperation.value) {
      operation.value = {
-     id: "",
+     _id: "",
        operationName: "",
        operationSystem: "",
        operationEnabled: true,

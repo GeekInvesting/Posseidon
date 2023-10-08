@@ -8,7 +8,7 @@ export function copyProperties(obj: { [key: string]: any }): CompleteItem[] {
     let result: Partial<CompleteItem> = {};
 
     for (let key in currentItem) {
-      if (key === 'id') {
+      if (key === 'id' || key === '_id') {
         result.link = currentItem[key];
       } else {
         result.value = currentItem[key];

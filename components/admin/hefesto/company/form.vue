@@ -174,7 +174,7 @@ const fetchLogo = async () => {
 
 const emptyForm = () => {
   company.value = {
-    id: "",
+    _id: "",
     companyName: "",
     companyCode: "",
     companySiteRi: "",

@@ -103,7 +103,7 @@ let city = ref<CityDto>({
 
 watch(props.initialData, (newVal) => {
   city.value = {
-    id: newVal.id || "",
+    _id: newVal.id || "",
     cityName: newVal.cityName || "",
     cityCode: newVal.cityCode || null,
     cityState: newVal.cityState || null,
@@ -184,7 +184,7 @@ const submitForm = async () => {
 
 const emptyForm = () => {
   city.value = {
-    id: "",
+    _id: "",
     cityName: "",
     cityCode: null,
     cityState: "",

@@ -1,6 +1,6 @@
 import {ApiService} from "~/service/ApiService";
 import {urlZeus} from "~/service/BaseUrl";
-import {CreateOperationDto} from "~/entities/zeus/operation.entity";
+import {Operation} from "~/entities/zeus/operation.entity";
 import {apiErrorHandler} from "~/middleware/apiErrorHandler";
 
 export class OperationService extends ApiService {
@@ -10,7 +10,7 @@ export class OperationService extends ApiService {
     super();
   }
 
-  async createOperation(operation: CreateOperationDto): Promise<Response> {
+  async createOperation(operation: Operation): Promise<Response> {
     const url = `${this.baseUrl}`;
     return await apiErrorHandler(this.fetch)(url, {
       method: "POST",
@@ -28,29 +28,16 @@ export class OperationService extends ApiService {
     });
   }
 
-  async updateOperation(operation: CreateOperationDto): Promise<Response> {
-    const { id, ...rest } = operation;
-    const url = `${this.baseUrl}/${id}`;
+  async updateOperation(operation: Operation): Promise<Response> {
+    //console.log(operation);
+    const { _id, ...rest } = operation;
+    const url = `${this.baseUrl}/${_id}`;
     return await apiErrorHandler(this.fetch)(url, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(rest),
-    });
-  }
-
-  async enableOperation(id: string): Promise<Response> {
-    const url = `${this.baseUrl}/${id}/enable`;
-    return await apiErrorHandler(this.fetch)(url, {
-      method: "PATCH",
-    });
-  }
-
-  async disableOperation(id: string): Promise<Response> {
-    const url = `${this.baseUrl}/${id}/disable`;
-    return await apiErrorHandler(this.fetch)(url, {
-      method: "PATCH",
     });
   }
 

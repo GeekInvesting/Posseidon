@@ -10,13 +10,15 @@ export class RateIrService extends ApiService {
   baseUrl = `${urlZeus}/rate-ir`;
 
   async createRateIr(rateIr: CreateRateIrDto): Promise<Response> {
+    const {_id, ...rateIrCreate} = rateIr;
+    console.log(rateIrCreate);
     const url = `${this.baseUrl}`;
     return await apiErrorHandler(this.fetch)(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(rateIr),
+      body: JSON.stringify(rateIrCreate),
     });
   }
 
@@ -28,8 +30,8 @@ export class RateIrService extends ApiService {
   }
 
   updateRateIr(rateIr: CreateRateIrDto): Promise<Response> {
-    const {id, ...rateIrUpdate} = rateIr;
-    const url = `${this.baseUrl}/${id}`;
+    const {_id, ...rateIrUpdate} = rateIr;
+    const url = `${this.baseUrl}/${_id}`;
     return apiErrorHandler(this.fetch)(url, {
       method: "PATCH",
       headers: {
@@ -40,7 +42,7 @@ export class RateIrService extends ApiService {
   }
 
   removeRateIr(rateIr: CreateRateIrDto): Promise<Response> {
-    const url = `${this.baseUrl}/${rateIr.id}`;
+    const url = `${this.baseUrl}/${rateIr._id}`;
     return apiErrorHandler(this.fetch)(url, {
       method: "DELETE",
     })

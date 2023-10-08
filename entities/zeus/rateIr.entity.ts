@@ -2,7 +2,7 @@ import {Operation} from "~/entities/zeus/operation.entity";
 import {TypeModel} from "~/entities/hefesto/TypeModel";
 
 export interface RateIrEntity {
-  id: string;
+  _id: string;
   system: string;
   operationId: string;
   Operation: Operation;

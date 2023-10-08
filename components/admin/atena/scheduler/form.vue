@@ -167,7 +167,7 @@ const schedulerEntity = ref<SchedulerEntity>({
 
 watch(() => props.initialData, (value) => {
   schedulerEntity.value = {
-    id: value.id || '',
+    _id: value.id || '',
     name: value.name || '',
     type: value.type || '',
     queue: value.queue || '',
@@ -293,7 +293,7 @@ const sendRequest = async (operation: string) => {
 
 const emptyForm = () => {
   schedulerEntity.value = {
-    id: '',
+    _id: '',
     name: '',
     type: '',
     queue: '',

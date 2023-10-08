@@ -1,5 +1,5 @@
 export interface Operation {
-  id: string;
+  _id: string;
   operationName: string;
   operationSystem: string;
   operationEnabled: boolean;
@@ -7,5 +7,3 @@ export interface Operation {
   operationCreatedAt: Date | undefined;
   operationUpdatedAt: Date | undefined;
 }
-
-export interface CreateOperationDto extends Partial<Operation> {};
