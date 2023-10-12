@@ -71,7 +71,7 @@
               <NuxtLink to="admin/yield">Yield</NuxtLink>
             </el-menu-item>
             <el-menu-item index="2-4-4">
-              <NuxtLink to="/admin/wallet">Wallet</NuxtLink>
+              <NuxtLink to="/wallets/inventory">Wallet</NuxtLink>
             </el-menu-item>
             <el-menu-item index="2-4-5">
               <NuxtLink to="/admin/rateIr">Rate IR</NuxtLink>
@@ -79,7 +79,7 @@
           </el-sub-menu>
         </el-sub-menu>
         <el-menu-item index="3" v-if="isLoged">
-          <NuxtLink to="/wallet">Wallet</NuxtLink>
+          <NuxtLink to="/wallets">Wallet</NuxtLink>
         </el-menu-item>
         <el-menu-item index="4">
           <NuxtLink to="/about">About</NuxtLink>

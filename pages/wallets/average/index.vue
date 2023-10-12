@@ -1,8 +1,8 @@
 <template>
   <div class="p-3 rounded-lg">
-    <WalletHeader title="Wallet"/>
+    <WalletHeader title="Average"/>
     <div class="p-3 rounded-lg">
-      <WalletAverage />
+      Hello Average
     </div>
   </div>
 </template>
@@ -10,6 +10,6 @@
 <script lang="ts" setup>
 definePageMeta({
   middleware: "auth",
-  name: "Wallet Admin"
+  name: "Average"
 });
 </script>

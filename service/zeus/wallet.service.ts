@@ -27,7 +27,7 @@ export class WalletService extends ApiService {
 
   async updateWallet(updateWallet: CreateWalletDto): Promise<Response> {
     console.log(updateWallet);
-    const { _id, ...updateWalletDto } = updateWallet;
+    const {_id, ...updateWalletDto} = updateWallet;
     const url = `${this.urlBase}/${_id}`;
     return await apiErrorHandler(this.fetch)(url, {
       method: 'PATCH',
@@ -63,5 +63,4 @@ export class WalletService extends ApiService {
       },
     });
   }
-
 }
