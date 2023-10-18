@@ -2,7 +2,7 @@
   <div class="p-3 rounded-lg">
     <WalletHeader title="Inventory"/>
     <div class="p-3 rounded-lg">
-      Hello Inventory
+      <AdminZeusWalletTable/>
     </div>
   </div>
 </template>

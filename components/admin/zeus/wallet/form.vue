@@ -211,7 +211,7 @@ onMounted(() => {
 const props = defineProps({
   initialData: {
     type: Object,
-    default: {}
+    default: {} as CreateWalletDto
   },
   typeSave: {
     type: String,
@@ -220,11 +220,11 @@ const props = defineProps({
 })
 
 const walletEntity = ref<CreateWalletDto>({
-  _id: props.initialData._id || "",
-  investorId: props.initialData.investorId.id || "",
-  ticketId: props.initialData.ticketId.id || "",
-  operationId: props.initialData.operationId._id || "",
-  brokerId: props.initialData.brokerId._id || "",
+  _id: props.initialData._id || undefined,
+  investorId: props.initialData.investorId?.id || "",
+  ticketId: props.initialData.ticketId?.id || "",
+  operationId: props.initialData.operationId?._id || "",
+  brokerId: props.initialData.brokerId?._id || "",
   dateOperation: props.initialData.dateOperation || "",
   amount: props.initialData.amount || 0,
   price: props.initialData.price || 0,

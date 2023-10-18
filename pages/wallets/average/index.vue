@@ -2,7 +2,7 @@
   <div class="p-3 rounded-lg">
     <WalletHeader title="Average"/>
     <div class="p-3 rounded-lg">
-      Hello Average
+      <WalletAverage/>
     </div>
   </div>
 </template>

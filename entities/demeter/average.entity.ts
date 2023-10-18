@@ -2,7 +2,7 @@ import {BrokerEntity} from "~/entities/zeus/broker.entity";
 import {InvestorHera} from "~/entities/hera/InvestorHera";
 import {Ticket} from "~/entities/hefesto/Ticket";
 
-export interface WalletAverageEntity {
+export interface AverageEntity {
     investorId: string;
     Investor: InvestorHera;
     ticketId: string;
