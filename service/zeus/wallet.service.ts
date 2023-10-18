@@ -27,7 +27,7 @@ export class WalletService extends ApiService {
 
   async updateWallet(updateWallet: CreateWalletDto): Promise<Response> {
     console.log(updateWallet);
-    const { _id, ...updateWalletDto } = updateWallet;
+    const {_id, ...updateWalletDto} = updateWallet;
     const url = `${this.urlBase}/${_id}`;
     return await apiErrorHandler(this.fetch)(url, {
       method: 'PATCH',
@@ -42,16 +42,6 @@ export class WalletService extends ApiService {
     });
   }
 
-  async averageCalculate(investorId: string): Promise<Response> {
-    const url = `${this.urlBase}/average`;
-    return await apiErrorHandler(this.fetch)(url, {
-      method: 'GET',
-      headers: {
-        investorId,
-      },
-    });
-  }
-
   async listTickets(investorId: string, brokerId: string, ticketId: string): Promise<Response> {
     const url = `${this.urlBase}/list`;
     return await apiErrorHandler(this.fetch)(url, {
@@ -63,5 +53,4 @@ export class WalletService extends ApiService {
       },
     });
   }
-
 }

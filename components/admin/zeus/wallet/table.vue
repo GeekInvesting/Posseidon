@@ -17,6 +17,7 @@
     :data="walletList"
     :width="windowWidth * 0.95"
     :height="windowHeight * 0.8"
+    class="overflow-scroll "
   />
 </template>
 
@@ -61,8 +62,13 @@ watch(() => windowWidth.value, () => {
 })
 
 const updateWidth = () => {
-  windowWidth.value = window.innerWidth;
-  withColumns.value = windowWidth.value * 0.95 / columns.value.length;
+  const limit = 1100
+  if(windowWidth.value > limit) {
+    withColumns.value = windowWidth.value * 0.95 / columns.value.length;
+    return;
+  }
+  windowWidth.value = limit;
+  withColumns.value = limit * 0.95 / columns.value.length;
 }
 
 const handleClose = () => {
@@ -82,7 +88,7 @@ const fetchWallet = async () => {
   const response = await walletService.findAllWallets();
   walletList.value = await response.json();
   loading.close();
-  console.log(walletList.value);
+  //console.log(walletList.value);
 }
 
 const columns = computed(() => [
