@@ -11,6 +11,12 @@ Create Project usign Nuxt 3
 ### Version 0.0.2
 Implement pages for admin services Hera, Hefesto and Atena.
 
+### Version 0.0.4
+Implement pages for admin services Demeter, Zeus and Posseidon.
+
+### Version 0.0.5
+Implement pages for wallet management and dashboard.
+
 
 # Nuxt 3 Minimal Starter
 
