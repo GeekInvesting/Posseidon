@@ -1,15 +1,15 @@
 <template>
   <div class="p-3 rounded-lg">
-    <WalletHeader title="Wallet"/>
+    <WalletHeader title="Inventory"/>
     <div class="p-3 rounded-lg">
-      <WalletAverage />
+      <AdminZeusWalletTable/>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 definePageMeta({
-  middleware: "auth",
-  name: "Wallet Admin"
+  middleware: "auth-user",
+  name: "Investory"
 });
 </script>

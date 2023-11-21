@@ -177,8 +177,6 @@ import {OperationService} from "~/service/zeus/operation.service";
 import {WalletService} from "~/service/zeus/wallet.service";
 import {emitEventBus} from "~/events/eventBus";
 import {RateIrService} from "~/service/zeus/RateIr.service";
-import {Ticket} from "~/entities/hefesto/Ticket";
-import {RateIrEntity} from "~/entities/zeus/rateIr.entity";
 
 const investorService = new InvestorHeraService();
 const ticketService = new TicketService();
@@ -207,12 +205,13 @@ onMounted(() => {
 
   setCompletes(props.initialData);
   getInvestorData();
+  //console.log(walletEntity.value)
 })
 
 const props = defineProps({
   initialData: {
     type: Object,
-    default: {}
+    default: {} as CreateWalletDto
   },
   typeSave: {
     type: String,
@@ -221,11 +220,11 @@ const props = defineProps({
 })
 
 const walletEntity = ref<CreateWalletDto>({
-  id: props.initialData.id || "",
-  investorId: props.initialData.investorId || "",
-  ticketId: props.initialData.ticketId || "",
-  operationId: props.initialData.operationId || "",
-  brokerId: props.initialData.brokerId || "",
+  _id: props.initialData._id || undefined,
+  investorId: props.initialData.investorId?.id || "",
+  ticketId: props.initialData.ticketId?.id || "",
+  operationId: props.initialData.operationId?._id || "",
+  brokerId: props.initialData.brokerId?._id || "",
   dateOperation: props.initialData.dateOperation || "",
   amount: props.initialData.amount || 0,
   price: props.initialData.price || 0,
@@ -239,11 +238,11 @@ const walletEntity = ref<CreateWalletDto>({
 
 watch(() => props.initialData, (value) => {
   walletEntity.value = {
-    id: value.id || "",
-    investorId: value.investorId || "",
-    ticketId: value.ticketId || "",
-    operationId: value.operationId || "",
-    brokerId: value.brokerId || "",
+    _id: value._id || "",
+    investorId: value.investorId.id || "",
+    ticketId: value.ticketId.id || "",
+    operationId: value.operationId._id || "",
+    brokerId: value.brokerId._id || "",
     dateOperation: value.dateOperation || "",
     amount: value.amount || 0,
     price: value.price || 0,
@@ -258,10 +257,10 @@ watch(() => props.initialData, (value) => {
 })
 
 const setCompletes = (value: any) => {
-  investorSelect.value = value.Investor?.investorName || "";
-  ticketSelect.value = value.Ticket?.ticketCode || "";
-  operationSelect.value = value.Operation?.operationName || "";
-  brokerSelect.value = value.Broker?.brokerName || "";
+  investorSelect.value = value.investorId?.investorName || "";
+  ticketSelect.value = value.ticketId?.ticketCode || "";
+  operationSelect.value = value.operationId?.operationName || "";
+  brokerSelect.value = value.brokerId?.brokerName || "";
 }
 
 const fetchInvestor = async () => {
@@ -373,7 +372,7 @@ const submit = async () => {
 
 const emptyForm = () => {
   walletEntity.value = {
-    id: "",
+    _id: "",
     ticketId: "",
     operationId: "",
     brokerId: "",

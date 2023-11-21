@@ -124,6 +124,7 @@ const fetchOperations = async () => {
   const response = await operationService.getAllOperations();
   operations = await response.json();
   hideDialog();
+  //console.log(operations)
   loading.value = false;
 };
 
@@ -155,7 +156,7 @@ const hideDialog = () => {
 
 const edit = (row: Operation) => {
   operation = row;
-  componentKey = row.id;
+  componentKey = row._id;
   dialogVisible.value = true;
 }
 
@@ -166,9 +167,8 @@ const toggle = (row: Operation) => {
     }).then(async () => {
       let response;
 
-      row.operationEnabled
-        ? (response = await operationService.disableOperation(row.id))
-        : (response = await operationService.enableOperation(row.id));
+      row.operationEnabled = !row.operationEnabled;
+      response = await operationService.updateOperation(row);
 
       response
         ? PosseidonNotif(`success`, `${row.operationEnabled ? "Disabled" : "Enabled"} this Operation!`)
@@ -186,7 +186,8 @@ const remove = (row: Operation) => {
   ElMessageBox.confirm(`Are you sure to delete this Operation?`, {
     confirmButtonText: `Delete`,
   }).then(async () => {
-    const response = await operationService.deleteOperation(row.id);
+    row.operationDeleted = !row.operationDeleted
+    const response = await operationService.updateOperation(row);
     response
       ? PosseidonNotif(`success`, `Deleted this Operation!`)
       : null;

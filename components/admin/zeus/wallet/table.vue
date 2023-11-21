@@ -17,6 +17,7 @@
     :data="walletList"
     :width="windowWidth * 0.95"
     :height="windowHeight * 0.8"
+    class="overflow-scroll "
   />
 </template>
 
@@ -61,8 +62,13 @@ watch(() => windowWidth.value, () => {
 })
 
 const updateWidth = () => {
-  windowWidth.value = window.innerWidth;
-  withColumns.value = windowWidth.value * 0.95 / columns.value.length;
+  const limit = 1100
+  if(windowWidth.value > limit) {
+    withColumns.value = windowWidth.value * 0.95 / columns.value.length;
+    return;
+  }
+  windowWidth.value = limit;
+  withColumns.value = limit * 0.95 / columns.value.length;
 }
 
 const handleClose = () => {
@@ -79,7 +85,8 @@ const loading = ElLoading.service({
 const fetchWallet = async () => {
   dialogVisible.value = false;
   loading;
-  const response = await walletService.findAllWallets();
+  let investorId = new GetInvestor().investorId();
+  let response = await walletService.findAllWalletsByInvestor(investorId)
   walletList.value = await response.json();
   loading.close();
   //console.log(walletList.value);
@@ -114,30 +121,30 @@ const columns = computed(() => [
     ),
   },
   {
-    key: 'Investor.investorName',
+    key: 'investorId.investorName',
     title: 'Investor',
-    dataKey: 'Investor.investorName',
+    dataKey: 'investorId.investorName',
     width: withColumns.value,
     align: 'center',
   },
   {
-    key: 'Broker.brokerName',
+    key: 'brokerId.brokerName',
     title: 'Broker',
-    dataKey: 'Broker.brokerName',
+    dataKey: 'brokerId.brokerName',
     width: withColumns.value,
     align: 'center',
   },
   {
-    key: 'Ticket.ticketCode',
+    key: 'ticketId.ticketCode',
     title: 'Ticket',
-    dataKey: 'Ticket.ticketCode',
+    dataKey: 'ticketId.ticketCode',
     width: withColumns.value,
     align: 'center',
   },
   {
-    key: 'Operation.operationName',
+    key: 'operationId.operationName',
     title: 'Operation',
-    dataKey: 'Operation.operationName',
+    dataKey: 'operationId.operationName',
     width: withColumns.value,
     align: 'center',
   },

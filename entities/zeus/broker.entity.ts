@@ -1,5 +1,5 @@
 export interface BrokerEntity {
-  id: string;
+  _id: string;
   brokerName: string;
   brokerUrl: string;
   brokerEnabled: boolean;

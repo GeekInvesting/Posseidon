@@ -4,7 +4,7 @@ import {StateDto} from "~/entities/hera/StateDto";
 export function StateUtils() {
   const stateToDto = (state: State): StateDto => {
     return {
-      id: state.id,
+      _id: state.id,
       stateName: state.stateName,
       stateCode: state.stateCode,
       countryName: state.stateCountry.countryName,

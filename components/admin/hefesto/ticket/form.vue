@@ -170,7 +170,7 @@ const ticket = ref<TicketDTO>({
 
 watch(props.initialData, (newValue) => {
   ticket.value = {
-    id: newValue.id || "",
+    _id: newValue.id || "",
     ticketCode: newValue.ticketCode || "",
     ticketCompanyName: newValue.ticketCompany?.companyName || "",
     ticketTypeCode: newValue.ticketType?.typeCode || "",
@@ -216,7 +216,7 @@ const submitForm = () => {
 
 const emptyForm = () => {
   ticket.value = {
-    id: "",
+    _id: "",
     ticketCode: "",
     ticketCompanyName: "",
     ticketTypeCode: "",

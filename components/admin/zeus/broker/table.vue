@@ -156,7 +156,7 @@ const handleClose = () => {
 const edit = (row: BrokerEntity) => {
   loading.value = true;
   broker.value = row;
-  componentKey.value = row.id;
+  componentKey.value = row._id;
   brokerVisible.value = true;
 }
 
@@ -167,9 +167,8 @@ const toggle = (row: BrokerEntity) => {
   }).then(async () => {
     let response;
 
-    row.brokerEnabled
-      ? (response = await brokerService.disableBroker(row.id))
-      : (response = await brokerService.enableBroker(row.id));
+    row.brokerEnabled = !row.brokerEnabled;
+    response = await brokerService.updateBroker(row);
 
     response
       ? PosseidonNotif(`success`, `${row.brokerEnabled ? "Disable" : "Enable"}d this Broker!`)
@@ -189,7 +188,8 @@ const remove = (row: BrokerEntity) => {
     type: "warning",
   })
     .then(async () => {
-      const response = await brokerService.deleteBroker(row.id);
+      row.brokerDeleted = !row.brokerDeleted;
+      const response = await brokerService.updateBroker(row)
       response
         ? PosseidonNotif(`success`, `Deleted this Broker!`)
         : PosseidonNotif(`error`, `Deleted this Broker!`)

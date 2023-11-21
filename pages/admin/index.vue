@@ -133,7 +133,7 @@
           Yield
         </NuxtLink>
         <NuxtLink
-          to="admin/wallet"
+          to="wallet/list"
           class="bg-blue-500 text-white px-4 py-2 rounded"
         >
           Wallet

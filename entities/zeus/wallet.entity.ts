@@ -5,7 +5,7 @@ import {BrokerEntity} from "~/entities/zeus/broker.entity";
 import {integer} from "vscode-languageserver-types";
 
 export interface WalletEntity {
-  id: string;
+  _id: string;
   investorId: string;
   Investor: Partial<InvestorHera>;
   ticketId: string;

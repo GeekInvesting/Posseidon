@@ -26,8 +26,9 @@ export class WalletService extends ApiService {
   }
 
   async updateWallet(updateWallet: CreateWalletDto): Promise<Response> {
-    const { id, ...updateWalletDto } = updateWallet;
-    const url = `${this.urlBase}/${id}`;
+    console.log(updateWallet);
+    const {_id, ...updateWalletDto} = updateWallet;
+    const url = `${this.urlBase}/${_id}`;
     return await apiErrorHandler(this.fetch)(url, {
       method: 'PATCH',
       body: JSON.stringify(updateWalletDto),
@@ -35,19 +36,9 @@ export class WalletService extends ApiService {
   }
 
   async removeWallet(deleteWallet: CreateWalletDto): Promise<Response> {
-    const url = `${this.urlBase}/${deleteWallet.id}`;
+    const url = `${this.urlBase}/${deleteWallet._id}`;
     return await apiErrorHandler(this.fetch)(url, {
       method: 'DELETE',
-    });
-  }
-
-  async averageCalculate(investorId: string): Promise<Response> {
-    const url = `${this.urlBase}/average`;
-    return await apiErrorHandler(this.fetch)(url, {
-      method: 'GET',
-      headers: {
-        investorId,
-      },
     });
   }
 
@@ -60,6 +51,13 @@ export class WalletService extends ApiService {
         brokerId,
         ticketId,
       },
+    });
+  }
+
+  async findAllWalletsByInvestor(investorId: string): Promise<Response> {
+    const url = `${this.urlBase}/investor/${investorId}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: 'GET',
     });
   }
 }

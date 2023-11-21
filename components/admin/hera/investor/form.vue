@@ -197,7 +197,7 @@ const investor = ref<InvestorDto>({
 
 watch(props.initialData, (newValue) => {
   investor.value = {
-    id: newValue.id || "",
+    _id: newValue.id || "",
     investorName: newValue.investorName || "",
     investorDoc: newValue.investorDoc || "",
     investorAdress: newValue.investorAdress || "",
@@ -251,7 +251,7 @@ const submit = () => {
 
 const emptyForm = () => {
   investor.value = {
-    id: "",
+    _id: "",
     investorName: "",
     investorDoc: "",
     investorAdress: "",

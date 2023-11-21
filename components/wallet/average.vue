@@ -33,6 +33,7 @@ import {TableV2FixedDir, ElIcon, ElButton, ElText, ElTag} from "element-plus";
 import {Timer, ArrowRightBold} from '@element-plus/icons-vue'
 import dayjs from "dayjs";
 import {Ref} from "vue";
+import {AverageService} from "~/service/demeter/average.service";
 
 const dialogVisible = ref(false);
 const componentKey = ref('');
@@ -47,10 +48,12 @@ const windowWidth = ref(window.innerWidth);
 const windowHeight = ref(window.innerHeight);
 const withColumns: Ref<number> = ref(150);
 
-const walletService = new WalletService();
+const averageService = new AverageService();
 
 onMounted(() => {
-  fetchWallet().then(r => r);
+  fetchWallet().then(r => {
+    loading.close();
+  });
   window.addEventListener('resize', () => {
     windowWidth.value = window.innerWidth;
     windowHeight.value = window.innerHeight;
@@ -95,18 +98,18 @@ const loading = ElLoading.service({
 const fetchWallet = async () => {
   dialogVisible.value = false;
   loading;
-  const investorId = 'f58c9a63-b445-417e-9ce5-c29b3625b40b';
-  const response = await walletService.averageCalculate(investorId);
+  const getInvestor = new GetInvestor();
+  const investorId = getInvestor.investorId();
+  const response = await averageService.averageCalculate(investorId);
   walletList.value = await response.json();
   //console.log(walletList.value);
-  loading.close();
 }
 
 const columns = computed(() => [
   {
-    key: 'Ticket.ticketCode',
+    key: 'ticket',
     title: 'Ticket',
-    dataKey: 'Ticket.ticketCode',
+    dataKey: 'ticket',
     width: withColumns.value,
     align: 'center',
     fixed: TableV2FixedDir.LEFT,
@@ -126,9 +129,9 @@ const columns = computed(() => [
     ),
   },
   {
-    key: 'Broker.brokerName',
+    key: 'broker',
     title: 'Broker',
-    dataKey: 'Broker.brokerName',
+    dataKey: 'broker',
     width: withColumns.value,
     align: 'center',
   },

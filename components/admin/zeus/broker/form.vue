@@ -95,7 +95,7 @@ const props = defineProps({
 })
 
 const broker: Ref<CreateBrokerDto> = ref({
-  id: props.initialData.id || "",
+  _id: props.initialData._id || "",
   brokerName: props.initialData.brokerName || "",
   brokerUrl: props.initialData.brokerUrl || "",
   brokerEnabled: props.initialData.brokerEnabled || true,
@@ -107,7 +107,7 @@ const broker: Ref<CreateBrokerDto> = ref({
 watch(() => props.initialData,
   (value) => {
     broker.value = {
-      id: value.id || "",
+      _id: value._id || "",
       brokerName: value.brokerName || "",
       brokerUrl: value.brokerUrl || "",
       brokerEnabled: value.brokerEnabled || true,
@@ -147,7 +147,7 @@ const submitForm = () => {
 
 const resetForm = () => {
   broker.value = {
-    id: "",
+    _id: "",
     brokerName: "",
     brokerUrl: "",
     brokerEnabled: true,

@@ -102,7 +102,7 @@
           <el-button
             type="primary"
             @click="submitForm"
-            :disabled="!rateIrEntity.system || !rateIrEntity.operationId || !rateIrEntity.rate">
+            :disabled="!rateIrEntity.system || !rateIrEntity.operationId || !rateIrEntity.typeId">
             {{ typeSave }}
           </el-button>
           <el-button
@@ -159,7 +159,7 @@ onMounted(() => {
 })
 
 const rateIrEntity = ref<CreateRateIrDto>({
-  id: props.initialData.id || "",
+  _id: props.initialData._id || "",
   system: props.initialData.system || "",
   operationId: props.initialData.operationId || "",
   typeId: props.initialData.typeId || "",
@@ -174,7 +174,7 @@ const rateIrEntity = ref<CreateRateIrDto>({
 watch(() => props.initialData,
   (value) => {
     rateIrEntity.value = {
-      id: value.id || "",
+      _id: value._id || "",
       system: value.system || "",
       operationId: value.operationId || "",
       typeId: value.typeId || "",
@@ -210,6 +210,7 @@ const querySearchType = (queryString: string, cb: any) => {
 }
 const handleSelectType = (item: CompleteItem) => {
   rateIrEntity.value.typeId = item.link;
+  console.log(item);
 }
 
 const createFilter = (queryString: string) => {
@@ -263,7 +264,7 @@ const submitForm = async () => {
 
 const emptyForm = () => {
   rateIrEntity.value = {
-    id: "",
+    _id: "",
     system: "",
     operationId: "",
     rate: 0,

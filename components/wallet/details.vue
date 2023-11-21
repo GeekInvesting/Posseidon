@@ -107,7 +107,7 @@
 </template>
 
 <script lang="ts" setup>
-import {WalletAverageEntity} from "~/entities/zeus/wallet-average.entity";
+import {AverageEntity} from "~/entities/demeter/average.entity";
 import {YieldService} from "~/service/zeus/yield.service";
 
 const resultPositive = ref(true)
@@ -131,7 +131,7 @@ const props = defineProps({
   },
 })
 
-const walletAverage: Ref<WalletAverageEntity> = ref({
+const walletAverage: Ref<AverageEntity> = ref({
   investorId: props.initialData.investorId || '',
   Investor: props.initialData.Investor,
   ticketId: props.initialData.ticketId || '',

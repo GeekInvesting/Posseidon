@@ -138,6 +138,11 @@ const schedulerService = new SchedulerService();
 onMounted(async () => {
   fetchUser();
   updateUser();
+  if (isAdmin.value) {
+    nameListAdmin.forEach((item) => {
+      nameList.push(item);
+    })
+  }
 })
 
 const props = defineProps({
@@ -191,9 +196,15 @@ const typeList = [
   'Yearly',
 ]
 
-const nameList = [
+let nameList = [
   'Average',
   'Price',
+  'GetData'
+]
+
+const nameListAdmin = [
+  'Price',
+  'GetData'
 ]
 
 const updateUser = () => {
@@ -241,6 +252,9 @@ const handleQueueCreate = () => {
       break;
     case 'Price':
       schedulerEntity.value.queue = 'SchedulerToPrice';
+      break;
+    case 'GetData':
+      schedulerEntity.value.queue = 'SchedulerToGetData';
       break;
     default:
       schedulerEntity.value.queue = '';

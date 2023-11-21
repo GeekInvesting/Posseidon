@@ -1,5 +1,8 @@
 <template>
-  <el-page-header @back="goToHome">
+  <el-page-header @back="goToWallet">
+    <template #title v-if="props.title !== 'Wallet'">
+      <span class="text-large font-600 mr-3">Wallet</span>
+    </template>
     <template #content>
       <div class="flex items-center py-4">
         <span class="text-large font-600 mr-3">{{ props.title }}</span>
@@ -7,14 +10,34 @@
     </template>
     <template #extra>
       <div class="flex items-center py4">
+        <el-button-group>
+          <el-button
+            plain
+            :disabled="props.title === 'Inventory'"
+            class="ml-2"
+            size="large"
+          >
+            <NuxtLink to="/wallets/inventory">Inventory</NuxtLink>
+          </el-button>
+          <el-button
+            plain
+            :disabled="props.title === 'Average'"
+            class="ml-2"
+            size="large"
+          >
+            <NuxtLink to="/wallets/average">Average</NuxtLink>
+          </el-button>
+        </el-button-group>
         <el-button
           @click="create"
           type="success"
           class="ml-2"
           circle
           size="large"
-          ><Icon name="ic:baseline-plus"
-        /></el-button>
+        >
+          <Icon name="ic:baseline-plus"
+          />
+        </el-button>
       </div>
     </template>
   </el-page-header>
@@ -33,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import { emitEventBus, useEventBus } from "~~/events/eventBus";
+import {emitEventBus, useEventBus} from "~~/events/eventBus";
 
 const title = ref("");
 const router = useRouter();
@@ -58,7 +81,7 @@ const handleClose = (done: () => void) => {
 
       dialogVisible.value = false;
     })
-    .catch((error:any) => {
+    .catch((error: any) => {
       console.log(error);
     });
 };
@@ -70,6 +93,10 @@ const create = () => {
 
 const goToHome = () => {
   router.push("/");
+};
+
+const goToWallet = () => {
+  router.push("/wallets");
 };
 
 watch(

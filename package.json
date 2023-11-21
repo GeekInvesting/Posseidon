@@ -1,6 +1,6 @@
 {
   "name": "posseidon",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "private": true,
   "scripts": {
     "build": "nuxt build",
@@ -20,6 +20,8 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.0",
+    "@syncfusion/ej2-vue-charts": "^23.1.41",
+    "chart.js": "^3.9.1",
     "flowbite": "^1.6.4",
     "lru-cache": "^8.0.4",
     "nuxt-icon": "^0.3.3",
@@ -27,6 +29,8 @@
     "primeicons": "^6.0.1",
     "primevue": "^3.26.1",
     "vee-validate": "^4.5.8",
+    "vue": "^3.3.4",
+    "vue-chart-3": "^3.1.8",
     "vuetify": "^3.1.4"
   }
 }
