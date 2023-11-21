@@ -85,7 +85,8 @@ const loading = ElLoading.service({
 const fetchWallet = async () => {
   dialogVisible.value = false;
   loading;
-  const response = await walletService.findAllWallets();
+  let investorId = new GetInvestor().investorId();
+  let response = await walletService.findAllWalletsByInvestor(investorId)
   walletList.value = await response.json();
   loading.close();
   //console.log(walletList.value);

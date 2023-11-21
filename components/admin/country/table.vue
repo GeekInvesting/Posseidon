@@ -93,7 +93,6 @@ import { ApiHera } from "~~/utils/api/hera";
 
 const apiHera = ApiHera();
 const svg = Loading().svg;
-
 let loading = ref(false);
 const eventBus = useEventBus();
 let country: Ref<Country> = ref({} as Country);

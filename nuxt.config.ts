@@ -6,5 +6,8 @@ export default defineNuxtConfig({
     "@element-plus/nuxt",
   ],
 
-  plugins: [{ src: "~/plugins/element-plus", mode: "client" }],
+  plugins: [
+    { src: "~/plugins/element-plus", mode: "client" },
+    { src: "~/plugins/chartjs.client", mode: "client" },
+  ],
 });

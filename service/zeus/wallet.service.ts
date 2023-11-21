@@ -53,4 +53,11 @@ export class WalletService extends ApiService {
       },
     });
   }
+
+  async findAllWalletsByInvestor(investorId: string): Promise<Response> {
+    const url = `${this.urlBase}/investor/${investorId}`;
+    return await apiErrorHandler(this.fetch)(url, {
+      method: 'GET',
+    });
+  }
 }
